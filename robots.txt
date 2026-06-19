@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.themakhana.com/sitemap.xml
+Sitemap: https://themakhana.in/sitemap.xml

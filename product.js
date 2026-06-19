@@ -22,7 +22,7 @@
   /* ---------- per-product SEO (canonical, OG, Twitter, robots, JSON-LD) ---------- */
   (function seo() {
     const head = document.head;
-    const SITE = "https://www.themakhana.com/";
+    const SITE = "https://themakhana.in/";
     const canonical = SITE + "product.html?id=" + p.id;
     const ogImage = SITE + "og/" + p.id + ".png"; // placeholder OG/social image
     const catName = p.category === "combo" ? "Combos" : (p.category === "raw" ? "Raw" : "Roasted");

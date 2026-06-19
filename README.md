@@ -43,7 +43,7 @@ Vanilla **HTML5 + CSS3 + JavaScript** (no framework, no build). Fonts: Fraunces 
 
 ## 📝 Placeholders to replace
 
-- Domain `https://www.themakhana.com/` (canonical / OG / sitemap) → your real domain
+- Domain `https://themakhana.in/` (canonical / OG / sitemap) → your real domain
 - `og-image.jpg` and product OG images
 - "As featured in" press names &amp; the Instagram handle/posts
 - Contact / FSSAI / address details
