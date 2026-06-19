@@ -629,7 +629,32 @@
   $$(".mobile-nav__links a").forEach((a) => a.addEventListener("click", closeMenu));
 
   /* hero pouch */
-  $("#heroPouch").innerHTML = '<img src="images/peri.jpg" alt="The Makhana Peri Peri Punch pack" />';
+  /* ---------- Hero slider ---------- */
+  (function heroSlider() {
+    const el = $("#heroPouch");
+    if (!el) return;
+    const imgs = ["images/peri.jpg", "images/peri-2.jpg", "images/peri-3.jpg"];
+    el.innerHTML =
+      '<div class="hero__slider"><div class="hero__track">' +
+      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="The Makhana Peri Peri Punch" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
+      '</div><div class="hero__dots">' +
+      imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
+      "</div></div>";
+    const slides = el.querySelectorAll(".hero__slide");
+    const dots = el.querySelectorAll(".hero__dot");
+    let idx = 0, timer = null;
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((sl, i) => sl.classList.toggle("is-active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    }
+    function start() { if (!reduceMotion) timer = setInterval(() => go(idx + 1), 4000); }
+    function stop() { clearInterval(timer); }
+    el.addEventListener("click", (e) => { const d = e.target.closest(".hero__dot"); if (d) { stop(); go(+d.dataset.i); start(); } });
+    el.addEventListener("mouseenter", stop);
+    el.addEventListener("mouseleave", start);
+    start();
+  })();
 
   /* ---------- Init ---------- */
   renderProducts("all");
