@@ -634,19 +634,26 @@
     const el = $("#heroPouch");
     if (!el) return;
     const imgs = ["images/hero-trio.jpg", "images/hero-box.jpg"];
+    const alts = ["Three roasted makhana pouches - peri peri, himalayan salt, pudina", "The Makhana seven-flavour foxnut gift box"];
+    const captions = ["The lineup · 3 signature roasts", "The gift box · 7 flavours"];
     el.innerHTML =
       '<div class="hero__slider"><div class="hero__track">' +
-      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="The Makhana flavours" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
+      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="' + alts[i] + '" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
+      '<span class="hero__caption" aria-hidden="true">' + captions[0] + '</span><span class="hero__progress run" aria-hidden="true"></span>' +
       '</div><button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide">&#8249;</button><button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide">&#8250;</button><div class="hero__dots">' +
       imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
       "</div></div>";
     const slides = el.querySelectorAll(".hero__slide");
     const dots = el.querySelectorAll(".hero__dot");
+    const caption = el.querySelector(".hero__caption");
+    const bar = el.querySelector(".hero__progress");
     let idx = 0, timer = null;
     function go(n) {
       idx = (n + slides.length) % slides.length;
       slides.forEach((sl, i) => sl.classList.toggle("is-active", i === idx));
       dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+      if (caption) caption.textContent = captions[idx];
+      if (bar && !reduceMotion) { bar.classList.remove("run"); void bar.offsetWidth; bar.classList.add("run"); }
     }
     function start() { if (!reduceMotion) timer = setInterval(() => go(idx + 1), 4000); }
     function stop() { clearInterval(timer); }
