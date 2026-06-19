@@ -637,7 +637,7 @@
     el.innerHTML =
       '<div class="hero__slider"><div class="hero__track">' +
       imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="The Makhana flavours" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
-      '</div><div class="hero__dots">' +
+      '</div><button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide">&#8249;</button><button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide">&#8250;</button><div class="hero__dots">' +
       imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
       "</div></div>";
     const slides = el.querySelectorAll(".hero__slide");
@@ -650,7 +650,7 @@
     }
     function start() { if (!reduceMotion) timer = setInterval(() => go(idx + 1), 4000); }
     function stop() { clearInterval(timer); }
-    el.addEventListener("click", (e) => { const d = e.target.closest(".hero__dot"); if (d) { stop(); go(+d.dataset.i); start(); } });
+    el.addEventListener("click", (e) => { const d = e.target.closest(".hero__dot"); if (d) { stop(); go(+d.dataset.i); start(); return; } if (e.target.closest(".hero__arrow--prev")) { stop(); go(idx - 1); start(); } else if (e.target.closest(".hero__arrow--next")) { stop(); go(idx + 1); start(); } });
     el.addEventListener("mouseenter", stop);
     el.addEventListener("mouseleave", start);
     start();

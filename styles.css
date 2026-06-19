@@ -213,13 +213,27 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .hero__dot{width:9px;height:9px;border-radius:50px;background:var(--line);transition:width .25s ease,background .25s ease;cursor:pointer}
 .hero__dot.is-active{background:var(--primary-deep);width:24px}
 .hero__dot:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.hero__arc,.hero__seal,.hero__pop{display:none}
-.hero__seal{position:absolute;top:8%;right:6%;width:104px;height:104px;color:var(--primary-deep);z-index:3;animation:sealIn 1.4s cubic-bezier(.2,.7,.3,1) .2s both}
-@keyframes sealIn{from{transform:rotate(-40deg);opacity:0}to{transform:rotate(0);opacity:1}}
-.hero__pop{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#F4E9CE);box-shadow:inset -2px -3px 5px rgba(120,90,30,.25);z-index:1}
-.hero__pop--1{width:30px;height:30px;top:14%;left:8%;animation:drift 7s ease-in-out infinite}
-.hero__pop--2{width:20px;height:20px;bottom:18%;left:14%;animation:drift 9s ease-in-out infinite reverse}
-.hero__pop--3{width:24px;height:24px;bottom:10%;right:10%;animation:drift 8s ease-in-out infinite}
+.hero__arc{display:none}
+.hero__pop{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#F2E6C8);
+  box-shadow:0 9px 18px -6px rgba(120,90,30,.45),inset -2px -3px 5px rgba(120,90,30,.3);z-index:3;pointer-events:none}
+.hero__pop--1{width:30px;height:30px;top:3%;left:1%;animation:drift 7s ease-in-out infinite}
+.hero__pop--2{width:18px;height:18px;bottom:24%;left:-3%;animation:drift 9s ease-in-out infinite reverse}
+.hero__pop--3{width:24px;height:24px;bottom:-2%;right:6%;animation:drift 8s ease-in-out infinite}
+.hero__pop--4{width:15px;height:15px;top:9%;right:-1%;animation:drift 6.5s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(8deg)}}
+/* slow ken-burns zoom on the active banner */
+.hero__slide.is-active{animation:kenburns 8s ease-out both}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
+/* slider arrows */
+.hero__arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 8px 18px -7px rgba(20,20,20,.45);color:var(--ink);
+  font-size:24px;font-weight:700;line-height:1;display:grid;place-items:center;z-index:4;
+  transition:background .2s ease,transform .15s ease;padding-bottom:3px}
+.hero__arrow:hover{background:#fff}
+.hero__arrow:active{transform:translateY(-50%) scale(.92)}
+.hero__arrow--prev{left:-8px}
+.hero__arrow--next{right:-8px}
+.hero__arrow:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 @keyframes drift{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-16px) translateX(6px)}}
 
 /* marquee */
