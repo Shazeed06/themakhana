@@ -633,10 +633,10 @@
   (function heroSlider() {
     const el = $("#heroPouch");
     if (!el) return;
-    const imgs = ["images/peri.jpg", "images/peri-2.jpg", "images/peri-3.jpg"];
+    const imgs = ["images/hero-trio.jpg", "images/hero-box.jpg"];
     el.innerHTML =
       '<div class="hero__slider"><div class="hero__track">' +
-      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="The Makhana Peri Peri Punch" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
+      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="The Makhana flavours" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
       '</div><div class="hero__dots">' +
       imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
       "</div></div>";
