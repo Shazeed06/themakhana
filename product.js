@@ -128,11 +128,12 @@
 
   /* ---------- gallery ---------- */
   const stage = $("#galleryStage"), thumbs = $("#galleryThumbs");
-  const views = p.image
-    ? [
-        { label: "Pack", html: '<img src="' + p.image + '" alt="' + escapeXML(p.name) + '" loading="eager" />', rot: 0 },
-        { label: "In the bowl", html: bowlSVG(p), rot: 0 }
-      ]
+  const views = (p.images && p.images.length)
+    ? p.images.map((src, i) => ({
+        label: "View " + (i + 1),
+        html: '<img src="' + src + '" alt="' + escapeXML(p.name) + ' pack" loading="' + (i === 0 ? "eager" : "lazy") + '" />',
+        rot: 0
+      }))
     : [
         { label: "Pack", html: pouchSVG(p), rot: 0 },
         { label: "In the bowl", html: bowlSVG(p), rot: 0 },
