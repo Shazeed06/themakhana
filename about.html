@@ -137,6 +137,17 @@
 .note-card__sign b{display:block;font-family:"Inter",sans-serif;font-size:15px;color:var(--ink)}
 .note-card__sign span{font-size:13px;color:var(--ink-soft)}
 
+/* ---------- Section imagery (farmer / lotus pond) ---------- */
+.story-media{position:relative}
+.story-media img{width:100%;max-height:520px;object-fit:cover;border-radius:24px;box-shadow:var(--sh-card);display:block}
+.story-media__cap{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:7px;
+  background:rgba(13,13,13,.58);color:#fff;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  padding:8px 14px;border-radius:50px;font-size:12.5px;font-weight:600;max-width:calc(100% - 32px)}
+.story-media__cap svg{width:15px;height:15px;flex:0 0 auto;stroke:var(--primary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.note-card--wide{max-width:880px;margin:clamp(32px,5vw,52px) auto 0}
+.heritage__grid--media{grid-template-columns:.92fr 1.08fr;align-items:stretch}
+.heritage__media img{width:100%;height:100%;min-height:260px;max-height:480px;object-fit:cover;border-radius:18px;display:block}
+
 /* ---------- Why Choose Us (4 cards) ---------- */
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .why{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 24px;
@@ -240,13 +251,14 @@
   .journey-steps{grid-template-columns:repeat(2,1fr)}
   .stats{grid-template-columns:repeat(2,1fr)}
   .values-grid{grid-template-columns:1fr 1fr}
-  .heritage__grid{grid-template-columns:1fr;gap:28px}
+  .heritage__grid,.heritage__grid--media{grid-template-columns:1fr;gap:28px}
 }
 @media (max-width:560px){
   .why-grid,.journey-steps,.stats,.values-grid{grid-template-columns:1fr}
   .ab-hero__pills span{font-size:12px}
   .ab-hero h1{font-size:clamp(30px,9vw,40px)}
   .note-card::before{font-size:72px;top:2px}
+  .story-media img,.heritage__media img{max-height:300px}
 }
 
 /* media-safe defaults */
@@ -323,7 +335,11 @@
   <section class="ab-sec" id="story" aria-labelledby="story-title">
     <div class="container">
       <div class="story-grid">
-        <div>
+        <div class="story-media">
+          <img src="farmer.jpg" alt="A farmer tending young crops in a lush green field in Madhubani, Bihar" loading="lazy" width="700" height="466" />
+          <span class="story-media__cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg>Handpicked at dawn &middot; Madhubani, Bihar</span>
+        </div>
+        <div class="story-text">
           <header class="ab-head">
             <p class="kicker"><span class="num">01</span> / Who we are</p>
             <h2 id="story-title">A modern snacking brand, rooted in <em>Madhubani heritage.</em></h2>
@@ -335,24 +351,24 @@
             <p>We built The Makhana on three simple pillars: <strong>authentic Bihar roots</strong>, <strong>premium quality</strong>, and <strong>modern healthy snacking</strong> — and we refuse to compromise on any of them.</p>
           </div>
         </div>
-
-        <!-- Founder note -->
-        <figure class="note-card">
-          <p class="note-card__label">A note from the founders</p>
-          <p>When we first carried a bag of Madhubani makhana to the city, friends couldn't believe a snack this light could taste this good. That moment started everything.</p>
-          <p>We promised ourselves we'd never cut a corner — no deep-frying, no palm oil, no shortcuts on the farmers who make it possible. Whether it's your post-workout handful or a festive gift, we want every pouch to taste like home and feel like a small act of care.</p>
-          <p>Thank you for snacking with us. We're only getting started.</p>
-          <figcaption class="note-card__sign">
-            <span class="seal" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 3c2.4 2.6 3.6 5.6 3.6 8.4a3.6 3.6 0 0 1-7.2 0C8.4 8.6 9.6 5.6 12 3z"/><path d="M5 16c3 .4 5.4 2 6.6 4M19 16c-3 .4-5.4 2-6.6 4"/></svg>
-            </span>
-            <span>
-              <b>&mdash; Team The Makhana</b>
-              <span>Madhubani, Bihar</span>
-            </span>
-          </figcaption>
-        </figure>
       </div>
+
+      <!-- Founder note -->
+      <figure class="note-card note-card--wide">
+        <p class="note-card__label">A note from the founders</p>
+        <p>When we first carried a bag of Madhubani makhana to the city, friends couldn't believe a snack this light could taste this good. That moment started everything.</p>
+        <p>We promised ourselves we'd never cut a corner — no deep-frying, no palm oil, no shortcuts on the farmers who make it possible. Whether it's your post-workout handful or a festive gift, we want every pouch to taste like home and feel like a small act of care.</p>
+        <p>Thank you for snacking with us. We're only getting started.</p>
+        <figcaption class="note-card__sign">
+          <span class="seal" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3c2.4 2.6 3.6 5.6 3.6 8.4a3.6 3.6 0 0 1-7.2 0C8.4 8.6 9.6 5.6 12 3z"/><path d="M5 16c3 .4 5.4 2 6.6 4M19 16c-3 .4-5.4 2-6.6 4"/></svg>
+          </span>
+          <span>
+            <b>&mdash; Team The Makhana</b>
+            <span>Madhubani, Bihar</span>
+          </span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -393,36 +409,39 @@
   <section class="ab-sec" aria-labelledby="heritage-title">
     <div class="container">
       <div class="heritage">
-        <div class="heritage__grid">
-          <div>
+        <div class="heritage__grid heritage__grid--media">
+          <div class="heritage__media">
+            <img src="lotus-pond.jpg" alt="A lotus pond in Madhubani, Bihar — where makhana (foxnuts) are harvested" loading="lazy" width="700" height="466" />
+          </div>
+          <div class="heritage__content">
             <p class="kicker"><span class="num">03</span> / Our heritage</p>
             <h2 id="heritage-title">The heritage of <em>Madhubani.</em></h2>
             <p>Madhubani is more than a place on a map — it is the makhana capital of the world, where lotus ponds and folk artistry have shaped life for centuries. We are proud to build our brand on that legacy.</p>
             <p>We work hand-in-hand with local farming communities, honouring centuries-old methods of harvesting and curing while investing in sustainable livelihoods that let these traditions thrive for generations to come.</p>
+            <ul class="heritage__points">
+              <li>
+                <span class="n" aria-hidden="true">01</span>
+                <div>
+                  <b>Hand-in-hand with farmers</b>
+                  <span>Direct, fair partnerships with the families who harvest our foxnuts — no faceless middlemen.</span>
+                </div>
+              </li>
+              <li>
+                <span class="n" aria-hidden="true">02</span>
+                <div>
+                  <b>Centuries-old methods</b>
+                  <span>Time-honoured popping and curing techniques, passed down through generations, kept alive in every batch.</span>
+                </div>
+              </li>
+              <li>
+                <span class="n" aria-hidden="true">03</span>
+                <div>
+                  <b>Sustainable livelihoods</b>
+                  <span>Fair pricing and steady demand that help farming communities grow with us, season after season.</span>
+                </div>
+              </li>
+            </ul>
           </div>
-          <ul class="heritage__points">
-            <li>
-              <span class="n" aria-hidden="true">01</span>
-              <div>
-                <b>Hand-in-hand with farmers</b>
-                <span>Direct, fair partnerships with the families who harvest our foxnuts — no faceless middlemen.</span>
-              </div>
-            </li>
-            <li>
-              <span class="n" aria-hidden="true">02</span>
-              <div>
-                <b>Centuries-old methods</b>
-                <span>Time-honoured popping and curing techniques, passed down through generations, kept alive in every batch.</span>
-              </div>
-            </li>
-            <li>
-              <span class="n" aria-hidden="true">03</span>
-              <div>
-                <b>Sustainable livelihoods</b>
-                <span>Fair pricing and steady demand that help farming communities grow with us, season after season.</span>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
