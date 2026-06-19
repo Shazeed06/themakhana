@@ -39,7 +39,7 @@ python -m http.server 8080
 
 ## 🛠️ Tech
 
-Vanilla **HTML5 + CSS3 + JavaScript** (no framework, no build). Fonts: Fraunces + Plus Jakarta Sans.
+Vanilla **HTML5 + CSS3 + JavaScript** (no framework, no build). Fonts: Inter.
 
 ## 📝 Placeholders to replace
 

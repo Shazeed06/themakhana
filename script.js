@@ -147,10 +147,10 @@
     '<path d="M-11 6c4 0 7 1.5 9 4M11 6c-4 0-7 1.5-9 4"/>' +
   '</g>' +
   // wordmark
-  '<text x="130" y="150" text-anchor="middle" font-family="\'Plus Jakarta Sans\',sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#211A0E">THE MAKHANA</text>' +
+  '<text x="130" y="150" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#211A0E">THE MAKHANA</text>' +
   // flavour ribbon
   '<path d="M44 168 L216 168 L208 184 L216 200 L44 200 L52 184 Z" fill="' + shade(acc, -16) + '"/>' +
-  '<text x="130" y="189" text-anchor="middle" font-family="\'Plus Jakarta Sans\',sans-serif" font-weight="700" font-size="13" letter-spacing="1" fill="#fff">' + escapeXML(ribbonName) + '</text>' +
+  '<text x="130" y="189" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="13" letter-spacing="1" fill="#fff">' + escapeXML(ribbonName) + '</text>' +
   // flavour cue icon
   '<g transform="translate(130 224)" fill="none" stroke="' + acc + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + cueIcon(p.cat) + '</g>' +
   // die-cut window
@@ -159,8 +159,8 @@
   '<rect x="78" y="232" width="104" height="58" rx="14" fill="none" stroke="' + shade(acc, -22) + '" stroke-width="2"/>' +
   // net weight chip + tag
   '<rect x="62" y="298" width="40" height="16" rx="8" fill="#FFFDF7"/>' +
-  '<text x="82" y="310" text-anchor="middle" font-family="\'Plus Jakarta Sans\',sans-serif" font-weight="700" font-size="9.5" fill="#211A0E">' + p.weight + '</text>' +
-  '<text x="176" y="310" text-anchor="middle" font-family="\'Plus Jakarta Sans\',sans-serif" font-weight="700" font-size="8.5" letter-spacing="1" fill="#fff" opacity=".9">' + (p.category === "raw" ? "RAW" : "ROASTED") + '</text>' +
+  '<text x="82" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="9.5" fill="#211A0E">' + p.weight + '</text>' +
+  '<text x="176" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="8.5" letter-spacing="1" fill="#fff" opacity=".9">' + (p.category === "raw" ? "RAW" : "ROASTED") + '</text>' +
 '</svg>';
     if (!opts.decorative) _pouchCache[p.id] = svg;
     return svg;
