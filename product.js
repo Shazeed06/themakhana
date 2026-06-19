@@ -24,7 +24,7 @@
     const head = document.head;
     const SITE = "https://www.themakhana.in/";
     const canonical = SITE + "product.html?id=" + p.id;
-    const ogImage = SITE + "og/" + p.id + ".png"; // placeholder OG/social image
+    const ogImage = SITE + "logo.jpg"; // placeholder OG/social image
     const catName = p.category === "combo" ? "Combos" : (p.category === "raw" ? "Raw" : "Roasted");
 
     // upsert a <meta>/<link> tag keyed by an attribute, creating it if absent

@@ -136,7 +136,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .header.scrolled{background:color-mix(in srgb,var(--surface) 94%,transparent);box-shadow:var(--sh-header)}
 .header__inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
 .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
-.brand__mark{color:var(--primary-deep);flex:0 0 auto}
+.brand__mark{display:none}.brand__logo{height:56px;width:auto;display:block;border-radius:8px}
 .brand__name{font-family:"Inter",sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em}
 .nav{display:flex;gap:30px}
 .nav a{font-weight:600;font-size:15px;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .2s ease}
