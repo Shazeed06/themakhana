@@ -171,93 +171,60 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .mobile-nav__links a{font-family:"Inter",serif;font-size:28px;font-weight:600;color:var(--ink)}
 .mobile-nav__links a:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:6px}
 
-/* ---------- Hero "The Harvest, Framed" ---------- */
-.hero{position:relative;overflow-x:clip;padding-top:clamp(40px,7vh,80px);
-  background:radial-gradient(120% 90% at 6% 18%,var(--surface-2) 0%,transparent 58%)}
+/* ---------- Hero (bold product banner) ---------- */
+.hero{position:relative;overflow-x:clip;
+  background:linear-gradient(118deg,#FFEFC6 0%,#FFF7E6 52%,#FDF6EC 100%)}
 .hero__grid{position:relative;z-index:1;display:grid;
-  grid-template-columns:minmax(0,5.2fr) minmax(0,5.8fr);gap:clamp(40px,4vw,64px);align-items:center;
-  padding-top:clamp(32px,5vh,64px);padding-bottom:clamp(40px,6vh,72px)}
-
-/* LEFT - copy column */
-.hero__copy{display:flex;flex-direction:column;gap:clamp(18px,2.2vh,28px)}
+  grid-template-columns:minmax(0,5fr) minmax(0,6.2fr);gap:clamp(24px,3.2vw,52px);align-items:center;
+  padding-top:clamp(30px,5vh,64px);padding-bottom:clamp(22px,3.5vh,40px)}
+.hero__copy{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(12px,1.8vh,20px)}
 .hero__copy>*{margin:0}
-.hero .kicker{letter-spacing:.14em;gap:10px;color:var(--primary-text)}
-.hero .kicker::before{content:"";width:28px;height:1px;background:var(--primary-deep);flex:0 0 auto}
-.hero__title{font-size:clamp(46px,5.4vw,74px);line-height:1.0;letter-spacing:-.03em;font-weight:800;color:var(--secondary);text-wrap:balance}
-.hero__accent{position:relative;color:var(--primary-deep);font-style:italic;font-weight:600;white-space:nowrap}
-.hero__swoosh{position:absolute;left:-2%;bottom:-12px;width:104%;height:18px;overflow:visible}
-.hero__swoosh path{fill:none;stroke:var(--primary-deep);stroke-width:4;stroke-linecap:round;
-  stroke-dasharray:240;stroke-dashoffset:240;animation:draw .7s ease .45s forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.hero__sub{max-width:440px;font-weight:400;line-height:1.55;color:var(--ink-soft)}
-.hero__cta{display:flex;gap:14px 22px;flex-wrap:wrap;align-items:center}
-.hero__textlink{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:15px;color:var(--ink-soft);
-  border-bottom:2px solid transparent;padding-bottom:1px;transition:color .2s ease,border-color .2s ease}
-.hero__textlink svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s ease}
-.hero__textlink:hover{color:var(--primary-deep);border-color:var(--primary)}
-.hero__textlink:hover svg{transform:translateX(3px)}
-.hero__textlink:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:3px}
-.hero__rule{width:64px;height:1px;border:0;background:var(--line);margin:4px 0}
-.hero__spec{font-size:13px;font-weight:600;color:var(--ink);line-height:1.5}
-.hero__spec span{color:var(--line);margin:0 4px;font-weight:400}
-
-/* RIGHT - art / bleed plate */
+.hero__eyebrow{font-size:clamp(14px,1.7vw,19px);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.hero__title{font-size:clamp(52px,8.2vw,112px);line-height:.88;letter-spacing:-.04em;font-weight:800;text-transform:uppercase;color:var(--primary-deep)}
+.hero__sub{font-size:clamp(15px,1.6vw,19px);font-weight:600;color:var(--ink)}
+.hero__sub span{color:var(--primary-deep);margin:0 5px}
+.hero__shop{display:inline-flex;align-items:center;justify-content:center;margin-top:8px;
+  background:var(--primary);color:var(--secondary);font-weight:800;font-size:16px;
+  padding:15px 36px;border:2px solid var(--secondary);border-radius:12px;
+  box-shadow:5px 5px 0 0 var(--secondary);transition:transform .12s ease,box-shadow .12s ease,background .2s ease}
+.hero__shop:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 0 var(--secondary);background:#FFD42E}
+.hero__shop:active{transform:translate(3px,3px);box-shadow:1px 1px 0 0 var(--secondary)}
+.hero__shop:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 .hero__art{position:relative;display:flex;align-items:center;justify-content:flex-end;min-height:auto}
 .hero__pouch{position:relative;z-index:2;width:100%;display:flex;justify-content:flex-end}
-.hero__slider{position:relative;width:min(54vw,760px);margin-right:calc(var(--pad) * -1)}
-.hero__track{position:relative;aspect-ratio:3/2;border-radius:4px 4px 4px 28px;overflow:hidden;
-  border:8px solid var(--surface-2);
-  box-shadow:0 1px 2px rgba(13,13,13,.06),0 40px 60px -38px rgba(20,20,20,.28),inset 0 0 0 1px var(--line)}
-.hero__track::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(to top,rgba(13,13,13,.12),transparent 38%)}
-.hero__slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%;
-  opacity:0;transition:opacity .9s cubic-bezier(.4,0,.2,1)}
-.hero__slide:nth-child(2){object-position:50% 48%}
-.hero__slide.is-active{opacity:1}
-/* slow filmic ken-burns on the active banner */
-.hero__slide.is-active{animation:kenburns 4s ease-out both}
-@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.04)}}
-
-/* caption chip */
-.hero__caption{position:absolute;left:14px;bottom:14px;z-index:3;
-  font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;
-  background:rgba(13,13,13,.62);padding:6px 12px;border-radius:var(--r-pill);
-  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
-  transition:opacity .9s cubic-bezier(.4,0,.2,1)}
-
-/* draining gold progress seam */
-.hero__progress{position:absolute;left:0;bottom:0;z-index:3;height:2px;width:0;background:var(--primary)}
+.hero__slider{position:relative;width:min(56vw,740px);margin-right:calc(var(--pad) * -1)}
+.hero__track{position:relative;aspect-ratio:3/2;border-radius:16px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(13,13,13,.06),0 36px 58px -34px rgba(20,20,20,.32)}
+.hero__track::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(13,13,13,.14),transparent 34%)}
+.hero__slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;opacity:0;transition:opacity .9s cubic-bezier(.4,0,.2,1)}
+.hero__slide:nth-child(2){object-position:50% 50%}
+.hero__slide.is-active{opacity:1;animation:kenburns 4s ease-out both}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.05)}}
+.hero__caption{position:absolute;left:14px;bottom:14px;z-index:3;font-size:11px;font-weight:700;letter-spacing:.06em;color:#fff;background:rgba(13,13,13,.62);padding:6px 12px;border-radius:var(--r-pill);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .9s ease}
+.hero__progress{position:absolute;left:0;bottom:0;z-index:3;height:3px;width:0;background:var(--primary)}
 .hero__progress.run{animation:drain 4s linear forwards}
 @keyframes drain{from{width:0}to{width:100%}}
 .hero__track:hover .hero__progress{animation-play-state:paused}
-
-/* dots */
 .hero__dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
 .hero__dot{width:9px;height:9px;border-radius:50px;background:var(--line);transition:width .25s ease,background .25s ease;cursor:pointer}
 .hero__dot.is-active{background:var(--primary-deep);width:24px}
 .hero__dot:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-
-/* slider arrows */
-.hero__arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;
-  background:rgba(255,255,255,.92);box-shadow:0 8px 18px -7px rgba(20,20,20,.45);color:var(--ink);
-  font-size:24px;font-weight:700;line-height:1;display:grid;place-items:center;z-index:4;
-  transition:background .2s ease,transform .15s ease;padding-bottom:3px}
+.hero__arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.94);box-shadow:0 8px 18px -7px rgba(20,20,20,.45);color:var(--ink);font-size:24px;font-weight:700;line-height:1;display:grid;place-items:center;z-index:4;transition:background .2s ease,transform .15s ease;padding-bottom:3px}
 .hero__arrow:hover{background:#fff}
 .hero__arrow:active{transform:translateY(-50%) scale(.92)}
-.hero__arrow--prev{left:6px}
-.hero__arrow--next{right:6px}
+.hero__arrow--prev{left:8px}.hero__arrow--next{right:8px}
 .hero__arrow:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-
-/* entrance stagger (once, on reveal) */
+.hero__strip{position:relative;z-index:1;display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(8px,1.1vw,15px);padding-bottom:clamp(20px,3vh,34px)}
+.hero__thumb{display:block;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 12px 26px -20px rgba(20,20,20,.5);transition:transform .25s ease,box-shadow .25s ease}
+.hero__thumb:hover{transform:translateY(-5px);box-shadow:0 20px 34px -20px rgba(20,20,20,.55)}
+.hero__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.hero__thumb:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .hero__copy.reveal>*{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
 .hero__copy.reveal.in>*{opacity:1;transform:none}
 .hero__copy.reveal.in>:nth-child(1){transition-delay:0ms}
-.hero__copy.reveal.in>:nth-child(2){transition-delay:60ms}
-.hero__copy.reveal.in>:nth-child(3){transition-delay:120ms}
-.hero__copy.reveal.in>:nth-child(4){transition-delay:180ms}
-.hero__copy.reveal.in>:nth-child(5){transition-delay:240ms}
-.hero__copy.reveal.in>:nth-child(6){transition-delay:300ms}
-.hero__copy.reveal.in>:nth-child(7){transition-delay:360ms}
+.hero__copy.reveal.in>:nth-child(2){transition-delay:80ms}
+.hero__copy.reveal.in>:nth-child(3){transition-delay:160ms}
+.hero__copy.reveal.in>:nth-child(4){transition-delay:240ms}
 .hero__art.reveal{opacity:0;transform:scale(.98);transition:opacity .75s ease .12s,transform .75s ease .12s}
 .hero__art.reveal.in{opacity:1;transform:none}
 
@@ -705,7 +672,8 @@ html,body{max-width:100%;overflow-x:hidden}
   .newsletter__form .btn{width:100%}
   .hero__seal{width:84px;height:84px}
   /* Reduce oversized clamp minimums so long words don't overflow ~320-360px */
-  .hero__title{font-size:clamp(34px,9vw,74px)}
+  .hero__title{font-size:clamp(46px,15vw,104px)}
+  .hero__strip{grid-template-columns:repeat(3,1fr)}
   .sec-head h2{font-size:clamp(28px,7.5vw,56px)}
   .gifting__copy h2{font-size:clamp(28px,7.5vw,52px)}
   /* Hero CTA: primary button full-width, text link drops below it */
