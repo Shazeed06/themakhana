@@ -10,3 +10,8 @@ desktop.ini
 
 # Node (not used, but just in case)
 node_modules/
+
+# stray media / saved pages
+*.mp4
+WhatsApp*
+*_files/
