@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Makhana — Cursor Effects Lab (pick one)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --g:#F5C518;      /* golden yellow */
+  --gd:#B8860B;     /* deep gold */
+  --ink:#1A1A1A;
+  --black:#0D0D0D;
+  --soft:#6B7280;
+  --bg:#FAFAF7;
+  --surf:#FFFFFF;
+  --line:#EAE9E3;
+  --tint:#FEF6D0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Plus Jakarta Sans",sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+body.fx-on,body.fx-on *{cursor:none !important}
+h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+a{color:inherit}
+
+/* ---- top bar ---- */
+.topbar{background:var(--black);color:#fff;padding:18px 24px;text-align:center}
+.topbar h1{font-size:clamp(22px,3vw,30px);color:#fff}
+.topbar h1 span{color:var(--g);font-style:italic}
+.topbar p{font-size:14px;color:#C8C6C0;margin-top:4px}
+.topbar .now{margin-top:10px;font-size:13px;font-weight:700}
+.topbar .now b{color:var(--g)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+
+/* ---- option chips ---- */
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:30px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surf);border:1.5px solid var(--line);
+  border-radius:16px;padding:13px 15px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.opt:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 12px 26px -18px rgba(20,20,20,.35)}
+.opt.active{border-color:var(--g);background:var(--tint);box-shadow:0 10px 24px -16px rgba(245,197,24,.7)}
+.opt__n{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--black);color:var(--g);
+  font-family:"Fraunces",serif;font-weight:600;font-size:15px;display:grid;place-items:center}
+.opt.active .opt__n{background:var(--g);color:var(--black)}
+.opt__t{font-weight:700;font-size:14.5px}
+.opt__d{font-size:12px;color:var(--soft);line-height:1.4;margin-top:2px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.btn-off{background:var(--ink);color:#fff;border:none;border-radius:50px;padding:10px 20px;font-weight:700;font-size:13px}
+.hint{font-size:13px;color:var(--soft)}
+
+/* ---- preview stage ---- */
+.stage{background:var(--surf);border:1.5px solid var(--line);border-radius:24px;overflow:hidden}
+.stage__light{padding:54px clamp(20px,5vw,60px)}
+.kick{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gd);margin-bottom:14px}
+.stage h2{font-size:clamp(32px,5vw,56px);margin-bottom:14px}
+.stage h2 em{color:var(--gd)}
+.stage .lead{font-size:18px;color:var(--soft);max-width:560px;margin-bottom:26px}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+.b{border:none;border-radius:50px;padding:14px 28px;font-weight:700;font-size:15px;font-family:inherit}
+.b--p{background:var(--g);color:var(--black)}
+.b--g{background:var(--surf);color:var(--ink);border:1.5px solid var(--line)}
+.links{display:flex;gap:24px;flex-wrap:wrap;font-weight:700;font-size:15px}
+.links a{border-bottom:2px solid var(--g);padding-bottom:2px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-top:34px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}
+.pcard__art{height:120px;border-radius:12px;background:var(--tint);display:grid;place-items:center;margin-bottom:14px;font-family:"Fraunces",serif;font-weight:600;color:var(--gd)}
+.pcard h3{font-size:18px;margin-bottom:4px}
+.pcard .price{font-weight:800;margin-bottom:10px}
+.pcard .add{width:100%;border:1.5px solid var(--black);background:transparent;color:var(--black);border-radius:50px;padding:10px;font-weight:700;font-size:13px;font-family:inherit}
+
+.stage__dark{background:var(--black);color:#fff;padding:54px clamp(20px,5vw,60px);text-align:center}
+.stage__dark .kick{color:var(--g)}
+.stage__dark h2{color:#fff}
+.stage__dark h2 em{color:var(--g)}
+.stage__dark p{color:#B7B4AD;max-width:520px;margin:0 auto 22px}
+.note{margin-top:28px;font-size:14px;color:var(--soft);text-align:center}
+.note b{color:var(--ink)}
+
+/* ---- cursor layer ---- */
+#cursorLayer{position:fixed;inset:0;pointer-events:none;z-index:9999}
+.cur{position:fixed;top:0;left:0;pointer-events:none;will-change:transform}
+.mk-particle{position:fixed;pointer-events:none;z-index:9998;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  background:radial-gradient(circle at 35% 30%,#fff,#EBD9A6)}
+.lotus{position:fixed;pointer-events:none;z-index:9998;color:var(--gd);font-size:16px}
+</style>
+</head>
+<body class="fx-on">
+
+<div class="topbar">
+  <h1>Cursor Effects <span>Lab</span></h1>
+  <p>Move your mouse inside the stage. Hover the buttons, links &amp; cards to feel each effect.</p>
+  <div class="now">Active: <b id="nowName">1 · Dot &amp; Ring</b></div>
+</div>
+
+<div class="wrap">
+
+  <!-- options -->
+  <div class="opts" id="opts"></div>
+
+  <div class="bar">
+    <button class="btn-off" id="offBtn">Turn off (normal cursor)</button>
+    <span class="hint">Tip: try effects 3 &amp; 4 over the dark panel below.</span>
+  </div>
+
+  <!-- preview stage -->
+  <div class="stage" id="stage">
+    <div class="stage__light">
+      <p class="kick">Live Preview</p>
+      <h2>Snack like the <em>sun's</em> out.</h2>
+      <p class="lead">Hover everything here — buttons, links and product cards all react to the cursor effect you pick.</p>
+      <div class="cta">
+        <button class="b b--p magnetic" data-cursor="Shop">Shop foxnuts</button>
+        <button class="b b--g magnetic" data-cursor="View">Our story</button>
+      </div>
+      <div class="links">
+        <a href="#" data-cursor="Open">Peri Peri</a>
+        <a href="#" data-cursor="Open">Chatpata Pudina</a>
+        <a href="#" data-cursor="Open">Raw Makhana</a>
+      </div>
+
+      <div class="cards">
+        <div class="pcard" data-cursor="Shop">
+          <div class="pcard__art">PERI PERI</div>
+          <h3>Peri Peri Punch</h3>
+          <div class="price">₹199</div>
+          <button class="add magnetic" data-cursor="Add">Add to cart</button>
+        </div>
+        <div class="pcard" data-cursor="Shop">
+          <div class="pcard__art">PUDINA</div>
+          <h3>Chatpata Pudina</h3>
+          <div class="price">₹199</div>
+          <button class="add magnetic" data-cursor="Add">Add to cart</button>
+        </div>
+        <div class="pcard" data-cursor="Shop">
+          <div class="pcard__art">RAW</div>
+          <h3>Raw Phool Makhana</h3>
+          <div class="price">₹249</div>
+          <button class="add magnetic" data-cursor="Add">Add to cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage__dark">
+      <p class="kick">Dark panel</p>
+      <h2>Best on dark: <em>Glow</em> &amp; <em>Invert</em></h2>
+      <p>Effects like the golden spotlight and the invert-blend circle look their best over a dark section like this one.</p>
+      <button class="b b--p magnetic" data-cursor="Shop">Get the combo</button>
+    </div>
+  </div>
+
+  <p class="note">Found your favourite? <b>Just tell me the number (1–10)</b> and I'll add it to the main The&nbsp;Makhana site. 🪷</p>
+</div>
+
+<div id="cursorLayer"></div>
+
+<script>
+(function(){
+  "use strict";
+  const layer = document.getElementById('cursorLayer');
+  const HOVER_SEL = 'a,button,.magnetic,[data-cursor],.pcard';
+  const mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+  const prev = { x: mouse.x, y: mouse.y };
+  const state = { hover:false, label:'' };
+  const lerp = (a,b,t)=>a+(b-a)*t;
+
+  window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+  document.addEventListener('mouseover', e=>{
+    const t = e.target.closest ? e.target.closest(HOVER_SEL) : null;
+    state.hover = !!t;
+    state.label = (t && t.getAttribute('data-cursor')) || '';
+  });
+
+  function mk(cls, css){ const d=document.createElement('div'); d.className='cur '+(cls||''); if(css) d.style.cssText+=css; layer.appendChild(d); return d; }
+
+  /* ============ EFFECTS ============ */
+  const EFFECTS = {};
+
+  // 1 — Dot & Ring
+  EFFECTS.dotring = function(){
+    const dot = mk('', 'width:8px;height:8px;border-radius:50%;background:var(--g)');
+    const ring = mk('', 'width:40px;height:40px;border:2px solid var(--g);border-radius:50%;transition:width .2s,height .2s,background .2s,border-color .2s');
+    let rx=mouse.x, ry=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      rx=lerp(rx,mouse.x,.2); ry=lerp(ry,mouse.y,.2);
+      dot.style.transform = `translate(${mouse.x-4}px,${mouse.y-4}px)`;
+      const s = state.hover ? 64 : 40;
+      ring.style.width=s+'px'; ring.style.height=s+'px';
+      ring.style.background = state.hover ? 'rgba(245,197,24,.16)' : 'transparent';
+      ring.style.transform = `translate(${rx - s/2}px,${ry - s/2}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); ring.remove(); };
+  };
+
+  // 2 — Trailing Dots
+  EFFECTS.trail = function(){
+    const N=16, dots=[], pos=[];
+    for(let i=0;i<N;i++){ const sz=Math.max(4,14-i*0.6);
+      dots.push(mk('', `width:${sz}px;height:${sz}px;border-radius:50%;background:var(--g);opacity:${1-i/N}`));
+      pos.push({x:mouse.x,y:mouse.y}); }
+    let run=true, raf;
+    (function loop(){
+      if(!run) return;
+      let lx=mouse.x, ly=mouse.y;
+      for(let i=0;i<N;i++){ pos[i].x=lerp(pos[i].x,lx,.35); pos[i].y=lerp(pos[i].y,ly,.35);
+        const sz=Math.max(4,14-i*0.6);
+        dots[i].style.transform=`translate(${pos[i].x-sz/2}px,${pos[i].y-sz/2}px)`;
+        lx=pos[i].x; ly=pos[i].y; }
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); dots.forEach(d=>d.remove()); };
+  };
+
+  // 3 — Glow Spotlight
+  EFFECTS.glow = function(){
+    const g = mk('', 'width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,24,.45),rgba(245,197,24,.12) 45%,transparent 70%);mix-blend-mode:normal;filter:blur(6px)');
+    const dot = mk('', 'width:10px;height:10px;border-radius:50%;background:var(--g)');
+    let gx=mouse.x, gy=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      gx=lerp(gx,mouse.x,.12); gy=lerp(gy,mouse.y,.12);
+      g.style.transform=`translate(${gx-170}px,${gy-170}px)`;
+      dot.style.transform=`translate(${mouse.x-5}px,${mouse.y-5}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); g.remove(); dot.remove(); };
+  };
+
+  // 4 — Invert Blend
+  EFFECTS.blend = function(){
+    const c = mk('', 'width:42px;height:42px;border-radius:50%;background:#fff;mix-blend-mode:difference;transition:width .2s,height .2s');
+    let cx=mouse.x, cy=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      cx=lerp(cx,mouse.x,.22); cy=lerp(cy,mouse.y,.22);
+      const s = state.hover ? 80 : 42;
+      c.style.width=s+'px'; c.style.height=s+'px';
+      c.style.transform=`translate(${cx-s/2}px,${cy-s/2}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); c.remove(); };
+  };
+
+  // 5 — Magnetic Pull
+  EFFECTS.magnetic = function(){
+    const ring = mk('', 'width:46px;height:46px;border:2px solid var(--g);border-radius:50%;transition:width .2s,height .2s,background .2s');
+    let rx=mouse.x, ry=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      rx=lerp(rx,mouse.x,.25); ry=lerp(ry,mouse.y,.25);
+      const s = state.hover ? 66 : 46;
+      ring.style.width=s+'px'; ring.style.height=s+'px';
+      ring.style.background = state.hover ? 'rgba(245,197,24,.15)' : 'transparent';
+      ring.style.transform=`translate(${rx-s/2}px,${ry-s/2}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    const mags = Array.from(document.querySelectorAll('.magnetic'));
+    const movers = mags.map(elm=>{
+      function move(e){ const r=elm.getBoundingClientRect();
+        const dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
+        elm.style.transition='transform .15s ease';
+        elm.style.transform=`translate(${dx*0.32}px,${dy*0.4}px)`; }
+      function leave(){ elm.style.transform='translate(0,0)'; }
+      elm.addEventListener('mousemove',move); elm.addEventListener('mouseleave',leave);
+      return {elm,move,leave};
+    });
+    return ()=>{ run=false; cancelAnimationFrame(raf); ring.remove();
+      movers.forEach(m=>{ m.elm.removeEventListener('mousemove',m.move); m.elm.removeEventListener('mouseleave',m.leave); m.elm.style.transform=''; m.elm.style.transition=''; }); };
+  };
+
+  // 6 — Makhana Trail (foxnut puffs)
+  EFFECTS.makhana = function(){
+    const dot = mk('', 'width:9px;height:9px;border-radius:50%;background:var(--gd)');
+    let run=true, raf, last={x:mouse.x,y:mouse.y};
+    const nodes = new Set();
+    function spawn(){
+      const p=document.createElement('div'); p.className='mk-particle';
+      const sz=8+Math.random()*10;
+      p.style.cssText=`width:${sz}px;height:${sz}px;left:${mouse.x-sz/2}px;top:${mouse.y-sz/2}px`;
+      document.body.appendChild(p); nodes.add(p);
+      const dx=(Math.random()-0.5)*40, dy=30+Math.random()*40;
+      const anim=p.animate([{transform:'translate(0,0) rotate(0)',opacity:1},
+        {transform:`translate(${dx}px,${dy}px) rotate(${(Math.random()-0.5)*120}deg)`,opacity:0}],
+        {duration:900+Math.random()*500,easing:'cubic-bezier(.3,.7,.3,1)'});
+      anim.onfinish=()=>{ p.remove(); nodes.delete(p); };
+    }
+    (function loop(){
+      if(!run) return;
+      dot.style.transform=`translate(${mouse.x-4.5}px,${mouse.y-4.5}px)`;
+      const d=Math.hypot(mouse.x-last.x,mouse.y-last.y);
+      if(d>14){ spawn(); last={x:mouse.x,y:mouse.y}; }
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); nodes.forEach(n=>n.remove()); nodes.clear(); };
+  };
+
+  // 7 — Click Ripple
+  EFFECTS.ripple = function(){
+    const dot = mk('', 'width:12px;height:12px;border-radius:50%;background:var(--g)');
+    let run=true, raf;
+    (function loop(){ if(!run) return; dot.style.transform=`translate(${mouse.x-6}px,${mouse.y-6}px)`; raf=requestAnimationFrame(loop); })();
+    function click(e){
+      const r=document.createElement('div'); r.className='cur';
+      r.style.cssText=`left:0;top:0;width:14px;height:14px;border:2px solid var(--g);border-radius:50%;transform:translate(${e.clientX-7}px,${e.clientY-7}px)`;
+      layer.appendChild(r);
+      const a=r.animate([{width:'14px',height:'14px',opacity:.9,transform:`translate(${e.clientX-7}px,${e.clientY-7}px)`},
+        {width:'120px',height:'120px',opacity:0,transform:`translate(${e.clientX-60}px,${e.clientY-60}px)`}],
+        {duration:600,easing:'ease-out'});
+      a.onfinish=()=>r.remove();
+    }
+    window.addEventListener('click',click);
+    return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); window.removeEventListener('click',click); };
+  };
+
+  // 8 — Label Cursor
+  EFFECTS.label = function(){
+    const pill = mk('', 'min-width:36px;height:36px;border-radius:50px;background:var(--g);color:var(--black);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:0 6px;transition:min-width .2s,padding .2s;white-space:nowrap');
+    let cx=mouse.x, cy=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      cx=lerp(cx,mouse.x,.2); cy=lerp(cy,mouse.y,.2);
+      if(state.label){ pill.textContent=state.label; pill.style.padding='0 16px'; }
+      else { pill.textContent=''; pill.style.padding='0'; pill.style.minWidth='16px'; }
+      const w=pill.offsetWidth||36;
+      pill.style.transform=`translate(${cx-w/2}px,${cy-18}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); pill.remove(); };
+  };
+
+  // 9 — Crosshair
+  EFFECTS.crosshair = function(){
+    const v = mk('', 'width:1px;height:100vh;top:0;left:0;background:linear-gradient(var(--g),var(--g));opacity:.55');
+    const h = mk('', 'width:100vw;height:1px;top:0;left:0;background:linear-gradient(90deg,var(--g),var(--g));opacity:.55');
+    const dot = mk('', 'width:10px;height:10px;border:2px solid var(--g);border-radius:50%');
+    let run=true, raf;
+    (function loop(){
+      if(!run) return;
+      v.style.transform=`translateX(${mouse.x}px)`;
+      h.style.transform=`translateY(${mouse.y}px)`;
+      dot.style.transform=`translate(${mouse.x-5}px,${mouse.y-5}px)`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); v.remove(); h.remove(); dot.remove(); };
+  };
+
+  // 10 — Elastic Blob
+  EFFECTS.blob = function(){
+    const b = mk('', 'width:36px;height:36px;border-radius:50%;background:rgba(245,197,24,.85)');
+    let bx=mouse.x, by=mouse.y, run=true, raf;
+    (function loop(){
+      if(!run) return;
+      bx=lerp(bx,mouse.x,.18); by=lerp(by,mouse.y,.18);
+      const vx=mouse.x-prev.x, vy=mouse.y-prev.y; prev.x=mouse.x; prev.y=mouse.y;
+      const speed=Math.min(Math.hypot(vx,vy),60);
+      const ang=Math.atan2(vy,vx)*180/Math.PI;
+      const stretch=1+speed/60*0.6, squash=1-speed/60*0.35;
+      b.style.transform=`translate(${bx-18}px,${by-18}px) rotate(${ang}deg) scale(${stretch},${squash})`;
+      raf=requestAnimationFrame(loop);
+    })();
+    return ()=>{ run=false; cancelAnimationFrame(raf); b.remove(); };
+  };
+
+  /* ============ CONTROLLER ============ */
+  const META = [
+    {id:'dotring',  name:'Dot & Ring',     desc:'Minimal dot + a smooth lagging ring. Grows on hover.'},
+    {id:'trail',    name:'Trailing Dots',  desc:'A comet-tail of fading golden dots.'},
+    {id:'glow',     name:'Glow Spotlight', desc:'Soft golden glow — stunning over dark areas.'},
+    {id:'blend',    name:'Invert Blend',   desc:'A circle that inverts whatever is beneath it.'},
+    {id:'magnetic', name:'Magnetic Pull',  desc:'Buttons lean toward the cursor + ring grows.'},
+    {id:'makhana',  name:'Makhana Trail',  desc:'Tiny foxnut puffs float off the cursor. On-brand!'},
+    {id:'ripple',   name:'Click Ripple',   desc:'An expanding ring ripples on every click.'},
+    {id:'label',    name:'Label Cursor',   desc:'Shows “Shop / Add / View” when hovering.'},
+    {id:'crosshair',name:'Crosshair',      desc:'Precise full-screen crosshair lines.'},
+    {id:'blob',     name:'Elastic Blob',   desc:'A jelly blob that stretches with your speed.'},
+  ];
+
+  let teardown=null, activeIdx=-1;
+  const optsEl=document.getElementById('opts');
+  const nowName=document.getElementById('nowName');
+
+  META.forEach((m,i)=>{
+    const b=document.createElement('button'); b.className='opt'; b.dataset.idx=i;
+    b.innerHTML=`<span class="opt__n">${i+1}</span><span><span class="opt__t">${m.name}</span><span class="opt__d">${m.desc}</span></span>`;
+    b.addEventListener('click',()=>activate(i));
+    optsEl.appendChild(b);
+  });
+
+  function activate(i){
+    if(teardown){ teardown(); teardown=null; }
+    document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('active', +o.dataset.idx===i));
+    document.body.classList.add('fx-on');
+    activeIdx=i;
+    teardown=EFFECTS[META[i].id]();
+    nowName.innerHTML=`${i+1} · ${META[i].name}`;
+  }
+
+  document.getElementById('offBtn').addEventListener('click',()=>{
+    if(teardown){ teardown(); teardown=null; }
+    document.body.classList.remove('fx-on');
+    document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
+    nowName.innerHTML='Off · normal cursor';
+    activeIdx=-1;
+  });
+
+  // start on effect 1
+  activate(0);
+})();
+</script>
+</body>
+</html>
