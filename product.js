@@ -1,5 +1,5 @@
 /* ===================================================================
-   THE MAKHANA — product detail page behaviour (uses window.TM)
+   THE MAKHANA - product detail page behaviour (uses window.TM)
    =================================================================== */
 (function () {
   "use strict";
@@ -14,8 +14,8 @@
   if (!p) p = TM.PRODUCTS[0];
 
   const shortName = p.name.split(" (")[0];
-  document.title = "The Makhana — " + shortName;
-  const metaDesc = shortName + " — " + p.tagline + " Premium roasted & raw makhana from Madhubani, Bihar.";
+  document.title = "The Makhana - " + shortName;
+  const metaDesc = shortName + " - " + p.tagline + " Premium roasted & raw makhana from Madhubani, Bihar.";
   const md = document.querySelector('meta[name="description"]');
   if (md) md.setAttribute("content", metaDesc);
 
@@ -53,7 +53,7 @@
 
     // Open Graph
     prop("og:type", "product");
-    prop("og:title", shortName + " — The Makhana");
+    prop("og:title", shortName + " - The Makhana");
     prop("og:description", metaDesc);
     prop("og:url", canonical);
     prop("og:site_name", "The Makhana");
@@ -63,7 +63,7 @@
 
     // Twitter
     meta("twitter:card", "summary_large_image");
-    meta("twitter:title", shortName + " — The Makhana");
+    meta("twitter:title", shortName + " - The Makhana");
     meta("twitter:description", metaDesc);
     meta("twitter:image", ogImage);
 

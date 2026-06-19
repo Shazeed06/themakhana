@@ -1,5 +1,5 @@
 /* ===================================================================
-   THE MAKHANA — Golden Yellow + Deep Black design system
+   THE MAKHANA - Golden Yellow + Deep Black design system
    Palette: Primary #F5C518 · Secondary #0D0D0D · Accent #FFFDF5
             Text Dark #1A1A1A · Text Light #6B7280 · Bg #FAFAF7
    =================================================================== */
@@ -54,7 +54,7 @@ input{font:inherit}
 em{font-style:italic}
 .tnum{font-variant-numeric:tabular-nums}
 
-/* svg stroke icon base — scoped so it never reaches decorative pouch SVGs
+/* svg stroke icon base - scoped so it never reaches decorative pouch SVGs
    (.card__pouch svg / .cart-item__art svg keep their inline fills) */
 .header svg path,.header svg circle,.header svg rect,
 .btn svg path,.trust__ic svg path,.benefit__ic svg path,.benefit__ic svg circle,
@@ -322,7 +322,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .card__details:hover svg{transform:translateX(3px)}
 
 /* ===================================================================
-   Homepage reference sections — flavour explorer · press · stats · insta
+   Homepage reference sections - flavour explorer · press · stats · insta
    =================================================================== */
 
 /* hero social proof line */
@@ -371,7 +371,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .insta__icon svg{fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .insta__tile:hover .insta__icon,.insta__tile:focus-visible .insta__icon{opacity:1}
 
-/* Responsive — reference sections */
+/* Responsive - reference sections */
 @media (max-width:900px){
   .flavours__row{grid-template-columns:repeat(3,minmax(0,1fr))}
   .insta__grid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -602,7 +602,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 
 /* ---------- Responsive ---------- */
 
-/* Global overflow guards — keep decorative/oversized elements inside the viewport
+/* Global overflow guards - keep decorative/oversized elements inside the viewport
    on every breakpoint so nothing forces a horizontal scrollbar. */
 html,body{max-width:100%;overflow-x:hidden}
 .hero,.story,.gifting,.closer,.trust,.marquee{max-width:100%}
@@ -613,7 +613,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .hero__grid{grid-template-columns:1fr;gap:30px}
   .hero__art{order:2;min-height:360px}
   .hero__copy{order:1}
-  /* Tablet (561–900px): two product columns, never cramped */
+  /* Tablet (561-900px): two product columns, never cramped */
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .journey{grid-template-columns:1fr;gap:30px}
   .journey__arrow{transform:rotate(90deg);margin:0 auto;width:50px}
@@ -630,7 +630,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .hero__watermark{font-size:34vw;right:-5%}
 }
 
-/* Touch tap-target hardening — only on coarse pointers, so desktop visuals
+/* Touch tap-target hardening - only on coarse pointers, so desktop visuals
    stay untouched. Brings interactive controls to a >=44px effective size. */
 @media (hover:none) and (pointer:coarse){
   .nav a{padding:10px 0}
@@ -655,7 +655,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .newsletter__form input{min-width:0;width:100%;flex:1 1 auto}
   .newsletter__form .btn{width:100%}
   .hero__seal{width:84px;height:84px}
-  /* Reduce oversized clamp minimums so long words don't overflow ~320–360px */
+  /* Reduce oversized clamp minimums so long words don't overflow ~320-360px */
   .hero__title{font-size:clamp(34px,9vw,84px)}
   .sec-head h2{font-size:clamp(28px,7.5vw,56px)}
   .gifting__copy h2{font-size:clamp(28px,7.5vw,52px)}

@@ -1,5 +1,5 @@
 /* ===================================================================
-   THE MAKHANA — shared catalogue (data + SVG art + cart store)
+   THE MAKHANA - shared catalogue (data + SVG art + cart store)
    Exposes window.TM, used by the product detail pages (product.html).
    =================================================================== */
 window.TM = (function () {
@@ -23,7 +23,7 @@ window.TM = (function () {
       taste:"Spicy & tangy",
       tagline:"Fiery, zingy and impossible to put down.",
       long:[
-        "From the lotus ponds of Madhubani to your snack bowl, our Peri Peri Punch starts with premium, hand-picked foxnuts that are slow-roasted in cold-pressed oil — never deep-fried.",
+        "From the lotus ponds of Madhubani to your snack bowl, our Peri Peri Punch starts with premium, hand-picked foxnuts that are slow-roasted in cold-pressed oil - never deep-fried.",
         "We then dust them in a bold peri peri blend of smoky red chilli, garlic and a squeeze of tang. The result is a guilt-free crunch with a kick that keeps you reaching back into the pack."
       ],
       ingredients:"Roasted makhana (foxnuts), peri peri seasoning (red chilli, garlic, tomato powder, salt, spices), cold-pressed sunflower oil.",
@@ -34,7 +34,7 @@ window.TM = (function () {
       tagline:"Cool mint chaat, bottled as a crunch.",
       long:[
         "Our Chatpata Pudina takes big, white foxnuts from Bihar and roasts them low-and-slow for an airy crunch.",
-        "A street-style toss of dried mint, amchur and chaat masala gives every piece that tangy pudina zing you can't stop snacking on — wholesome and addictive at once."
+        "A street-style toss of dried mint, amchur and chaat masala gives every piece that tangy pudina zing you can't stop snacking on - wholesome and addictive at once."
       ],
       ingredients:"Roasted makhana (foxnuts), mint & chaat seasoning (dried mint, amchur, black salt, cumin, spices), cold-pressed sunflower oil.",
       allergen:"May contain traces of nuts."
@@ -43,7 +43,7 @@ window.TM = (function () {
       taste:"Creamy & savoury",
       tagline:"Creamy, savoury, dangerously moreish.",
       long:[
-        "Cream & Onion is the crowd-pleaser of the range — light foxnuts roasted to a perfect crunch.",
+        "Cream & Onion is the crowd-pleaser of the range - light foxnuts roasted to a perfect crunch.",
         "Dusted in a creamy onion-and-herb seasoning, it's the comforting, savoury snack that disappears fastest at every gathering."
       ],
       ingredients:"Roasted makhana (foxnuts), cream & onion seasoning (onion powder, milk solids, herbs, salt, spices), cold-pressed sunflower oil.",
@@ -54,7 +54,7 @@ window.TM = (function () {
       tagline:"The classic. Perfectly seasoned crunch.",
       long:[
         "Some things never go out of style. Salt & Pepper keeps it simple with premium roasted foxnuts.",
-        "A balance of sea salt and freshly cracked black pepper lets the natural, nutty taste of the makhana shine through — a timeless, all-occasion snack."
+        "A balance of sea salt and freshly cracked black pepper lets the natural, nutty taste of the makhana shine through - a timeless, all-occasion snack."
       ],
       ingredients:"Roasted makhana (foxnuts), sea salt, cracked black pepper, cold-pressed sunflower oil.",
       allergen:"May contain traces of nuts."
@@ -64,7 +64,7 @@ window.TM = (function () {
       tagline:"Clean and light, with Himalayan pink salt.",
       long:[
         "For the purists. Himalayan Pink Salt makhana is roasted, never fried, and seasoned with just a whisper of mineral-rich pink salt.",
-        "Clean, light and barely-there salty — the kind of snack you feel genuinely good about, any time of day."
+        "Clean, light and barely-there salty - the kind of snack you feel genuinely good about, any time of day."
       ],
       ingredients:"Roasted makhana (foxnuts), Himalayan pink salt, cold-pressed sunflower oil.",
       allergen:"May contain traces of nuts."
@@ -73,7 +73,7 @@ window.TM = (function () {
       taste:"Mild & natural",
       tagline:"Just makhana, just right.",
       long:[
-        "Our Classic Lightly Salted is makhana in its most honest form — premium foxnuts, slow-roasted to a satisfying crunch.",
+        "Our Classic Lightly Salted is makhana in its most honest form - premium foxnuts, slow-roasted to a satisfying crunch.",
         "A gentle pinch of salt is all it needs. Perfect for kids, elders and anyone who loves a clean, subtle, everyday snack."
       ],
       ingredients:"Roasted makhana (foxnuts), a pinch of salt, cold-pressed sunflower oil.",
@@ -81,9 +81,9 @@ window.TM = (function () {
     },
     raw: {
       taste:"Plain (raw)",
-      tagline:"Premium handpicked foxnuts — big, white pops.",
+      tagline:"Premium handpicked foxnuts - big, white pops.",
       long:[
-        "Raw Phool Makhana is the hero ingredient itself — large, hand-graded foxnuts sourced directly from farmer families in Madhubani, Bihar.",
+        "Raw Phool Makhana is the hero ingredient itself - large, hand-graded foxnuts sourced directly from farmer families in Madhubani, Bihar.",
         "Roast them at home in a little ghee or olive oil, add them to kheer and curries, or pop them into a trail mix. Single ingredient, endless possibilities."
       ],
       ingredients:"100% raw makhana (phool makhana). Nothing else.",
@@ -93,7 +93,7 @@ window.TM = (function () {
       taste:"5 flavours",
       tagline:"All five signature flavours in one gift-ready box.",
       long:[
-        "Can't decide? The Variety Combo packs all five of our signature roasted flavours — Peri Peri, Chatpata Pudina, Cream & Onion, Salt & Pepper and Himalayan Pink Salt — into one beautiful box.",
+        "Can't decide? The Variety Combo packs all five of our signature roasted flavours - Peri Peri, Chatpata Pudina, Cream & Onion, Salt & Pepper and Himalayan Pink Salt - into one beautiful box.",
         "Sealed fresh from Madhubani, it's the perfect way to discover your favourite, or to gift wholesome snacking to someone you love."
       ],
       ingredients:"5 packs of roasted makhana in assorted flavours (see individual flavours for seasoning details).",
@@ -152,7 +152,7 @@ window.TM = (function () {
 
   function benefits() {
     return [
-      { ic: "protein", title: "High in plant protein", text: "A handful keeps you full and fuelled — a smart swap for fried snacks." },
+      { ic: "protein", title: "High in plant protein", text: "A handful keeps you full and fuelled - a smart swap for fried snacks." },
       { ic: "feather", title: "Light & low-calorie", text: "Roasted, never deep-fried, so you get all the crunch with none of the guilt." },
       { ic: "spark", title: "Rich in antioxidants", text: "Foxnuts are naturally loaded with antioxidants and essential minerals." },
       { ic: "heart", title: "Heart & bone friendly", text: "Low in sodium and fat, with calcium and magnesium for stronger bones." }
@@ -161,7 +161,7 @@ window.TM = (function () {
 
   function howto() {
     return [
-      { t: "Straight from the pack", d: "The perfect anytime snack — at your desk, in the gym bag or on the go." },
+      { t: "Straight from the pack", d: "The perfect anytime snack - at your desk, in the gym bag or on the go." },
       { t: "With your chai or coffee", d: "Swap the biscuits. A crunchy, wholesome companion for your evening cup." },
       { t: "Toss into salads & bowls", d: "Add a protein-rich crunch to salads, poha, trail mix and chaat." },
       { t: "Cook it up", d: "Drop into kheer, curries and raita, or roast with ghee for a quick treat." }
@@ -181,18 +181,18 @@ window.TM = (function () {
 
   function faqs(p) {
     const base = [
-      { q: "Is makhana actually healthy?", a: "Yes! Foxnuts (makhana) are naturally high in protein and fibre, low in fat, gluten-free and rich in antioxidants and minerals like calcium and magnesium — one of the smartest snacks you can keep around." },
-      { q: "How many calories are in a pack?", a: "Our roasted flavours are roughly 385 kcal per 100g, and an " + p.weight + " pack is light and airy — a typical handful is well under 100 calories. Raw makhana is even lighter at ~347 kcal/100g." },
+      { q: "Is makhana actually healthy?", a: "Yes! Foxnuts (makhana) are naturally high in protein and fibre, low in fat, gluten-free and rich in antioxidants and minerals like calcium and magnesium - one of the smartest snacks you can keep around." },
+      { q: "How many calories are in a pack?", a: "Our roasted flavours are roughly 385 kcal per 100g, and an " + p.weight + " pack is light and airy - a typical handful is well under 100 calories. Raw makhana is even lighter at ~347 kcal/100g." },
       { q: "Is it good for weight loss?", a: "Makhana is filling, high in protein and roasted (never fried), which makes it a great swap for chips and biscuits when you're watching your intake." },
       { q: "How should I store it?", a: "Keep it in a cool, dry place away from sunlight and reseal the pack after opening to keep every piece crunchy." },
-      { q: "Who can eat The Makhana?", a: "Everyone — kids, elders, gym-goers and anyone who loves a clean snack. It's 100% vegetarian and gluten-free." }
+      { q: "Who can eat The Makhana?", a: "Everyone - kids, elders, gym-goers and anyone who loves a clean snack. It's 100% vegetarian and gluten-free." }
     ];
     if (p.category === "raw")
-      base.push({ q: "How do I roast raw makhana?", a: "Heat a little ghee or olive oil in a pan, add the makhana and roast on low heat for 5–7 minutes, stirring, until crisp. Season to taste and enjoy." });
+      base.push({ q: "How do I roast raw makhana?", a: "Heat a little ghee or olive oil in a pan, add the makhana and roast on low heat for 5-7 minutes, stirring, until crisp. Season to taste and enjoy." });
     else if (p.category === "combo")
-      base.push({ q: "Which flavours are in the box?", a: "Peri Peri Punch, Chatpata Pudina, Cream & Onion, Salt & Pepper and Himalayan Pink Salt — one pack of each." });
+      base.push({ q: "Which flavours are in the box?", a: "Peri Peri Punch, Chatpata Pudina, Cream & Onion, Salt & Pepper and Himalayan Pink Salt - one pack of each." });
     else
-      base.push({ q: "Is this flavour very spicy?", a: p.id === "peri" ? "It has a bold, smoky kick — flavourful and zingy, but balanced enough to keep snacking." : "Not at all — it's a balanced, everyday flavour the whole family can enjoy." });
+      base.push({ q: "Is this flavour very spicy?", a: p.id === "peri" ? "It has a bold, smoky kick - flavourful and zingy, but balanced enough to keep snacking." : "Not at all - it's a balanced, everyday flavour the whole family can enjoy." });
     return base;
   }
 
@@ -301,7 +301,7 @@ window.TM = (function () {
     return svg;
   }
 
-  /* A bowl of foxnuts — used as a second gallery angle */
+  /* A bowl of foxnuts - used as a second gallery angle */
   function bowlSVG(p) {
     const acc = p.acc, roasted = p.category === "roasted";
     const pile = [

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Makhana — Cursor Effects Lab (pick one)</title>
+<title>The Makhana - Cursor Effects Lab (pick one)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
@@ -110,7 +110,7 @@ a{color:inherit}
     <div class="stage__light">
       <p class="kick">Live Preview</p>
       <h2>Snack like the <em>sun's</em> out.</h2>
-      <p class="lead">Hover everything here — buttons, links and product cards all react to the cursor effect you pick.</p>
+      <p class="lead">Hover everything here - buttons, links and product cards all react to the cursor effect you pick.</p>
       <div class="cta">
         <button class="b b--p magnetic" data-cursor="Shop">Shop foxnuts</button>
         <button class="b b--g magnetic" data-cursor="View">Our story</button>
@@ -151,7 +151,7 @@ a{color:inherit}
     </div>
   </div>
 
-  <p class="note">Found your favourite? <b>Just tell me the number (1–10)</b> and I'll add it to the main The&nbsp;Makhana site. 🪷</p>
+  <p class="note">Found your favourite? <b>Just tell me the number (1-10)</b> and I'll add it to the main The&nbsp;Makhana site. 🪷</p>
 </div>
 
 <div id="cursorLayer"></div>
@@ -178,7 +178,7 @@ a{color:inherit}
   /* ============ EFFECTS ============ */
   const EFFECTS = {};
 
-  // 1 — Dot & Ring
+  // 1 - Dot & Ring
   EFFECTS.dotring = function(){
     const dot = mk('', 'width:8px;height:8px;border-radius:50%;background:var(--g)');
     const ring = mk('', 'width:40px;height:40px;border:2px solid var(--g);border-radius:50%;transition:width .2s,height .2s,background .2s,border-color .2s');
@@ -196,7 +196,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); ring.remove(); };
   };
 
-  // 2 — Trailing Dots
+  // 2 - Trailing Dots
   EFFECTS.trail = function(){
     const N=16, dots=[], pos=[];
     for(let i=0;i<N;i++){ const sz=Math.max(4,14-i*0.6);
@@ -215,7 +215,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); dots.forEach(d=>d.remove()); };
   };
 
-  // 3 — Glow Spotlight
+  // 3 - Glow Spotlight
   EFFECTS.glow = function(){
     const g = mk('', 'width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,197,24,.45),rgba(245,197,24,.12) 45%,transparent 70%);mix-blend-mode:normal;filter:blur(6px)');
     const dot = mk('', 'width:10px;height:10px;border-radius:50%;background:var(--g)');
@@ -230,7 +230,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); g.remove(); dot.remove(); };
   };
 
-  // 4 — Invert Blend
+  // 4 - Invert Blend
   EFFECTS.blend = function(){
     const c = mk('', 'width:42px;height:42px;border-radius:50%;background:#fff;mix-blend-mode:difference;transition:width .2s,height .2s');
     let cx=mouse.x, cy=mouse.y, run=true, raf;
@@ -245,7 +245,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); c.remove(); };
   };
 
-  // 5 — Magnetic Pull
+  // 5 - Magnetic Pull
   EFFECTS.magnetic = function(){
     const ring = mk('', 'width:46px;height:46px;border:2px solid var(--g);border-radius:50%;transition:width .2s,height .2s,background .2s');
     let rx=mouse.x, ry=mouse.y, run=true, raf;
@@ -272,7 +272,7 @@ a{color:inherit}
       movers.forEach(m=>{ m.elm.removeEventListener('mousemove',m.move); m.elm.removeEventListener('mouseleave',m.leave); m.elm.style.transform=''; m.elm.style.transition=''; }); };
   };
 
-  // 6 — Makhana Trail (foxnut puffs)
+  // 6 - Makhana Trail (foxnut puffs)
   EFFECTS.makhana = function(){
     const dot = mk('', 'width:9px;height:9px;border-radius:50%;background:var(--gd)');
     let run=true, raf, last={x:mouse.x,y:mouse.y};
@@ -298,7 +298,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); nodes.forEach(n=>n.remove()); nodes.clear(); };
   };
 
-  // 7 — Click Ripple
+  // 7 - Click Ripple
   EFFECTS.ripple = function(){
     const dot = mk('', 'width:12px;height:12px;border-radius:50%;background:var(--g)');
     let run=true, raf;
@@ -316,7 +316,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); dot.remove(); window.removeEventListener('click',click); };
   };
 
-  // 8 — Label Cursor
+  // 8 - Label Cursor
   EFFECTS.label = function(){
     const pill = mk('', 'min-width:36px;height:36px;border-radius:50px;background:var(--g);color:var(--black);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:0 6px;transition:min-width .2s,padding .2s;white-space:nowrap');
     let cx=mouse.x, cy=mouse.y, run=true, raf;
@@ -332,7 +332,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); pill.remove(); };
   };
 
-  // 9 — Crosshair
+  // 9 - Crosshair
   EFFECTS.crosshair = function(){
     const v = mk('', 'width:1px;height:100vh;top:0;left:0;background:linear-gradient(var(--g),var(--g));opacity:.55');
     const h = mk('', 'width:100vw;height:1px;top:0;left:0;background:linear-gradient(90deg,var(--g),var(--g));opacity:.55');
@@ -348,7 +348,7 @@ a{color:inherit}
     return ()=>{ run=false; cancelAnimationFrame(raf); v.remove(); h.remove(); dot.remove(); };
   };
 
-  // 10 — Elastic Blob
+  // 10 - Elastic Blob
   EFFECTS.blob = function(){
     const b = mk('', 'width:36px;height:36px;border-radius:50%;background:rgba(245,197,24,.85)');
     let bx=mouse.x, by=mouse.y, run=true, raf;
@@ -369,7 +369,7 @@ a{color:inherit}
   const META = [
     {id:'dotring',  name:'Dot & Ring',     desc:'Minimal dot + a smooth lagging ring. Grows on hover.'},
     {id:'trail',    name:'Trailing Dots',  desc:'A comet-tail of fading golden dots.'},
-    {id:'glow',     name:'Glow Spotlight', desc:'Soft golden glow — stunning over dark areas.'},
+    {id:'glow',     name:'Glow Spotlight', desc:'Soft golden glow - stunning over dark areas.'},
     {id:'blend',    name:'Invert Blend',   desc:'A circle that inverts whatever is beneath it.'},
     {id:'magnetic', name:'Magnetic Pull',  desc:'Buttons lean toward the cursor + ring grows.'},
     {id:'makhana',  name:'Makhana Trail',  desc:'Tiny foxnut puffs float off the cursor. On-brand!'},

@@ -1,5 +1,5 @@
 /* ===================================================================
-   THE MAKHANA — store logic, SVG pouches, cart, UI
+   THE MAKHANA - store logic, SVG pouches, cart, UI
    =================================================================== */
 (function () {
   "use strict";
@@ -17,7 +17,7 @@
   ];
 
   const REVIEWS = [
-    { quote:"“The peri peri is dangerously good. My 4pm slump never stood a chance — I'm on my third pack this month.”", name:"Ananya Sharma", city:"Mumbai" },
+    { quote:"“The peri peri is dangerously good. My 4pm slump never stood a chance - I'm on my third pack this month.”", name:"Ananya Sharma", city:"Mumbai" },
     { quote:"“Finally a snack I feel good giving my kids. Light, crunchy and not a drop of oil. The pudina is unreal.”", name:"Rohan Mehta", city:"Bengaluru" },
     { quote:"“Sent the combo box as a Diwali gift and got three calls asking where I bought it. Premium all the way.”", name:"Kavya Iyer", city:"Delhi" }
   ];
@@ -72,7 +72,7 @@
       ? 'role="presentation" aria-hidden="true"'
       : 'role="img" aria-label="' + escapeXML(p.name + " makhana pouch") + '"';
 
-    // makhana puffs — irregular off-round foxnut blobs with a crease/dimple + rim highlight
+    // makhana puffs - irregular off-round foxnut blobs with a crease/dimple + rim highlight
     const puffs = [
       [98, 252, 14, -8], [128, 246, 16, 5], [156, 256, 13, 12],
       [112, 270, 12, 18], [142, 268, 11, -10]
@@ -197,7 +197,7 @@
     const sash = isCombo ? '<span class="card__sash">Best value</span>' : "";
     const meta = isCombo ? "5 packs &middot; gifting box" : (p.category === "raw" ? "Raw" : "Roasted");
     const pitch = isFeature
-      ? '<p class="card__pitch">' + ICON.star + '<span>Our #1 seller &mdash; most loved this month</span></p>'
+      ? '<p class="card__pitch">' + ICON.star + '<span>Our #1 seller - most loved this month</span></p>'
       : "";
     const cls = "card reveal" + (isCombo ? " card--combo" : "") + (isFeature ? " card--feature" : "");
 
@@ -569,7 +569,7 @@
     if (!ok) { input.classList.add("invalid"); input.focus(); toast("Please enter a valid email"); return; }
     input.classList.remove("invalid");
     input.value = "";
-    toast("You're in — check your inbox.");
+    toast("You're in - check your inbox.");
   });
   $("#newsEmail").addEventListener("input", () => $("#newsEmail").classList.remove("invalid"));
 
