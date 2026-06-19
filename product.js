@@ -128,20 +128,25 @@
 
   /* ---------- gallery ---------- */
   const stage = $("#galleryStage"), thumbs = $("#galleryThumbs");
-  const views = [
-    { label: "Pack", svg: pouchSVG(p), rot: 0 },
-    { label: "In the bowl", svg: bowlSVG(p), rot: 0 },
-    { label: "Angle", svg: pouchSVG(p), rot: -7 }
-  ];
+  const views = p.image
+    ? [
+        { label: "Pack", html: '<img src="' + p.image + '" alt="' + escapeXML(p.name) + '" loading="eager" />', rot: 0 },
+        { label: "In the bowl", html: bowlSVG(p), rot: 0 }
+      ]
+    : [
+        { label: "Pack", html: pouchSVG(p), rot: 0 },
+        { label: "In the bowl", html: bowlSVG(p), rot: 0 },
+        { label: "Angle", html: pouchSVG(p), rot: -7 }
+      ];
   const ribbonBadge = p.ribbon ? '<span class="gallery__badge">' + p.ribbon + '</span>' : "";
   function showView(i) {
-    stage.innerHTML = ribbonBadge + views[i].svg;
-    const g = stage.querySelector("svg");
+    stage.innerHTML = ribbonBadge + views[i].html;
+    const g = stage.querySelector("svg, img");
     if (g && views[i].rot) g.style.transform = "rotate(" + views[i].rot + "deg)";
     $$(".thumb", thumbs).forEach((t, j) => t.classList.toggle("active", j === i));
   }
   thumbs.innerHTML = views.map((v, i) =>
-    '<button class="thumb" aria-label="View ' + v.label + '" data-view="' + i + '">' + v.svg + '</button>'
+    '<button class="thumb" aria-label="View ' + v.label + '" data-view="' + i + '">' + v.html + '</button>'
   ).join("");
   thumbs.addEventListener("click", (e) => { const t = e.target.closest("[data-view]"); if (t) showView(+t.dataset.view); });
   showView(0);

@@ -33,6 +33,7 @@
 .gallery__stage::after{content:"";position:absolute;width:75%;height:75%;border-radius:50%;
   background:radial-gradient(circle,rgba(245,197,24,.18),transparent 65%);z-index:0}
 .gallery__stage svg{position:relative;z-index:1;max-height:380px;width:auto;filter:drop-shadow(0 22px 26px rgba(20,20,20,.18))}
+.gallery__stage img{position:relative;z-index:1;max-height:450px;width:auto;border-radius:12px;filter:drop-shadow(0 22px 26px rgba(20,20,20,.18))}
 .gallery__badge{position:absolute;top:16px;left:16px;z-index:2;background:var(--primary);color:var(--secondary);
   font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;border-radius:50px}
 .gallery__thumbs{display:flex;gap:12px;margin-top:14px}
@@ -41,6 +42,7 @@
 .thumb:hover{transform:translateY(-2px)}
 .thumb.active{border-color:var(--primary);box-shadow:0 0 0 2px var(--honey-tint)}
 .thumb svg{max-height:62px;width:auto}
+.thumb img{max-height:74px;width:auto;border-radius:4px}
 
 .pdp__cat{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--primary-text);margin-bottom:10px}
 .pdp__title{font-size:clamp(30px,4vw,46px);line-height:1.05;margin-bottom:12px}
@@ -180,10 +182,12 @@
 @media (max-width:560px){
   .gallery__stage{min-height:300px;padding:20px;border-radius:20px}
   .gallery__stage svg{max-height:300px}
+.gallery__stage img{max-height:340px}
   /* thumbs scale down + may scroll horizontally rather than wrap awkwardly */
   .gallery__thumbs{gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
   .thumb{width:72px;height:72px;flex:0 0 auto}
   .thumb svg{max-height:54px}
+.thumb img{max-height:60px}
 
   /* variant chips stay tappable (>=44px) and fill the row neatly */
   .variants{gap:8px}
