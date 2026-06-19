@@ -7,7 +7,7 @@ window.TM = (function () {
 
   /* ---------- Base products (mirrors the homepage) ---------- */
   const PRODUCTS = [
-    { id:"peri",    name:"Peri Peri Punch",        price:199, mrp:249, category:"roasted", acc:"#C0492F", weight:"80g",  note:"spicy, zingy, addictive",       ribbon:"BESTSELLER", ribbonType:"bestseller", rating:4.8, reviews:124, cat:"chilli", images:["peri.jpg","peri-2.jpg","peri-3.jpg"] },
+    { id:"peri",    name:"Peri Peri Punch",        price:199, mrp:249, category:"roasted", acc:"#C0492F", weight:"80g",  note:"spicy, zingy, addictive",       ribbon:"BESTSELLER", ribbonType:"bestseller", rating:4.8, reviews:124, cat:"chilli", images:["images/peri.jpg","images/peri-2.jpg","images/peri-3.jpg"] },
     { id:"pudina",  name:"Chatpata Pudina",        price:199, mrp:249, category:"roasted", acc:"#4F7A52", weight:"80g",  note:"tangy mint chaat hit",          ribbon:"NEW",        ribbonType:"new",        rating:4.7, reviews:98,  cat:"mint" },
     { id:"cream",   name:"Cream & Onion",          price:199, mrp:249, category:"roasted", acc:"#8A6BB0", weight:"80g",  note:"creamy, savoury, moreish",      ribbon:"",           ribbonType:"",           rating:4.7, reviews:86,  cat:"onion" },
     { id:"salt",    name:"Salt & Pepper",          price:179, mrp:229, category:"roasted", acc:"#4A5A66", weight:"80g",  note:"classic, perfectly seasoned",   ribbon:"",           ribbonType:"",           rating:4.6, reviews:72,  cat:"pepper" },

@@ -629,7 +629,7 @@
   $$(".mobile-nav__links a").forEach((a) => a.addEventListener("click", closeMenu));
 
   /* hero pouch */
-  $("#heroPouch").innerHTML = '<img src="peri.jpg" alt="The Makhana Peri Peri Punch pack" />';
+  $("#heroPouch").innerHTML = '<img src="images/peri.jpg" alt="The Makhana Peri Peri Punch pack" />';
 
   /* ---------- Init ---------- */
   renderProducts("all");
