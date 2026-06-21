@@ -59,108 +59,71 @@
 
   /* ---------- THE POUCH (reusable parameterised SVG) ---------- */
   const _pouchCache = {};
+  // Renders a paper-canister (tin) illustration for a product, parameterised by accent colour.
   function pouchSVG(p, opts) {
     opts = opts || {};
-    // Memoise the (heavy) labelled pouch markup per product id.
     if (!opts.decorative && _pouchCache[p.id]) return _pouchCache[p.id];
     const id = p.id;
     const acc = p.acc;
     const flav = p.name.split(" (")[0].toUpperCase();
-    const ribbonName = flav.length > 16 ? p.id.toUpperCase() : flav;
-    // Decorative variant (cart line items) is hidden from SR: the row text already names the product.
+    const ribbonName = flav.length > 15 ? p.id.toUpperCase() : flav;
     const a11y = opts.decorative
       ? 'role="presentation" aria-hidden="true"'
-      : 'role="img" aria-label="' + escapeXML(p.name + " makhana pouch") + '"';
+      : 'role="img" aria-label="' + escapeXML(p.name + " makhana canister") + '"';
 
-    // makhana puffs - irregular off-round foxnut blobs with a crease/dimple + rim highlight
-    const puffs = [
-      [98, 252, 14, -8], [128, 246, 16, 5], [156, 256, 13, 12],
-      [112, 270, 12, 18], [142, 268, 11, -10]
-    ].map((m, i) => {
-      const [cx, cy, r, rot] = m;
-      const rx = r, ry = r * 0.86; // slightly oblong, like a popped foxnut
-      const speck = p.category === "roasted" ?
-        '<circle cx="' + (cx + r * .25) + '" cy="' + (cy - r * .15) + '" r="1.1" fill="' + acc + '" opacity=".5"/>' : '';
-      // body, soft inner shade, two short crease arcs (the foxnut split), tiny rim highlight
-      return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
-        '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FBF3E0"/>' +
-        '<ellipse cx="' + cx + '" cy="' + (cy + ry * .22) + '" rx="' + (rx * .82) + '" ry="' + (ry * .62) + '" fill="#EBDCB6" opacity=".55"/>' +
-        '<path d="M' + (cx - rx * .55) + ' ' + (cy - ry * .12) + 'q' + (rx * .55) + ' ' + (ry * .34) + ' ' + (rx * 1.1) + ' 0" fill="none" stroke="#CBB488" stroke-width="1.3" stroke-linecap="round"/>' +
-        '<path d="M' + (cx - rx * .32) + ' ' + (cy + ry * .3) + 'q' + (rx * .32) + ' ' + (ry * .26) + ' ' + (rx * .64) + ' 0" fill="none" stroke="#CBB488" stroke-width="1" stroke-linecap="round" opacity=".7"/>' +
-        '<ellipse cx="' + (cx - rx * .32) + '" cy="' + (cy - ry * .4) + '" rx="' + (rx * .3) + '" ry="' + (ry * .2) + '" fill="#fff" opacity=".7"/>' +
-        speck + '</g>';
-    }).join("");
+    // a few foxnut puffs at the base, as garnish
+    const puffs = [[78, 298, 12, -10], [188, 300, 11, 8], [98, 311, 9, 16]]
+      .map((m) => {
+        const cx = m[0], cy = m[1], r = m[2], rot = m[3], rx = r, ry = r * 0.86;
+        return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
+          '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FBF3E0"/>' +
+          '<ellipse cx="' + cx + '" cy="' + (cy + ry * 0.22) + '" rx="' + (rx * 0.8) + '" ry="' + (ry * 0.6) + '" fill="#E7D5AC" opacity=".6"/>' +
+          '<path d="M' + (cx - rx * 0.5) + ' ' + (cy - ry * 0.1) + 'q' + (rx * 0.5) + ' ' + (ry * 0.32) + ' ' + rx + ' 0" fill="none" stroke="#C9B07F" stroke-width="1.1" stroke-linecap="round"/>' +
+          '<ellipse cx="' + (cx - rx * 0.3) + '" cy="' + (cy - ry * 0.4) + '" rx="' + (rx * 0.28) + '" ry="' + (ry * 0.18) + '" fill="#fff" opacity=".75"/>' +
+          '</g>';
+      }).join("");
 
-    const svg = '' +
+    let stripes = "";
+    for (let x = 78; x <= 182; x += 8) stripes += '<line x1="' + x + '" y1="110" x2="' + x + '" y2="312"/>';
+
+    const svg =
 '<svg viewBox="0 0 260 340" ' + a11y + ' xmlns="http://www.w3.org/2000/svg">' +
   '<defs>' +
-    '<linearGradient id="body-' + id + '" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="' + acc + '"/>' +
-      '<stop offset="1" stop-color="' + shade(acc, -14) + '"/>' +
-    '</linearGradient>' +
-    '<linearGradient id="hl-' + id + '" x1="0" y1="0" x2="1" y2="0">' +
-      '<stop offset="0" stop-color="#fff" stop-opacity=".2"/>' +
-      '<stop offset="0.18" stop-color="#fff" stop-opacity="0"/>' +
-      '<stop offset="0.82" stop-color="#000" stop-opacity="0"/>' +
-      '<stop offset="1" stop-color="#000" stop-opacity=".12"/>' +
-    '</linearGradient>' +
-    // horizontal barrel shading → fakes the cylindrical stand-up pouch
     '<linearGradient id="barrel-' + id + '" x1="0" y1="0" x2="1" y2="0">' +
       '<stop offset="0" stop-color="#000" stop-opacity=".22"/>' +
-      '<stop offset="0.08" stop-color="#000" stop-opacity=".10"/>' +
-      '<stop offset="0.38" stop-color="#fff" stop-opacity=".16"/>' +
-      '<stop offset="0.62" stop-color="#fff" stop-opacity=".04"/>' +
-      '<stop offset="0.92" stop-color="#000" stop-opacity=".12"/>' +
-      '<stop offset="1" stop-color="#000" stop-opacity=".24"/>' +
+      '<stop offset="0.10" stop-color="#000" stop-opacity=".05"/>' +
+      '<stop offset="0.42" stop-color="#fff" stop-opacity=".36"/>' +
+      '<stop offset="0.60" stop-color="#fff" stop-opacity=".08"/>' +
+      '<stop offset="0.90" stop-color="#000" stop-opacity=".08"/>' +
+      '<stop offset="1" stop-color="#000" stop-opacity=".26"/>' +
     '</linearGradient>' +
-    '<clipPath id="win-' + id + '"><rect x="78" y="232" width="104" height="58" rx="14"/></clipPath>' +
-    '<clipPath id="bodyClip-' + id + '"><path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z"/></clipPath>' +
+    '<linearGradient id="lid-' + id + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="' + shade(acc, 24) + '"/>' +
+      '<stop offset="1" stop-color="' + shade(acc, -16) + '"/>' +
+    '</linearGradient>' +
+    '<clipPath id="body-' + id + '"><path d="M70 112 L190 112 L190 294 Q130 311 70 294 Z"/></clipPath>' +
   '</defs>' +
-  // ground shadow
-  '<ellipse cx="132" cy="322" rx="78" ry="12" fill="rgba(40,28,8,.22)" filter="url(#pouchShadow)"/>' +
-  // body silhouette (stand-up doypack)
-  '<path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z" fill="url(#body-' + id + ')"/>' +
-  // cylindrical barrel shading (dark edges, light core)
-  '<g clip-path="url(#bodyClip-' + id + ')">' +
-    '<rect x="44" y="46" width="174" height="270" fill="url(#barrel-' + id + ')"/>' +
-    // bottom gusset fold shadow
-    '<ellipse cx="130" cy="312" rx="92" ry="20" fill="#000" opacity=".14"/>' +
-    '<path d="M52 300 Q130 290 208 300" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="6"/>' +
+  '<ellipse cx="130" cy="309" rx="66" ry="11" fill="rgba(40,28,8,.22)" filter="url(#pouchShadow)"/>' +
+  '<path d="M70 112 L190 112 L190 294 Q130 311 70 294 Z" fill="#EFE1C2"/>' +
+  '<g clip-path="url(#body-' + id + ')" stroke="#E3D3AC" stroke-width="2" opacity=".7">' + stripes + '</g>' +
+  '<rect x="68" y="112" width="124" height="11" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
+  '<rect x="68" y="280" width="124" height="20" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
+  '<rect x="68" y="108" width="124" height="206" fill="url(#barrel-' + id + ')" clip-path="url(#body-' + id + ')"/>' +
+  '<circle cx="130" cy="152" r="21" fill="#FFFDF7"/>' +
+  '<circle cx="130" cy="152" r="21" fill="none" stroke="' + acc + '" stroke-width="2.4"/>' +
+  '<g transform="translate(130 152)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round">' +
+    '<path d="M0 -9c2.6 3.4 3.9 6.8 3.9 9.4a3.9 3.9 0 0 1-7.8 0c0-2.6 1.3-6 3.9-9.4z"/>' +
+    '<path d="M-10 4c3.4 0 6 1.3 7.6 3.4M10 4c-3.4 0-6 1.3-7.6 3.4"/>' +
   '</g>' +
-  // edge modelling
-  '<path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z" fill="url(#hl-' + id + ')"/>' +
-  // center gusset crease
-  '<path d="M130 52 L130 312" stroke="#fff" stroke-opacity=".07" stroke-width="6"/>' +
-  // top crimp (serrated seal)
-  serrate(54, 46, 152, acc) +
-  // hang hole
-  '<circle cx="130" cy="40" r="5" fill="none" stroke="' + shade(acc, -22) + '" stroke-width="2.5"/>' +
-  // gloss highlight (primary diagonal sheen)
-  '<ellipse cx="90" cy="108" rx="40" ry="78" fill="#fff" opacity=".18" transform="rotate(-18 90 108)" clip-path="url(#bodyClip-' + id + ')"/>' +
-  // secondary thin specular streak
-  '<rect x="70" y="58" width="9" height="248" rx="4.5" fill="#fff" opacity=".12" transform="rotate(-7 74 180)" clip-path="url(#bodyClip-' + id + ')"/>' +
-  // brand label band
-  '<rect x="60" y="92" width="140" height="120" rx="12" fill="#FFFDF7"/>' +
-  // lotus glyph
-  '<g transform="translate(130 118)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round">' +
-    '<path d="M0 -10c3 4 4.5 8 4.5 11a4.5 4.5 0 0 1-9 0c0-3 1.5-7 4.5-11z"/>' +
-    '<path d="M-11 6c4 0 7 1.5 9 4M11 6c-4 0-7 1.5-9 4"/>' +
-  '</g>' +
-  // wordmark
-  '<text x="130" y="150" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#211A0E">THE MAKHANA</text>' +
-  // flavour ribbon
-  '<path d="M44 168 L216 168 L208 184 L216 200 L44 200 L52 184 Z" fill="' + shade(acc, -16) + '"/>' +
-  '<text x="130" y="189" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="13" letter-spacing="1" fill="#fff">' + escapeXML(ribbonName) + '</text>' +
-  // flavour cue icon
-  '<g transform="translate(130 224)" fill="none" stroke="' + acc + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + cueIcon(p.cat) + '</g>' +
-  // die-cut window
-  '<rect x="78" y="232" width="104" height="58" rx="14" fill="#241B0C" opacity=".14"/>' +
-  '<g clip-path="url(#win-' + id + ')"><rect x="78" y="232" width="104" height="58" fill="#2A2114"/>' + puffs + '</g>' +
-  '<rect x="78" y="232" width="104" height="58" rx="14" fill="none" stroke="' + shade(acc, -22) + '" stroke-width="2"/>' +
-  // net weight chip + tag
-  '<rect x="62" y="298" width="40" height="16" rx="8" fill="#FFFDF7"/>' +
-  '<text x="82" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="9.5" fill="#211A0E">' + p.weight + '</text>' +
-  '<text x="176" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="8.5" letter-spacing="1" fill="#fff" opacity=".9">' + (p.category === "raw" ? "RAW" : "ROASTED") + '</text>' +
+  '<text x="130" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="13" letter-spacing="1.3" fill="#3A2E18">THE MAKHANA</text>' +
+  '<text x="130" y="214" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="8.5" letter-spacing="1.5" fill="#8A754C">' + (p.category === "raw" ? "RAW" : "ROASTED") + ' · ' + p.weight + '</text>' +
+  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFDF7"/>' +
+  '<text x="130" y="263" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10" letter-spacing=".4" fill="' + shade(acc, -34) + '">' + escapeXML(ribbonName) + '</text>' +
+  puffs +
+  '<path d="M65 104 L65 113 Q65 118 130 120 Q195 118 195 113 L195 104 Z" fill="' + shade(acc, -20) + '"/>' +
+  '<ellipse cx="130" cy="104" rx="65" ry="13.5" fill="url(#lid-' + id + ')"/>' +
+  '<ellipse cx="130" cy="104" rx="65" ry="13.5" fill="none" stroke="' + shade(acc, -28) + '" stroke-width="1.4" opacity=".5"/>' +
+  '<ellipse cx="115" cy="100" rx="30" ry="5.5" fill="#fff" opacity=".28"/>' +
 '</svg>';
     if (!opts.decorative) _pouchCache[p.id] = svg;
     return svg;
@@ -192,36 +155,18 @@
     const ribbon = p.ribbon
       ? '<span class="ribbon ribbon--' + p.ribbonType + '">' + p.ribbon + '</span>' : "";
     const isCombo = p.category === "combo";
-    const isFeature = p.ribbonType === "bestseller";
     const badge = isCombo ? "" : '<span class="disc-badge">-' + pct(p) + "%</span>";
-    const sash = isCombo ? '<span class="card__sash">Best value</span>' : "";
-    const meta = isCombo ? "5 packs &middot; gifting box" : (p.category === "raw" ? "Raw" : "Roasted");
-    const pitch = isFeature
-      ? '<p class="card__pitch">' + ICON.star + '<span>Our #1 seller - most loved this month</span></p>'
-      : "";
-    const cls = "card reveal" + (isCombo ? " card--combo" : "") + (isFeature ? " card--feature" : "");
-
+    const nm = p.name.split(" (")[0];
     return '' +
-      '<article class="' + cls + '" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
-        ribbon + badge + sash +
-        '<a class="card__media" href="product.html?id=' + p.id + '" aria-label="View ' + p.name.split(" (")[0] + '"><div class="card__pouch"><span class="card__pop"></span>' + pouchSVG(p) + '</div></a>' +
-        '<div class="card__body">' +
-          '<p class="card__cat">' + (isCombo ? "VARIETY COMBO" : p.category.toUpperCase()) + '</p>' +
-          '<h3 class="card__name"><a href="product.html?id=' + p.id + '">' + p.name.split(" (")[0] + '</a></h3>' +
-          pitch +
-          '<p class="card__note">' + p.note + '</p>' +
-          '<span class="card__rule"></span>' +
-          '<p class="card__meta tnum"><span>' + p.weight + '</span><span class="dot"></span><span>' + meta + '</span></p>' +
-          '<div class="card__price">' +
-            '<span class="card__now">' + rupee(p.price) + '</span>' +
-            '<span class="card__mrp">' + rupee(p.mrp) + '</span>' +
-            '<span class="card__save">Save ' + rupee(p.mrp - p.price) + '</span>' +
-          '</div>' +
-          '<div class="card__stars"><span class="stars" aria-hidden="true">' + stars(5) + '</span>' +
-            '<span class="count">' + p.rating.toFixed(1) + ' (' + p.reviews + ')</span></div>' +
-          '<a class="card__details" href="product.html?id=' + p.id + '">View details <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>' +
-          '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + p.name + ' to cart">' +
-            ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
+      '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
+        ribbon + badge +
+        '<a class="card__media" href="product.html?id=' + p.id + '" aria-label="View ' + escapeXML(nm) + '"><div class="card__pouch">' + pouchSVG(p) + '</div></a>' +
+        '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + escapeXML(p.name) + ' to cart">' +
+          ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
+        '<h3 class="card__name"><a href="product.html?id=' + p.id + '">' + nm + '</a></h3>' +
+        '<div class="card__price">' +
+          '<span class="card__now">' + rupee(p.price) + '</span>' +
+          '<span class="card__mrp">' + rupee(p.mrp) + '</span>' +
         '</div>' +
       '</article>';
   }

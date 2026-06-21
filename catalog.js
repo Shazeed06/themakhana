@@ -258,44 +258,43 @@ window.TM = (function () {
   }
 
   const _cache = {};
+  // paper-canister (tin) illustration, parameterised by accent colour
   function pouchSVG(p, opts) {
     opts = opts || {};
     if (!opts.decorative && _cache[p.id]) return _cache[p.id];
     const id = p.id, acc = p.acc;
     const flav = p.name.split(" (")[0].toUpperCase();
-    const ribbonName = flav.length > 16 ? p.id.toUpperCase() : flav;
-    const a11y = opts.decorative ? 'role="presentation" aria-hidden="true"' : 'role="img" aria-label="' + escapeXML(p.name + " pouch") + '"';
-    const puffs = [[98,252,14,-8],[128,246,16,5],[156,256,13,12],[112,270,12,18],[142,268,11,-10]]
+    const ribbonName = flav.length > 15 ? p.id.toUpperCase() : flav;
+    const a11y = opts.decorative ? 'role="presentation" aria-hidden="true"' : 'role="img" aria-label="' + escapeXML(p.name + " makhana canister") + '"';
+    const puffs = [[78, 298, 12, -10], [188, 300, 11, 8], [98, 311, 9, 16]]
       .map((m) => puff(m[0], m[1], m[2], m[3], acc, p.category === "roasted")).join("");
+    let stripes = "";
+    for (let x = 78; x <= 182; x += 8) stripes += '<line x1="' + x + '" y1="110" x2="' + x + '" y2="312"/>';
     const svg =
 '<svg viewBox="0 0 260 340" ' + a11y + ' xmlns="http://www.w3.org/2000/svg">' +
   '<defs>' +
-    '<linearGradient id="body-' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + acc + '"/><stop offset="1" stop-color="' + shade(acc, -14) + '"/></linearGradient>' +
-    '<linearGradient id="hl-' + id + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset="0.18" stop-color="#fff" stop-opacity="0"/><stop offset="0.82" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient>' +
-    '<linearGradient id="barrel-' + id + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset="0.08" stop-color="#000" stop-opacity=".10"/><stop offset="0.38" stop-color="#fff" stop-opacity=".16"/><stop offset="0.62" stop-color="#fff" stop-opacity=".04"/><stop offset="0.92" stop-color="#000" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".24"/></linearGradient>' +
-    '<clipPath id="win-' + id + '"><rect x="78" y="232" width="104" height="58" rx="14"/></clipPath>' +
-    '<clipPath id="bodyClip-' + id + '"><path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z"/></clipPath>' +
+    '<linearGradient id="barrel-' + id + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset="0.10" stop-color="#000" stop-opacity=".05"/><stop offset="0.42" stop-color="#fff" stop-opacity=".36"/><stop offset="0.60" stop-color="#fff" stop-opacity=".08"/><stop offset="0.90" stop-color="#000" stop-opacity=".08"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>' +
+    '<linearGradient id="lid-' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + shade(acc, 24) + '"/><stop offset="1" stop-color="' + shade(acc, -16) + '"/></linearGradient>' +
+    '<clipPath id="body-' + id + '"><path d="M70 112 L190 112 L190 294 Q130 311 70 294 Z"/></clipPath>' +
   '</defs>' +
-  '<ellipse cx="132" cy="322" rx="78" ry="12" fill="rgba(20,20,20,.18)" filter="url(#pouchShadow)"/>' +
-  '<path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z" fill="url(#body-' + id + ')"/>' +
-  '<g clip-path="url(#bodyClip-' + id + ')"><rect x="44" y="46" width="174" height="270" fill="url(#barrel-' + id + ')"/><ellipse cx="130" cy="312" rx="92" ry="20" fill="#000" opacity=".14"/><path d="M52 300 Q130 290 208 300" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="6"/></g>' +
-  '<path d="M48 70 Q48 50 70 48 L190 48 Q212 50 212 70 L214 296 Q214 312 198 314 L62 314 Q46 312 46 296 Z" fill="url(#hl-' + id + ')"/>' +
-  '<path d="M130 52 L130 312" stroke="#fff" stroke-opacity=".07" stroke-width="6"/>' +
-  serrate(54, 46, 152, acc) +
-  '<circle cx="130" cy="40" r="5" fill="none" stroke="' + shade(acc, -22) + '" stroke-width="2.5"/>' +
-  '<ellipse cx="90" cy="108" rx="40" ry="78" fill="#fff" opacity=".18" transform="rotate(-18 90 108)" clip-path="url(#bodyClip-' + id + ')"/>' +
-  '<rect x="60" y="92" width="140" height="120" rx="12" fill="#FFFDF7"/>' +
-  '<g transform="translate(130 118)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round"><path d="M0 -10c3 4 4.5 8 4.5 11a4.5 4.5 0 0 1-9 0c0-3 1.5-7 4.5-11z"/><path d="M-11 6c4 0 7 1.5 9 4M11 6c-4 0-7 1.5-9 4"/></g>' +
-  '<text x="130" y="150" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#211A0E">THE MAKHANA</text>' +
-  '<path d="M44 168 L216 168 L208 184 L216 200 L44 200 L52 184 Z" fill="' + shade(acc, -16) + '"/>' +
-  '<text x="130" y="189" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="13" letter-spacing="1" fill="#fff">' + escapeXML(ribbonName) + '</text>' +
-  '<g transform="translate(130 224)" fill="none" stroke="' + acc + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + cueIcon(p.cat) + '</g>' +
-  '<rect x="78" y="232" width="104" height="58" rx="14" fill="#241B0C" opacity=".14"/>' +
-  '<g clip-path="url(#win-' + id + ')"><rect x="78" y="232" width="104" height="58" fill="#2A2114"/>' + puffs + '</g>' +
-  '<rect x="78" y="232" width="104" height="58" rx="14" fill="none" stroke="' + shade(acc, -22) + '" stroke-width="2"/>' +
-  '<rect x="62" y="298" width="40" height="16" rx="8" fill="#FFFDF7"/>' +
-  '<text x="82" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="9.5" fill="#211A0E">' + p.weight + '</text>' +
-  '<text x="176" y="310" text-anchor="middle" font-family="\'Inter\',sans-serif" font-weight="700" font-size="8.5" letter-spacing="1" fill="#fff" opacity=".9">' + (p.category === "raw" ? "RAW" : "ROASTED") + '</text>' +
+  '<ellipse cx="130" cy="309" rx="66" ry="11" fill="rgba(40,28,8,.22)" filter="url(#pouchShadow)"/>' +
+  '<path d="M70 112 L190 112 L190 294 Q130 311 70 294 Z" fill="#EFE1C2"/>' +
+  '<g clip-path="url(#body-' + id + ')" stroke="#E3D3AC" stroke-width="2" opacity=".7">' + stripes + '</g>' +
+  '<rect x="68" y="112" width="124" height="11" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
+  '<rect x="68" y="280" width="124" height="20" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
+  '<rect x="68" y="108" width="124" height="206" fill="url(#barrel-' + id + ')" clip-path="url(#body-' + id + ')"/>' +
+  '<circle cx="130" cy="152" r="21" fill="#FFFDF7"/>' +
+  '<circle cx="130" cy="152" r="21" fill="none" stroke="' + acc + '" stroke-width="2.4"/>' +
+  '<g transform="translate(130 152)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round"><path d="M0 -9c2.6 3.4 3.9 6.8 3.9 9.4a3.9 3.9 0 0 1-7.8 0c0-2.6 1.3-6 3.9-9.4z"/><path d="M-10 4c3.4 0 6 1.3 7.6 3.4M10 4c-3.4 0-6 1.3-7.6 3.4"/></g>' +
+  '<text x="130" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="13" letter-spacing="1.3" fill="#3A2E18">THE MAKHANA</text>' +
+  '<text x="130" y="214" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="8.5" letter-spacing="1.5" fill="#8A754C">' + (p.category === "raw" ? "RAW" : "ROASTED") + ' · ' + p.weight + '</text>' +
+  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFDF7"/>' +
+  '<text x="130" y="263" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10" letter-spacing=".4" fill="' + shade(acc, -34) + '">' + escapeXML(ribbonName) + '</text>' +
+  puffs +
+  '<path d="M65 104 L65 113 Q65 118 130 120 Q195 118 195 113 L195 104 Z" fill="' + shade(acc, -20) + '"/>' +
+  '<ellipse cx="130" cy="104" rx="65" ry="13.5" fill="url(#lid-' + id + ')"/>' +
+  '<ellipse cx="130" cy="104" rx="65" ry="13.5" fill="none" stroke="' + shade(acc, -28) + '" stroke-width="1.4" opacity=".5"/>' +
+  '<ellipse cx="115" cy="100" rx="30" ry="5.5" fill="#fff" opacity=".28"/>' +
 '</svg>';
     if (!opts.decorative) _cache[p.id] = svg;
     return svg;

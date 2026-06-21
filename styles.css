@@ -815,3 +815,27 @@ html,body{max-width:100%;overflow-x:hidden}
   .checkout__body{grid-template-columns:1fr}
   .checkout__summary{border-left:0;border-top:1px solid var(--line)}
 }
+
+
+/* ---------- Product cards: paper-canister / POPCAN style ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px)}
+.card{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 10px 28px -22px rgba(20,20,20,.4);transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-5px);box-shadow:0 26px 48px -28px rgba(20,20,20,.45)}
+.card__media{display:grid;place-items:center;aspect-ratio:1/1;padding:14px;background:color-mix(in srgb,var(--acc) 12%,#FBF7EC)}
+.card__pouch{display:grid;place-items:center;height:90%;width:100%}
+.card__pouch svg{height:100%;width:auto;max-width:100%;filter:drop-shadow(0 14px 18px rgba(40,28,8,.16))}
+.add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--secondary);color:#fff;font-weight:700;font-size:15px;letter-spacing:.01em;padding:14px 16px;border-radius:0;transition:background .2s ease,opacity .2s ease}
+.add-btn:hover{background:#000}
+.add-btn:focus-visible{outline:2px solid var(--focus);outline-offset:-3px}
+.add-btn svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:1.8}
+.add-btn.added{background:var(--good)}
+.card__name{padding:16px 14px 0;font-size:clamp(16px,1.5vw,20px);font-weight:700;letter-spacing:-.01em}
+.card__name a{color:var(--secondary)}
+.card__name a:hover{color:var(--primary-deep)}
+.card__price{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:auto;padding:8px 14px 18px}
+.card__now{font-size:19px;font-weight:800;color:var(--secondary)}
+.card__mrp{font-size:14px;color:var(--ink-soft);text-decoration:line-through}
+.card .disc-badge{position:absolute;top:12px;right:12px;z-index:3}
+.card .ribbon{position:absolute;top:12px;left:12px;z-index:3}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
