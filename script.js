@@ -547,9 +547,14 @@
 
   $("#checkoutBtn").addEventListener("click", () => {
     if (!cart.length) { toast("Your basket is empty"); return; }
-    cart = []; saveCart(); updateCartUI(); bumpCount();
     closeCart();
-    toast("Order placed (demo)");
+    Checkout.open({
+      items: cart,
+      getProduct: getProduct,
+      rupee: rupee,
+      freeShip: FREE_SHIP_THRESHOLD,
+      onPlaced: () => { cart = []; saveCart(); updateCartUI(); bumpCount(); toast("Order placed - thank you!"); }
+    });
   });
 
   /* filter */

@@ -377,7 +377,14 @@
   scrim.addEventListener("click", closeCart);
   $("#checkoutBtn").addEventListener("click", () => {
     if (!TM.getCart().length) { toast("Your basket is empty"); return; }
-    TM.setCart([]); updateCartUI(); bumpCount(); closeCart(); toast("Order placed (demo)");
+    closeCart();
+    Checkout.open({
+      items: TM.getCart(),
+      getProduct: TM.getProduct,
+      rupee: TM.rupee,
+      freeShip: 599,
+      onPlaced: () => { TM.setCart([]); updateCartUI(); bumpCount(); toast("Order placed - thank you!"); }
+    });
   });
   document.addEventListener("click", (e) => {
     const q = e.target.closest("[data-qty]"); if (q) { setQty(q.dataset.id, +q.dataset.qty); return; }
