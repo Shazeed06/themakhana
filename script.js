@@ -605,7 +605,7 @@
       if (caption) caption.textContent = captions[idx];
       if (bar && !reduceMotion) { bar.classList.remove("run"); void bar.offsetWidth; bar.classList.add("run"); }
     }
-    function start() { if (!reduceMotion) timer = setInterval(() => go(idx + 1), 4000); }
+    function start() { timer = setInterval(() => go(idx + 1), 4000); }
     function stop() { clearInterval(timer); }
     el.addEventListener("click", (e) => { const d = e.target.closest(".hero__dot"); if (d) { stop(); go(+d.dataset.i); start(); return; } if (e.target.closest(".hero__arrow--prev")) { stop(); go(idx - 1); start(); } else if (e.target.closest(".hero__arrow--next")) { stop(); go(idx + 1); start(); } });
     el.addEventListener("mouseenter", stop);

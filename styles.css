@@ -204,7 +204,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .hero__progress.run{animation:drain 4s linear forwards}
 @keyframes drain{from{width:0}to{width:100%}}
 .hero__track:hover .hero__progress{animation-play-state:paused}
-.hero__dots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.hero__dots{display:none}
 .hero__dot{width:9px;height:9px;border-radius:50px;background:rgba(13,13,13,.26);transition:width .25s ease,background .25s ease;cursor:pointer}
 .hero__dot.is-active{background:var(--secondary);width:24px}
 .hero__dot:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
