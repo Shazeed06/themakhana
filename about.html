@@ -17,13 +17,13 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.themakhana.in/about.html" />
 <meta property="og:site_name" content="The Makhana" />
-<meta property="og:image" content="https://www.themakhana.in/images/logo.png" />
+<meta property="og:image" content="https://www.themakhana.in/images/about-hero.jpg" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="About Us - The Makhana | Premium Foxnuts from Madhubani, Bihar" />
 <meta name="twitter:description" content="Rooted in tradition, crafted for modern snacking. Handpicked phool makhana from Madhubani, Bihar - roasted in cold-pressed oil, never fried." />
-<meta name="twitter:image" content="https://www.themakhana.in/images/logo.png" />
+<meta name="twitter:image" content="https://www.themakhana.in/images/about-hero.jpg" />
 
 <!-- ===== Fonts + shared design system ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,191 +77,71 @@
 
 <style>
 /* ===========================================================
-   About page - built on the shared design tokens (styles.css)
+   About page - clean, minimal, on shared tokens (styles.css)
    =========================================================== */
 .about-wrap{overflow-x:hidden}
+.nav a[aria-current="page"]{color:var(--ink)}
+.nav a[aria-current="page"]::after{width:100%}
 
 /* ---------- Hero ---------- */
-.ab-hero{position:relative;overflow:hidden;background:
-  radial-gradient(120% 90% at 80% -10%,rgba(245,197,24,0),transparent 60%),
-  var(--bg);
-  border-bottom:1px solid var(--line)}
-.ab-hero__inner{padding-block:clamp(56px,9vw,108px);max-width:880px}
-.ab-hero .kicker{margin-bottom:18px}
-.ab-hero h1{font-family:"Inter",serif;font-weight:600;
-  font-size:clamp(34px,6.2vw,68px);line-height:1.02;letter-spacing:-.01em;
-  color:var(--ink);margin-bottom:22px}
-.ab-hero h1 em{font-style:italic;color:var(--primary-deep)}
-.ab-hero__sub{font-size:clamp(16px,2vw,20px);line-height:1.7;color:var(--ink-soft);max-width:640px;margin-bottom:30px}
-.ab-hero__cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.ab-hero__pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
-.ab-hero__pills span{display:inline-flex;align-items:center;gap:7px;
-  background:var(--surface);border:1px solid var(--line);border-radius:50px;
-  padding:9px 15px;font-size:13px;font-weight:700;color:var(--ink)}
-.ab-hero__pills svg{width:16px;height:16px;color:var(--primary-deep);fill:none;
-  stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ab-hero__watermark{position:absolute;right:-3%;bottom:-26%;font-family:"Inter",serif;
-  font-weight:600;font-size:clamp(220px,38vw,460px);line-height:1;color:var(--primary);
-  opacity:.07;pointer-events:none;user-select:none;z-index:0}
-.ab-hero__inner{position:relative;z-index:1}
+.ab-hero{padding-top:clamp(36px,5.5vw,68px);text-align:center}
+.ab-hero .kicker{justify-content:center;margin-bottom:16px}
+.ab-hero h1{font-size:clamp(40px,6.4vw,82px);line-height:1;letter-spacing:-.03em;font-weight:800;color:var(--secondary);text-wrap:balance}
+.ab-hero h1 em{font-style:italic;font-weight:600;color:var(--primary-deep)}
+.ab-hero__sub{max-width:600px;margin:20px auto 0;font-size:clamp(16px,1.9vw,20px);line-height:1.7;color:var(--ink-soft)}
+.ab-hero__img{margin-top:clamp(30px,4vw,52px);border-radius:clamp(16px,2vw,26px);overflow:hidden;border:1px solid var(--line);box-shadow:0 34px 64px -36px rgba(20,20,20,.45)}
+.ab-hero__img img{display:block;width:100%;height:auto}
 
-/* ---------- Generic section scaffolding ---------- */
-.ab-sec{padding-block:clamp(48px,7vw,92px)}
-.ab-sec--tint{background:var(--bg);border-block:1px solid var(--line)}
-.ab-head{max-width:680px;margin-bottom:44px}
-.ab-head .kicker{margin-bottom:14px}
-.ab-head h2{font-family:"Inter",serif;font-weight:600;
-  font-size:clamp(28px,4.4vw,48px);line-height:1.07;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
-.ab-head h2 em{font-style:italic;color:var(--primary-deep)}
-.ab-head p{font-size:clamp(15px,1.8vw,18px);line-height:1.7;color:var(--ink-soft)}
-.ab-head--center{margin-inline:auto;text-align:center}
-.ab-head--center .kicker{justify-content:center}
+/* ---------- Story - elegant statements ---------- */
+.ab-story{padding-block:clamp(56px,9vw,118px)}
+.ab-story__inner{max-width:760px;margin-inline:auto;text-align:center}
+.ab-story p{font-size:clamp(20px,2.7vw,31px);line-height:1.46;letter-spacing:-.012em;color:var(--secondary);font-weight:500;margin-bottom:clamp(22px,3vw,34px);text-wrap:balance}
+.ab-story p:last-child{margin-bottom:0}
+.ab-story em{font-style:italic;color:var(--primary-deep)}
+.ab-story strong{font-weight:800}
+.ab-story .muted{color:var(--ink-soft);font-weight:400;font-size:clamp(16px,2vw,21px);line-height:1.62}
 
-/* ---------- Our Story (two columns) ---------- */
-.story-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:start}
-.story-prose p{font-size:clamp(15px,1.85vw,18px);line-height:1.8;color:var(--ink-soft);margin-bottom:18px;max-width:560px}
-.story-prose p strong{color:var(--ink);font-weight:700}
-.story-prose .lead{font-family:"Inter",serif;font-style:italic;font-size:clamp(19px,2.4vw,24px);
-  line-height:1.55;color:var(--ink);margin-bottom:22px;max-width:600px}
-.note-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;
-  box-shadow:var(--sh-card);padding:clamp(26px,3.4vw,40px);position:relative}
-.note-card::before{content:"\201C";position:absolute;top:6px;left:22px;font-family:"Inter",serif;
-  font-size:96px;line-height:1;color:var(--primary);opacity:.5}
-.note-card__label{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--primary-text);margin:18px 0 16px}
-.note-card p{font-family:"Inter",serif;font-size:clamp(16px,1.9vw,19px);line-height:1.7;color:var(--ink);margin-bottom:14px}
-.note-card__sign{margin-top:22px;display:flex;align-items:center;gap:12px}
-.note-card__sign .seal{width:46px;height:46px;border-radius:50%;background:var(--honey-tint);
-  color:var(--primary-deep);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.note-card__sign .seal svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.note-card__sign b{display:block;font-family:"Inter",sans-serif;font-size:15px;color:var(--ink)}
-.note-card__sign span{font-size:13px;color:var(--ink-soft)}
+/* ---------- Promise checklist ---------- */
+.ab-promise{background:var(--surface-2);border-block:1px solid var(--line);padding-block:clamp(48px,7vw,90px)}
+.ab-promise__head{text-align:center;max-width:600px;margin:0 auto clamp(34px,4vw,52px)}
+.ab-promise__head h2{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.08}
+.ab-promise__head p{margin-top:12px;color:var(--ink-soft);font-size:clamp(15px,1.8vw,18px);line-height:1.7}
+.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,24px)}
+.promise{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.promise:hover{transform:translateY(-5px);box-shadow:0 24px 42px -28px rgba(20,20,20,.42);border-color:color-mix(in srgb,var(--primary) 45%,var(--line))}
+.promise__ic{width:58px;height:58px;border-radius:50%;background:var(--honey-tint);color:var(--primary-deep);display:grid;place-items:center;margin:0 auto 16px}
+.promise__ic svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.promise h3{font-size:17px;font-weight:800;color:var(--secondary);margin-bottom:7px;letter-spacing:-.01em}
+.promise p{font-size:14px;line-height:1.55;color:var(--ink-soft)}
 
-/* ---------- Section imagery (farmer / lotus pond) ---------- */
-.story-media{position:relative}
-.story-media img{width:100%;max-height:520px;object-fit:cover;border-radius:24px;box-shadow:var(--sh-card);display:block}
-.story-media__cap{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:7px;
-  background:rgba(13,13,13,.58);color:#fff;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
-  padding:8px 14px;border-radius:50px;font-size:12.5px;font-weight:600;max-width:calc(100% - 32px)}
-.story-media__cap svg{width:15px;height:15px;flex:0 0 auto;stroke:var(--primary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.note-card--wide{max-width:880px;margin:clamp(32px,5vw,52px) auto 0}
-.heritage__grid--media{grid-template-columns:.92fr 1.08fr;align-items:stretch}
-.heritage__media img{width:100%;height:100%;min-height:260px;max-height:480px;object-fit:cover;border-radius:18px;display:block}
+/* ---------- Made in Madhubani ---------- */
+.ab-made{padding-block:clamp(52px,8vw,106px)}
+.ab-made__inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.ab-made__media img{width:100%;height:100%;max-height:460px;object-fit:cover;border-radius:22px;border:1px solid var(--line);box-shadow:var(--sh-card);display:block}
+.ab-made__copy .kicker{margin-bottom:14px}
+.ab-made__copy h2{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.08;margin-bottom:16px}
+.ab-made__copy h2 em{font-style:italic;font-weight:600;color:var(--primary-deep)}
+.ab-made__copy p{font-size:clamp(15px,1.8vw,18px);line-height:1.8;color:var(--ink-soft);margin-bottom:16px;max-width:540px}
+.ab-made__stats{display:flex;gap:clamp(22px,4vw,46px);margin-top:26px}
+.ab-made__stats b{display:block;font-size:clamp(26px,3.4vw,40px);font-weight:800;color:var(--secondary);line-height:1;letter-spacing:-.02em}
+.ab-made__stats b em{font-style:normal;color:var(--primary-deep)}
+.ab-made__stats span{font-size:13px;color:var(--ink-soft);margin-top:6px;display:block}
 
-/* ---------- Why Choose Us (4 cards) ---------- */
-.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.why{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 24px;
-  box-shadow:var(--sh-card);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-.why:hover{transform:translateY(-5px);box-shadow:var(--sh-card-hover);
-  border-color:color-mix(in srgb,var(--primary) 45%,var(--line))}
-.why__ic{width:54px;height:54px;border-radius:50%;background:var(--honey-tint);color:var(--primary-deep);
-  display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.why__ic svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.why h3{font-family:"Inter",serif;font-weight:600;font-size:20px;margin-bottom:8px;color:var(--ink)}
-.why p{font-size:14.5px;line-height:1.6;color:var(--ink-soft)}
-
-/* ---------- Heritage (editorial, image-less) ---------- */
-.heritage{background:var(--secondary);color:#fff;border-radius:clamp(20px,3vw,32px);
-  padding:clamp(30px,5vw,64px);position:relative;overflow:hidden}
-.heritage::after{content:"";position:absolute;width:60%;height:130%;right:-12%;top:-15%;
-  background:radial-gradient(circle,rgba(245,197,24,.16),transparent 62%);pointer-events:none}
-.heritage__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,56px);align-items:center;position:relative;z-index:1}
-.heritage .kicker{color:var(--primary)}
-.heritage h2{font-family:"Inter",serif;font-weight:600;color:#fff;
-  font-size:clamp(26px,3.8vw,44px);line-height:1.08;margin:14px 0 18px}
-.heritage h2 em{font-style:italic;color:var(--primary)}
-.heritage p{font-size:clamp(15px,1.8vw,17.5px);line-height:1.8;color:#CFCDC6;margin-bottom:16px}
-.heritage__points{list-style:none;margin-top:8px;display:grid;gap:18px}
-.heritage__points li{display:flex;gap:14px;align-items:flex-start}
-.heritage__points .n{font-family:"Inter",serif;font-style:italic;font-size:22px;color:var(--primary);flex:0 0 auto;min-width:30px}
-.heritage__points b{display:block;font-size:16px;color:#fff;margin-bottom:4px;font-weight:700}
-.heritage__points span{font-size:14.5px;line-height:1.6;color:#B7B4AD}
-
-/* ---------- Farm-to-Bowl journey (reuses homepage language) ---------- */
-.journey-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.jstep{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 24px;
-  box-shadow:var(--sh-card);position:relative;transition:transform .25s ease,box-shadow .25s ease}
-.jstep:hover{transform:translateY(-5px);box-shadow:var(--sh-card-hover)}
-.jstep__num{font-family:"Inter",serif;font-style:italic;font-weight:600;font-size:15px;
-  color:var(--primary-deep);letter-spacing:.04em}
-.jstep__ic{width:58px;height:58px;border-radius:16px;background:var(--honey-tint);color:var(--primary-deep);
-  display:flex;align-items:center;justify-content:center;margin:14px 0 16px}
-.jstep__ic svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.jstep h3{font-family:"Inter",serif;font-weight:600;font-size:19px;margin-bottom:7px;color:var(--ink)}
-.jstep p{font-size:14px;line-height:1.6;color:var(--ink-soft)}
-
-/* ---------- Impact stats ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 22px;text-align:center}
-.stat__n{font-family:"Inter",serif;font-weight:600;font-size:clamp(32px,4.4vw,48px);line-height:1;
-  color:var(--ink);font-variant-numeric:tabular-nums}
-.stat__n em{font-style:normal;color:var(--primary-deep)}
-.stat__l{font-size:13.5px;font-weight:600;color:var(--ink-soft);margin-top:10px;line-height:1.4}
-
-/* ---------- Values ---------- */
-.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.value{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px 26px;box-shadow:var(--sh-card)}
-.value__ic{width:48px;height:48px;border-radius:14px;background:var(--honey-tint);color:var(--primary-deep);
-  display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.value__ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.value h3{font-family:"Inter",serif;font-weight:600;font-size:19px;margin-bottom:8px;color:var(--ink)}
-.value p{font-size:14.5px;line-height:1.65;color:var(--ink-soft)}
-
-/* ---------- FAQ ---------- */
-.faq-list{max-width:780px;margin-inline:auto}
-.faq-item{border-bottom:1px solid var(--line)}
-.faq-item__q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  text-align:left;padding:22px 0;background:none;border:none;cursor:pointer;
-  font-family:"Inter",serif;font-weight:600;font-size:clamp(17px,2.1vw,20px);color:var(--ink);min-height:44px}
-.faq-item__q:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
-.faq-item__ic{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);
-  position:relative;transition:.2s}
-.faq-item__ic::before,.faq-item__ic::after{content:"";position:absolute;background:var(--ink);border-radius:2px;
-  top:50%;left:50%;transform:translate(-50%,-50%);transition:.25s}
-.faq-item__ic::before{width:12px;height:2px}
-.faq-item__ic::after{width:2px;height:12px}
-.faq-item.open .faq-item__ic{border-color:var(--primary);background:var(--primary)}
-.faq-item.open .faq-item__ic::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
-.faq-item__a{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.faq-item__a p{padding:0 0 22px;font-size:15.5px;line-height:1.75;color:var(--ink-soft);max-width:700px}
-
-/* ---------- Closing CTA band ---------- */
-.cta-band{background:
-  radial-gradient(120% 130% at 0% 0%,rgba(245,197,24,.22),transparent 55%),
-  var(--secondary);color:#fff;border-radius:clamp(20px,3vw,32px);
-  padding:clamp(34px,5vw,68px);text-align:center;position:relative;overflow:hidden}
-.cta-band h2{font-family:"Inter",serif;font-weight:600;color:#fff;
-  font-size:clamp(28px,4.6vw,52px);line-height:1.05;margin-bottom:14px}
-.cta-band h2 em{font-style:italic;color:var(--primary)}
-.cta-band p{font-size:clamp(15px,1.9vw,18px);line-height:1.7;color:#CFCDC6;max-width:560px;margin:0 auto 28px}
+/* ---------- Closing CTA ---------- */
+.cta-band{background:radial-gradient(120% 130% at 0% 0%,rgba(245,197,24,.22),transparent 55%),var(--secondary);color:#fff;border-radius:clamp(20px,3vw,32px);padding:clamp(38px,5vw,74px);text-align:center;margin-block:clamp(20px,3vw,40px) clamp(54px,8vw,96px)}
+.cta-band h2{font-size:clamp(30px,4.6vw,54px);font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:14px}
+.cta-band h2 em{font-style:italic;font-weight:600;color:var(--primary)}
+.cta-band p{font-size:clamp(15px,1.9vw,18px);line-height:1.7;color:#CFCDC6;max-width:540px;margin:0 auto 28px}
 .cta-band__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .cta-band .btn--ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
 .cta-band .btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
 
-/* mark current nav item */
-.nav a[aria-current="page"]{color:var(--ink)}
-.nav a[aria-current="page"]::after{width:100%}
-
-/* ===========================================================
-   Responsive - tablet (<=900px) and mobile (<=560px)
-   =========================================================== */
-@media (max-width:900px){
-  .story-grid{grid-template-columns:1fr;gap:34px}
-  .why-grid{grid-template-columns:repeat(2,1fr)}
-  .journey-steps{grid-template-columns:repeat(2,1fr)}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .values-grid{grid-template-columns:1fr 1fr}
-  .heritage__grid,.heritage__grid--media{grid-template-columns:1fr;gap:28px}
+@media (max-width:760px){
+  .promise-grid{grid-template-columns:1fr 1fr}
+  .ab-made__inner{grid-template-columns:1fr;gap:30px}
+  .ab-made__media{order:-1}
 }
-@media (max-width:560px){
-  .why-grid,.journey-steps,.stats,.values-grid{grid-template-columns:1fr}
-  .ab-hero__pills span{font-size:12px}
-  .ab-hero h1{font-size:clamp(30px,9vw,40px)}
-  .note-card::before{font-size:72px;top:2px}
-  .story-media img,.heritage__media img{max-height:300px}
-}
-
-/* media-safe defaults */
+@media (max-width:460px){ .promise-grid{grid-template-columns:1fr} }
 .about-wrap svg,.about-wrap img{max-width:100%}
 </style>
 </head>
@@ -311,279 +191,91 @@
 
   <!-- ===== Hero ===== -->
   <section class="ab-hero" aria-labelledby="ab-hero-title">
-    <span class="ab-hero__watermark" aria-hidden="true">M</span>
     <div class="container">
-      <div class="ab-hero__inner">
-        <p class="kicker">Our Story &middot; Madhubani, Bihar</p>
-        <h1 id="ab-hero-title">Rooted in tradition,<br /><em>crafted for modern snacking.</em></h1>
-        <p class="ab-hero__sub">The Makhana began with a single belief - that India's oldest superfood deserves a place in the modern pantry. We handpick phool makhana from the lotus ponds of Madhubani and roast it in cold-pressed oil, never deep-frying. The result is an honest, high-protein crunch you can feel good about.</p>
-        <div class="ab-hero__cta">
-          <a href="index.html#products" class="btn btn--primary">Taste the difference</a>
-          <a href="#story" class="btn btn--ghost">Read our story</a>
-        </div>
-        <div class="ab-hero__pills" aria-label="What we stand for">
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>High protein</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg>Gluten-free</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2.5 5 5.5 5 8a5 5 0 0 1-10 0c0-2.5 2-5.5 5-8z"/></svg>Roasted, never fried</span>
-          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12c2-5 5-7 7-7s5 2 7 7c-2 5-5 7-7 7s-5-2-7-7z"/><circle cx="12" cy="12" r="2.4"/></svg>Non-GMO &middot; No palm oil</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Who We Are / Our Story ===== -->
-  <section class="ab-sec" id="story" aria-labelledby="story-title">
-    <div class="container">
-      <div class="story-grid">
-        <div class="story-media">
-          <img src="images/farmer.jpg" alt="A farmer tending young crops in a lush green field in Madhubani, Bihar" loading="lazy" width="700" height="466" />
-          <span class="story-media__cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg>Handpicked at dawn &middot; Madhubani, Bihar</span>
-        </div>
-        <div class="story-text">
-          <header class="ab-head">
-            <p class="kicker">Who we are</p>
-            <h2 id="story-title">A modern snacking brand, rooted in <em>Madhubani heritage.</em></h2>
-          </header>
-          <div class="story-prose">
-            <p class="lead">We are a small team obsessed with one humble lotus seed - and the centuries of craft behind it.</p>
-            <p>Long before makhana became a wellness headline, families across <strong>Madhubani, Bihar</strong> were wading into lotus ponds at dawn to gather foxnuts by hand. That tradition is the heart of everything we make. We work directly with these farming communities, paying fairly and sourcing seasonally, so the people who grow our makhana share in its success.</p>
-            <p>Every batch is cleaned, graded and roasted in <strong>cold-pressed oil - never deep-fried</strong>, never drowned in palm oil. What reaches your bowl is exactly what nature intended: a light, protein-rich, gluten-free, non-GMO snack that fits an unapologetically modern life.</p>
-            <p>We built The Makhana on three simple pillars: <strong>authentic Bihar roots</strong>, <strong>premium quality</strong>, and <strong>modern healthy snacking</strong> - and we refuse to compromise on any of them.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Founder note -->
-      <figure class="note-card note-card--wide">
-        <p class="note-card__label">A note from the founders</p>
-        <p>When we first carried a bag of Madhubani makhana to the city, friends couldn't believe a snack this light could taste this good. That moment started everything.</p>
-        <p>We promised ourselves we'd never cut a corner - no deep-frying, no palm oil, no shortcuts on the farmers who make it possible. Whether it's your post-workout handful or a festive gift, we want every pouch to taste like home and feel like a small act of care.</p>
-        <p>Thank you for snacking with us. We're only getting started.</p>
-        <figcaption class="note-card__sign">
-          <span class="seal" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 3c2.4 2.6 3.6 5.6 3.6 8.4a3.6 3.6 0 0 1-7.2 0C8.4 8.6 9.6 5.6 12 3z"/><path d="M5 16c3 .4 5.4 2 6.6 4M19 16c-3 .4-5.4 2-6.6 4"/></svg>
-          </span>
-          <span>
-            <b>- Team The Makhana</b>
-            <span>Madhubani, Bihar</span>
-          </span>
-        </figcaption>
+      <p class="kicker">Our Story &middot; Madhubani, Bihar</p>
+      <h1 id="ab-hero-title">Makhana, <em>made better.</em></h1>
+      <p class="ab-hero__sub">India's oldest superfood &mdash; handpicked from the lotus ponds of Madhubani and slow-roasted in cold-pressed oil, never fried. This is The Makhana.</p>
+      <figure class="ab-hero__img">
+        <img src="images/about-hero.jpg" alt="A bowl of roasted makhana surrounded by olive oil, lemon, fresh herbs, red chilli and salt" width="1200" height="562" />
       </figure>
     </div>
   </section>
 
-  <!-- ===== Why Choose Us ===== -->
-  <section class="ab-sec ab-sec--tint" aria-labelledby="why-title">
+  <!-- ===== Story ===== -->
+  <section class="ab-story">
     <div class="container">
-      <header class="ab-head ab-head--center">
-        <p class="kicker">Why choose us</p>
-        <h2 id="why-title">Crafted with care, <em>start to finish.</em></h2>
-        <p>Four promises in every pouch - the standards we hold ourselves to before anything reaches your bowl.</p>
-      </header>
-      <div class="why-grid">
-        <article class="why">
-          <span class="why__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
-          <h3>Premium Quality</h3>
-          <p>Only large, hand-graded foxnuts make the cut. Small batches, big standards, zero filler.</p>
+      <div class="ab-story__inner">
+        <p>Every great snack begins with respect for its ingredient. Ours begins with a single lotus seed.</p>
+        <p class="muted">For generations, families in Madhubani have waded into the lotus ponds at first light, gathering foxnuts by hand &mdash; a craft older than most of the food on our shelves.</p>
+        <p>We started The Makhana to carry that craft forward, honestly &mdash; to take a humble, quiet seed and give it the care it has always <em>deserved.</em></p>
+        <p class="muted">So we keep it simple. Handpicked, slow-roasted in cold-pressed oil, sealed fresh. Never deep-fried. Never drowned in palm oil. Nothing to hide on the label.</p>
+        <p>Light enough for an everyday handful. Good enough for a festive gift. <strong>Honest enough that you never think twice.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Our promise ===== -->
+  <section class="ab-promise" aria-labelledby="promise-title">
+    <div class="container">
+      <div class="ab-promise__head">
+        <h2 id="promise-title">Our promise, in every pouch</h2>
+        <p>The standards we hold ourselves to, before anything ever reaches your bowl.</p>
+      </div>
+      <div class="promise-grid">
+        <article class="promise">
+          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2.5 5 5.5 5 8a5 5 0 0 1-10 0c0-2.5 2-5.5 5-8z"/></svg></span>
+          <h3>Roasted, never fried</h3>
+          <p>Slow-roasted in cold-pressed oil for crunch without the grease.</p>
         </article>
-        <article class="why">
-          <span class="why__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg></span>
-          <h3>100% Natural</h3>
-          <p>No additives, no preservatives, no palm oil. Just makhana, roasted in cold-pressed oil.</p>
+        <article class="promise">
+          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg></span>
+          <h3>No palm oil, no maida</h3>
+          <p>No palm oil, no maida, no MSG, no hidden additives &mdash; ever.</p>
         </article>
-        <article class="why">
-          <span class="why__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 16h28" transform="scale(0.5)"/><path d="M5 8h14v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8z"/><path d="M8 8V6.5a4 4 0 0 1 8 0V8"/><path d="M9 13l2 2 4-4"/></svg></span>
-          <h3>Hygienically Packed</h3>
-          <p>Cleaned, graded and sealed fresh in a controlled facility - crisp from our hands to yours.</p>
+        <article class="promise">
+          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3>High in protein</h3>
+          <p>Plant-powered, naturally gluten-free and non-GMO snacking.</p>
         </article>
-        <article class="why">
-          <span class="why__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c4.5-3 7-6.5 7-10a7 7 0 0 0-14 0c0 3.5 2.5 7 7 10z"/><path d="M9 11h6"/><path d="M12 8v6"/></svg></span>
-          <h3>Farm Fresh</h3>
-          <p>Sourced seasonally and direct from Madhubani growers, so freshness is never an afterthought.</p>
+        <article class="promise">
+          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg></span>
+          <h3>Handpicked in Bihar</h3>
+          <p>Sourced direct from Madhubani's farming families, every season.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ===== Heritage of Madhubani ===== -->
-  <section class="ab-sec" aria-labelledby="heritage-title">
+  <!-- ===== Made in Madhubani ===== -->
+  <section class="ab-made" aria-labelledby="made-title">
     <div class="container">
-      <div class="heritage">
-        <div class="heritage__grid heritage__grid--media">
-          <div class="heritage__media">
-            <img src="images/lotus-pond.jpg" alt="A lotus pond in Madhubani, Bihar - where makhana (foxnuts) are harvested" loading="lazy" width="700" height="466" />
-          </div>
-          <div class="heritage__content">
-            <p class="kicker">Our heritage</p>
-            <h2 id="heritage-title">The heritage of <em>Madhubani.</em></h2>
-            <p>Madhubani is more than a place on a map - it is the makhana capital of the world, where lotus ponds and folk artistry have shaped life for centuries. We are proud to build our brand on that legacy.</p>
-            <p>We work hand-in-hand with local farming communities, honouring centuries-old methods of harvesting and curing while investing in sustainable livelihoods that let these traditions thrive for generations to come.</p>
-            <ul class="heritage__points">
-              <li>
-                <span class="n" aria-hidden="true">01</span>
-                <div>
-                  <b>Hand-in-hand with farmers</b>
-                  <span>Direct, fair partnerships with the families who harvest our foxnuts - no faceless middlemen.</span>
-                </div>
-              </li>
-              <li>
-                <span class="n" aria-hidden="true">02</span>
-                <div>
-                  <b>Centuries-old methods</b>
-                  <span>Time-honoured popping and curing techniques, passed down through generations, kept alive in every batch.</span>
-                </div>
-              </li>
-              <li>
-                <span class="n" aria-hidden="true">03</span>
-                <div>
-                  <b>Sustainable livelihoods</b>
-                  <span>Fair pricing and steady demand that help farming communities grow with us, season after season.</span>
-                </div>
-              </li>
-            </ul>
+      <div class="ab-made__inner">
+        <div class="ab-made__copy">
+          <p class="kicker">Made in India</p>
+          <h2 id="made-title">Rooted in <em>Madhubani.</em> Made for today.</h2>
+          <p>Madhubani is the makhana capital of the world &mdash; where lotus ponds and folk artistry have shaped life for centuries. We are proud to build on that legacy.</p>
+          <p>We work hand-in-hand with local growers, paying fairly and sourcing seasonally, so the families who harvest our foxnuts share in their success.</p>
+          <div class="ab-made__stats">
+            <div><b>500<em>+</em></b><span>farmer families</span></div>
+            <div><b>100<em>%</em></b><span>Madhubani-sourced</span></div>
+            <div><b>4.8<em>&#9733;</em></b><span>average rating</span></div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Farm-to-Bowl journey ===== -->
-  <section class="ab-sec ab-sec--tint" aria-labelledby="journey-title">
-    <div class="container">
-      <header class="ab-head ab-head--center">
-        <p class="kicker">Farm-to-bowl</p>
-        <h2 id="journey-title">The journey of every <em>handful.</em></h2>
-        <p>Four honest steps from the lotus ponds of Bihar to the bowl on your desk.</p>
-      </header>
-      <div class="journey-steps">
-        <article class="jstep">
-          <span class="jstep__num">Step 01</span>
-          <span class="jstep__ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 10c4 5 6 10 6 14a6 6 0 0 1-12 0c0-4 2-9 6-14z"/><path d="M10 24c5 0 9 2 11 5M38 24c-5 0-9 2-11 5"/><path d="M24 29v9"/></svg></span>
-          <h3>Farm Sourcing</h3>
-          <p>Foxnuts are handpicked from Madhubani's lotus ponds and sourced directly from local growers.</p>
-        </article>
-        <article class="jstep">
-          <span class="jstep__num">Step 02</span>
-          <span class="jstep__ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="13"/><path d="M24 11v-4M24 41v-4M11 24H7M41 24h-4"/><path d="M19 24l3.5 3.5L30 20"/></svg></span>
-          <h3>Cleaning &amp; Grading</h3>
-          <p>Every seed is cleaned and hand-graded, so only the plumpest, premium foxnuts move forward.</p>
-        </article>
-        <article class="jstep">
-          <span class="jstep__num">Step 03</span>
-          <span class="jstep__ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 8c4 5 6 9 6 12.5A6 6 0 0 1 18 20.5C18 17 20 13 24 8z"/><path d="M10 40c0-6 6-10 14-10s14 4 14 10"/></svg></span>
-          <h3>Roasting</h3>
-          <p>Slow-roasted in small batches with cold-pressed oil - never deep-fried, never greasy.</p>
-        </article>
-        <article class="jstep">
-          <span class="jstep__num">Step 04</span>
-          <span class="jstep__ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 16h28v22a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V16z"/><path d="M16 16V12a8 8 0 0 1 16 0v4"/><path d="M19 26l4 4 7-8"/></svg></span>
-          <h3>Fresh Packing</h3>
-          <p>Sealed fresh within hours so every handful lands as crisp as the moment it was roasted.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Impact stats ===== -->
-  <section class="ab-sec" aria-labelledby="impact-title">
-    <div class="container">
-      <header class="ab-head ab-head--center">
-        <p class="kicker">Our impact</p>
-        <h2 id="impact-title">Small seed, <em>real difference.</em></h2>
-        <p>Numbers we're proud of - and growing every harvest.</p>
-      </header>
-      <div class="stats">
-        <div class="stat"><div class="stat__n">500<em>+</em></div><div class="stat__l">Farmer families supported</div></div>
-        <div class="stat"><div class="stat__n">50k<em>+</em></div><div class="stat__l">Happy snackers across India</div></div>
-        <div class="stat"><div class="stat__n">4.8<em>&#9733;</em></div><div class="stat__l">Average customer rating</div></div>
-        <div class="stat"><div class="stat__n">100<em>%</em></div><div class="stat__l">Madhubani-sourced makhana</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Values ===== -->
-  <section class="ab-sec ab-sec--tint" aria-labelledby="values-title">
-    <div class="container">
-      <header class="ab-head ab-head--center">
-        <p class="kicker">What we value</p>
-        <h2 id="values-title">The values that <em>guide us.</em></h2>
-        <p>Principles we return to with every harvest, every roast and every pouch.</p>
-      </header>
-      <div class="values-grid">
-        <article class="value">
-          <span class="value__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c4.5-3 7-6.5 7-10a7 7 0 0 0-14 0c0 3.5 2.5 7 7 10z"/></svg></span>
-          <h3>Honesty in every pouch</h3>
-          <p>No deep-frying, no palm oil, no hidden additives. What's on the label is exactly what's inside.</p>
-        </article>
-        <article class="value">
-          <span class="value__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.5a3.2 3.2 0 0 1 0 5.6M21 20c0-2.4-1.4-4.5-3.5-5.4"/></svg></span>
-          <h3>Farmers come first</h3>
-          <p>Fair partnerships and seasonal sourcing that put Madhubani's growers at the centre of our story.</p>
-        </article>
-        <article class="value">
-          <span class="value__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg></span>
-          <h3>Better for you, always</h3>
-          <p>High-protein, gluten-free, non-GMO snacking that proves wholesome and delicious aren't a trade-off.</p>
-        </article>
-        <article class="value">
-          <span class="value__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12c2-5 5-7 7-7s5 2 7 7c-2 5-5 7-7 7s-5-2-7-7z"/><circle cx="12" cy="12" r="2.4"/></svg></span>
-          <h3>Craft over scale</h3>
-          <p>Small-batch by design. We'd rather make less and make it right than chase shortcuts.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAQ ===== -->
-  <section class="ab-sec" aria-labelledby="faq-title">
-    <div class="container">
-      <header class="ab-head ab-head--center">
-        <p class="kicker">Good to know</p>
-        <h2 id="faq-title">Questions, <em>answered.</em></h2>
-      </header>
-      <div class="faq-list" id="faqList">
-        <div class="faq-item">
-          <button type="button" class="faq-item__q" aria-expanded="false">
-            What exactly is makhana?
-            <span class="faq-item__ic" aria-hidden="true"></span>
-          </button>
-          <div class="faq-item__a"><p>Makhana - also called phool makhana, foxnuts or lotus seeds - is a popped seed of the lotus plant. It's a centuries-old Indian superfood that's naturally light, high in protein and gluten-free, making it a perfect everyday snack.</p></div>
-        </div>
-        <div class="faq-item">
-          <button type="button" class="faq-item__q" aria-expanded="false">
-            Are your foxnuts fried?
-            <span class="faq-item__ic" aria-hidden="true"></span>
-          </button>
-          <div class="faq-item__a"><p>Never. We slow-roast our makhana in small batches using cold-pressed oil - no deep-frying and no palm oil. You get all the crunch with none of the grease.</p></div>
-        </div>
-        <div class="faq-item">
-          <button type="button" class="faq-item__q" aria-expanded="false">
-            Where is The Makhana sourced from?
-            <span class="faq-item__ic" aria-hidden="true"></span>
-          </button>
-          <div class="faq-item__a"><p>Every seed is handpicked in Madhubani, Bihar - the makhana capital of the world - and sourced directly from local farming families we partner with season after season.</p></div>
-        </div>
-        <div class="faq-item">
-          <button type="button" class="faq-item__q" aria-expanded="false">
-            Is makhana a healthy snack?
-            <span class="faq-item__ic" aria-hidden="true"></span>
-          </button>
-          <div class="faq-item__a"><p>It's one of the most balanced snacks around - high in plant protein, naturally gluten-free, non-GMO and low in calories per handful. Roasted in cold-pressed oil, it's snacking you can feel genuinely good about.</p></div>
+        <div class="ab-made__media">
+          <img src="images/lotus-pond.jpg" alt="A lotus pond in Madhubani, Bihar, where makhana is harvested" loading="lazy" width="700" height="466" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== Closing CTA band ===== -->
-  <section class="ab-sec" aria-labelledby="cta-title">
-    <div class="container">
-      <div class="cta-band">
-        <h2 id="cta-title">Taste the <em>difference.</em></h2>
-        <p>From Madhubani's lotus ponds to your bowl - discover the crunch that tradition and care can create.</p>
-        <div class="cta-band__btns">
-          <a href="index.html#products" class="btn btn--primary">Shop the range</a>
-          <a href="index.html#gifting" class="btn btn--ghost">Explore gifting</a>
-        </div>
+  <!-- ===== Closing CTA ===== -->
+  <section class="container">
+    <div class="cta-band">
+      <h2>Taste the <em>difference.</em></h2>
+      <p>From Madhubani's lotus ponds to your bowl &mdash; discover the crunch that tradition and care can create.</p>
+      <div class="cta-band__btns">
+        <a href="index.html#products" class="btn btn--primary">Shop the range</a>
+        <a href="index.html#gifting" class="btn btn--ghost">Explore gifting</a>
       </div>
     </div>
   </section>
