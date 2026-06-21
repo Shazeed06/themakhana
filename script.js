@@ -640,7 +640,7 @@
       '<div class="hero__slider"><div class="hero__track">' +
       imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="' + alts[i] + '" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
       '<span class="hero__caption" aria-hidden="true">' + captions[0] + '</span><span class="hero__progress run" aria-hidden="true"></span>' +
-      '</div><button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide">&#8249;</button><button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide">&#8250;</button><div class="hero__dots">' +
+      '</div><div class="hero__dots">' +
       imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
       "</div></div>";
     const slides = el.querySelectorAll(".hero__slide");
