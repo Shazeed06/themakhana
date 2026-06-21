@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ===== SEO ===== -->
+<title>Contact Us - The Makhana | Premium Foxnuts from Madhubani, Bihar</title>
+<meta name="description" content="Get in touch with The Makhana. Questions about our roasted foxnuts, orders, gifting or bulk enquiries - we reply within 24 hours. Email hello@themakhana.in." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://www.themakhana.in/contact.html" />
+<meta name="theme-color" content="#F5C518" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Contact Us - The Makhana" />
+<meta property="og:description" content="Questions, orders, gifting or bulk enquiries - we'd love to hear from you. We reply within 24 hours." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.themakhana.in/contact.html" />
+<meta property="og:site_name" content="The Makhana" />
+<meta property="og:image" content="https://www.themakhana.in/images/about-hero.jpg" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Contact Us - The Makhana" />
+<meta name="twitter:description" content="Questions, orders, gifting or bulk enquiries - we'd love to hear from you." />
+<meta name="twitter:image" content="https://www.themakhana.in/images/about-hero.jpg" />
+
+<!-- ===== Fonts + shared design system ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="icon" type="image/png" href="images/logo.png" />
+<link rel="apple-touch-icon" href="images/logo.png" />
+
+<!-- ===== JSON-LD structured data ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "url": "https://www.themakhana.in/contact.html",
+  "name": "Contact Us - The Makhana",
+  "description": "Contact The Makhana for questions, orders, gifting or bulk enquiries.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "The Makhana",
+    "url": "https://www.themakhana.in/",
+    "logo": "https://www.themakhana.in/images/logo.png",
+    "email": "hello@themakhana.in",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Madhubani",
+      "addressRegion": "Bihar",
+      "addressCountry": "IN"
+    },
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "hello@themakhana.in",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi"]
+    }],
+    "sameAs": ["https://www.instagram.com/themakhanaofficial/"]
+  }
+}
+</script>
+
+<style>
+/* ===========================================================
+   Contact page - on shared tokens (styles.css)
+   =========================================================== */
+.contact-wrap{overflow-x:hidden}
+.nav a[aria-current="page"]{color:var(--ink)}
+.nav a[aria-current="page"]::after{width:100%}
+
+/* Hero */
+.ct-hero{padding-top:clamp(34px,5vw,60px);padding-bottom:clamp(8px,2vw,18px);text-align:center}
+.ct-hero .kicker{justify-content:center;margin-bottom:14px}
+.ct-hero h1{font-size:clamp(38px,5.6vw,68px);line-height:1.02;letter-spacing:-.03em;font-weight:800;color:var(--secondary)}
+.ct-hero h1 em{font-style:italic;font-weight:600;color:var(--primary-deep)}
+.ct-hero p{max-width:560px;margin:18px auto 0;font-size:clamp(16px,1.9vw,19px);line-height:1.7;color:var(--ink-soft)}
+
+/* Layout */
+.ct-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,52px);align-items:start;
+  padding-block:clamp(36px,6vw,72px)}
+
+/* Form card */
+.ct-form{background:var(--surface);border:1px solid var(--line);border-radius:22px;
+  box-shadow:var(--sh-card);padding:clamp(24px,3.4vw,40px)}
+.ct-form h2{font-size:clamp(20px,2.4vw,26px);font-weight:800;color:var(--secondary);margin-bottom:6px;letter-spacing:-.01em}
+.ct-form__intro{font-size:14.5px;color:var(--ink-soft);margin-bottom:22px;line-height:1.6}
+.ct-field{margin-bottom:14px}
+.ct-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ct-label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.ct-input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);
+  color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .15s ease,box-shadow .15s ease}
+.ct-input:focus{outline:none;border-color:var(--primary-deep);box-shadow:0 0 0 3px rgba(245,197,24,.26)}
+textarea.ct-input{min-height:130px;resize:vertical;line-height:1.6}
+.ct-field.is-invalid .ct-input{border-color:#D14545;box-shadow:0 0 0 3px rgba(209,69,69,.15)}
+.ct-err{display:none;font-size:12px;color:#D14545;margin-top:5px}
+.ct-field.is-invalid .ct-err{display:block}
+.ct-form .btn{width:100%;margin-top:6px}
+.ct-note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:12px}
+/* success */
+.ct-done{display:none;text-align:center;padding:clamp(20px,3vw,36px) 6px}
+.ct-form.sent .ct-form__body{display:none}
+.ct-form.sent .ct-done{display:block}
+.ct-done__tick{width:66px;height:66px;border-radius:50%;background:var(--good);display:grid;place-items:center;margin:0 auto 14px}
+.ct-done__tick svg{width:34px;height:34px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ct-done h3{font-size:22px;font-weight:800;color:var(--secondary);margin-bottom:8px}
+.ct-done p{font-size:15px;color:var(--ink-soft);line-height:1.65;max-width:380px;margin:0 auto}
+.ct-done a{color:var(--primary-deep);font-weight:700}
+
+/* Info cards */
+.ct-info{display:flex;flex-direction:column;gap:14px}
+.ct-card{display:flex;gap:15px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:18px;padding:20px 22px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.ct-card:hover{transform:translateY(-3px);box-shadow:var(--sh-card);border-color:color-mix(in srgb,var(--primary) 40%,var(--line))}
+.ct-card__ic{flex:0 0 auto;width:46px;height:46px;border-radius:13px;background:var(--honey-tint);color:var(--primary-deep);
+  display:grid;place-items:center}
+.ct-card__ic svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ct-card h3{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-text);margin-bottom:5px}
+.ct-card a,.ct-card p{font-size:15.5px;color:var(--ink);font-weight:600;line-height:1.5;word-break:break-word}
+.ct-card a:hover{color:var(--primary-deep)}
+.ct-card span{display:block;font-size:13px;color:var(--ink-soft);font-weight:400;margin-top:3px}
+
+@media (max-width:820px){
+  .ct-grid{grid-template-columns:1fr;gap:26px}
+}
+@media (max-width:460px){
+  .ct-row{grid-template-columns:1fr}
+}
+.contact-wrap svg,.contact-wrap img{max-width:100%}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ===== Announcement bar ===== -->
+<div class="announce" id="announce">
+  <p class="announce__text">Free shipping over &#8377;599&nbsp;&nbsp;&middot;&nbsp;&nbsp;Roasted, never fried&nbsp;&nbsp;&middot;&nbsp;&nbsp;Handpicked in Madhubani, Bihar</p>
+</div>
+
+<!-- ===== Header ===== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html" aria-label="The Makhana home">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <path d="M16 4c2.4 2.6 3.6 5.6 3.6 8.4 0 1.4-.3 2.6-.9 3.7M16 4c-2.4 2.6-3.6 5.6-3.6 8.4 0 1.4.3 2.6.9 3.7M16 4v12" />
+        <path d="M6 13c2.8.4 5 1.6 6.4 3.2.7.8 1.2 1.7 1.5 2.6M26 13c-2.8.4-5 1.6-6.4 3.2-.7.8-1.2 1.7-1.5 2.6" />
+        <path d="M9 22c2.2-1 4.4-1.2 6.2-.6 1 .3 1.9.9 2.6 1.6M23 22c-2.2-1-4.4-1.2-6.2-.6" />
+        <circle cx="16" cy="24.5" r="2.2" />
+      </svg>
+      <img class="brand__logo" src="images/logo.png" alt="The Makhana" width="50" height="50" />
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#products">Shop</a>
+      <a href="index.html#benefits">Benefits</a>
+      <a href="product.html?id=combo">Combos</a>
+      <a href="about.html">Our Story</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="cart-btn" id="cartBtn" href="index.html" aria-label="Go to shop, 0 items in cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M6 8h12l-1 11a2 2 0 0 1-2 1.8H9A2 2 0 0 1 7 19L6 8z" />
+          <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
+        </svg>
+        <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="contact-wrap">
+
+  <!-- ===== Hero ===== -->
+  <section class="ct-hero">
+    <div class="container">
+      <p class="kicker">Get in touch</p>
+      <h1>We'd love to <em>hear from you.</em></h1>
+      <p>Questions about our foxnuts, your order, gifting or bulk supply &mdash; drop us a line and a real human from The Makhana will get back within 24 hours.</p>
+    </div>
+  </section>
+
+  <!-- ===== Form + info ===== -->
+  <section>
+    <div class="container">
+      <div class="ct-grid">
+
+        <!-- Form -->
+        <form class="ct-form" id="ctForm" novalidate>
+          <div class="ct-form__body">
+            <h2>Send us a message</h2>
+            <p class="ct-form__intro">Fill this in and we'll reply to your email. Prefer email? Write to <a href="mailto:hello@themakhana.in" style="color:var(--primary-deep);font-weight:700">hello@themakhana.in</a>.</p>
+            <div class="ct-row">
+              <div class="ct-field">
+                <label class="ct-label" for="ctName">Full name</label>
+                <input class="ct-input" id="ctName" name="name" type="text" autocomplete="name" />
+                <span class="ct-err" id="err-ctName">Please enter your name</span>
+              </div>
+              <div class="ct-field">
+                <label class="ct-label" for="ctEmail">Email</label>
+                <input class="ct-input" id="ctEmail" name="email" type="email" autocomplete="email" />
+                <span class="ct-err" id="err-ctEmail">Enter a valid email</span>
+              </div>
+            </div>
+            <div class="ct-field">
+              <label class="ct-label" for="ctSubject">Subject <span style="color:var(--ink-soft);font-weight:400">(optional)</span></label>
+              <input class="ct-input" id="ctSubject" name="subject" type="text" placeholder="Order, gifting, bulk enquiry&hellip;" />
+            </div>
+            <div class="ct-field">
+              <label class="ct-label" for="ctMsg">Message</label>
+              <textarea class="ct-input" id="ctMsg" name="message" placeholder="How can we help?"></textarea>
+              <span class="ct-err" id="err-ctMsg">Please write a short message</span>
+            </div>
+            <button type="submit" class="btn btn--primary">Send message</button>
+            <p class="ct-note">We never share your details. Replies usually land within 24 hours.</p>
+          </div>
+          <div class="ct-done" id="ctDone" aria-live="polite"></div>
+        </form>
+
+        <!-- Info -->
+        <aside class="ct-info" aria-label="Other ways to reach us">
+          <a class="ct-card" href="mailto:hello@themakhana.in">
+            <span class="ct-card__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></span>
+            <div><h3>Email us</h3><span style="color:var(--ink);font-weight:600;font-size:15.5px;margin-top:0">hello@themakhana.in</span><span>For orders, support &amp; everything else</span></div>
+          </a>
+          <a class="ct-card" href="mailto:gifting@themakhana.in?subject=Gifting%20%26%20bulk%20enquiry">
+            <span class="ct-card__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z"/><path d="M3 5h18v4H3zM12 5v16"/><path d="M12 5C12 5 9 2 7 4s2 1 5 1zM12 5C12 5 15 2 17 4s-2 1-5 1z"/></svg></span>
+            <div><h3>Gifting &amp; bulk</h3><span style="color:var(--ink);font-weight:600;font-size:15.5px;margin-top:0">gifting@themakhana.in</span><span>Festive hampers &amp; corporate orders</span></div>
+          </a>
+          <a class="ct-card" href="https://www.instagram.com/themakhanaofficial/" target="_blank" rel="noopener">
+            <span class="ct-card__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></span>
+            <div><h3>Instagram</h3><span style="color:var(--ink);font-weight:600;font-size:15.5px;margin-top:0">@themakhanaofficial</span><span>DMs open &middot; behind-the-scenes &amp; drops</span></div>
+          </a>
+          <div class="ct-card">
+            <span class="ct-card__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg></span>
+            <div><h3>Find us</h3><p style="margin-top:0">Madhubani, Bihar &mdash; India</p><span>The makhana capital of the world</span></div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand brand--light" href="index.html" aria-label="The Makhana home">
+          <svg class="brand__mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+            <path d="M16 4c2.4 2.6 3.6 5.6 3.6 8.4 0 1.4-.3 2.6-.9 3.7M16 4c-2.4 2.6-3.6 5.6-3.6 8.4 0 1.4.3 2.6.9 3.7M16 4v12" />
+            <path d="M6 13c2.8.4 5 1.6 6.4 3.2.7.8 1.2 1.7 1.5 2.6M26 13c-2.8.4-5 1.6-6.4 3.2-.7.8-1.2 1.7-1.5 2.6" />
+            <path d="M9 22c2.2-1 4.4-1.2 6.2-.6 1 .3 1.9.9 2.6 1.6M23 22c-2.2-1-4.4-1.2-6.2-.6" />
+            <circle cx="16" cy="24.5" r="2.2" />
+          </svg>
+          <img class="brand__logo" src="images/logo.png" alt="The Makhana" width="50" height="50" />
+        </a>
+        <p>Small-batch foxnuts, handpicked in Madhubani, Bihar. Roasted, never fried.</p>
+        <div class="footer__fssai"><span class="fssai__mark">FS</span><span>FSSAI certified &middot;</span><span class="fssai__num">Lic. 10024051001234</span></div>
+      </div>
+      <div class="footer__col"><h4>Shop</h4><a href="product.html?id=peri">Peri Peri Punch</a><a href="product.html?id=pudina">Chatpata Pudina</a><a href="product.html?id=raw">Raw Phool Makhana</a><a href="product.html?id=combo">Variety Combo</a></div>
+      <div class="footer__col"><h4>Company</h4><a href="about.html">Our Story</a><a href="product.html?id=combo">Combos</a><a href="index.html#reviews">Reviews</a><a href="contact.html">Contact</a></div>
+      <div class="footer__col"><h4>Help</h4><a href="index.html">Shipping</a><a href="index.html">Returns</a><a href="contact.html">FAQ</a></div>
+    </div>
+    <div class="footer__bottom"><p>&copy; 2026 The Makhana &middot; Made in Madhubani, Bihar</p></div>
+  </div>
+</footer>
+
+<!-- ===== Inline script: cart count + contact form ===== -->
+<script>
+(function () {
+  // cart count from localStorage
+  try {
+    var cart = JSON.parse(localStorage.getItem("makhana_cart")) || [];
+    var count = cart.reduce(function (s, i) { return s + (i && i.qty ? i.qty : 0); }, 0);
+    var el = document.getElementById("cartCount");
+    var btn = document.getElementById("cartBtn");
+    if (el) el.textContent = count;
+    if (btn) btn.setAttribute("aria-label", "Go to shop, " + count + (count === 1 ? " item" : " items") + " in cart");
+  } catch (e) {}
+
+  // contact form: validate -> open mailto -> show confirmation
+  var form = document.getElementById("ctForm");
+  if (!form) return;
+  function setErr(id, bad) {
+    var f = document.getElementById(id).closest(".ct-field");
+    if (f) f.classList.toggle("is-invalid", bad);
+  }
+  form.addEventListener("input", function (e) {
+    var f = e.target.closest(".ct-field"); if (f) f.classList.remove("is-invalid");
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("ctName");
+    var email = document.getElementById("ctEmail");
+    var subject = document.getElementById("ctSubject");
+    var msg = document.getElementById("ctMsg");
+    var bad = null;
+    var nameBad = name.value.trim().length < 2; setErr("ctName", nameBad); if (nameBad) bad = bad || name;
+    var emailBad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()); setErr("ctEmail", emailBad); if (emailBad) bad = bad || email;
+    var msgBad = msg.value.trim().length < 5; setErr("ctMsg", msgBad); if (msgBad) bad = bad || msg;
+    if (bad) { bad.focus(); return; }
+
+    var subj = subject.value.trim() || "Website enquiry";
+    var body = msg.value.trim() + "\n\n— " + name.value.trim() + " (" + email.value.trim() + ")";
+    var mailto = "mailto:hello@themakhana.in?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
+
+    var done = document.getElementById("ctDone");
+    done.innerHTML =
+      '<div class="ct-done__tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></div>' +
+      '<h3>Thanks, ' + name.value.trim().replace(/[<>&]/g, "") + '!</h3>' +
+      '<p>Your email app should open with your message ready to send. If it doesn’t, just write to us at <a href="mailto:hello@themakhana.in">hello@themakhana.in</a> &mdash; we reply within 24 hours.</p>';
+    form.classList.add("sent");
+    try { window.location.href = mailto; } catch (err) {}
+  });
+})();
+</script>
+</body>
+</html>
