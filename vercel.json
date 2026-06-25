@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/products/:id",
-      "destination": "/product.html?id=:id"
+      "destination": "/product?id=:id"
     }
   ]
 }
