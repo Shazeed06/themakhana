@@ -16,9 +16,9 @@
     var nm = p.name.split(' (')[0];
     return '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
       ribbon + badge +
-      '<a class="card__media" href="product.html?id=' + p.id + '" aria-label="View ' + nm + '"><div class="card__pouch">' + TM.pouchSVG(p) + '</div></a>' +
+      '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + nm + '"><div class="card__pouch">' + TM.pouchSVG(p) + '</div></a>' +
       '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + nm + ' to cart">' + TM.ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
-      '<h3 class="card__name"><a href="product.html?id=' + p.id + '">' + nm + '</a></h3>' +
+      '<h3 class="card__name"><a href="/products/' + p.id + '">' + nm + '</a></h3>' +
       '<div class="card__price"><span class="card__now">' + TM.rupee(p.price) + '</span><span class="card__mrp">' + TM.rupee(p.mrp) + '</span></div>' +
       '</article>';
   }
@@ -52,7 +52,7 @@
   function renderCart() {
     var c = TM.getCart(), body = $('#cartItems'), foot = $('#cartFoot');
     if (!c.length) {
-      body.innerHTML = '<div class="cart__empty">' + TM.ICON.lotus + '<p>Your basket is empty</p><a href="shop.html" data-close-cart>Shop the range</a></div>';
+      body.innerHTML = '<div class="cart__empty">' + TM.ICON.lotus + '<p>Your basket is empty</p><a href="/shop" data-close-cart>Shop the range</a></div>';
       foot.classList.add('is-empty'); return;
     }
     foot.classList.remove('is-empty');

@@ -10,7 +10,9 @@
 
   /* ---------- resolve product ---------- */
   const params = new URLSearchParams(location.search);
-  let p = TM.getProduct(params.get("id"));
+  let _pid = params.get("id");
+  if (!_pid) { var _seg = location.pathname.replace(/\/+$/, "").split("/").pop(); if (_seg && _seg !== "product.html" && _seg !== "products") _pid = _seg.replace(/\.html$/, ""); }
+  let p = TM.getProduct(_pid);
   if (!p) p = TM.PRODUCTS[0];
 
   const shortName = p.name.split(" (")[0];
@@ -23,7 +25,7 @@
   (function seo() {
     const head = document.head;
     const SITE = "https://www.themakhana.in/";
-    const canonical = SITE + "product.html?id=" + p.id;
+    const canonical = SITE + "products/" + p.id;
     const ogImage = SITE + "images/logo.png"; // placeholder OG/social image
     const catName = p.category === "combo" ? "Combos" : (p.category === "raw" ? "Raw" : "Roasted");
 
@@ -96,8 +98,8 @@
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE },
-        { "@type": "ListItem", position: 2, name: "Shop", item: SITE + "index.html#products" },
-        { "@type": "ListItem", position: 3, name: catName, item: SITE + "index.html#products" },
+        { "@type": "ListItem", position: 2, name: "Shop", item: SITE + "shop" },
+        { "@type": "ListItem", position: 3, name: catName, item: SITE + "shop" },
         { "@type": "ListItem", position: 4, name: shortName, item: canonical }
       ]
     };
@@ -122,9 +124,9 @@
   /* ---------- breadcrumb ---------- */
   const catName = p.category === "combo" ? "Combos" : (p.category === "raw" ? "Raw" : "Roasted");
   $("#crumb").innerHTML =
-    '<a href="index.html">Home</a><span class="sep">/</span>' +
-    '<a href="index.html#products">Shop</a><span class="sep">/</span>' +
-    '<a href="index.html#products">' + catName + '</a><span class="sep">/</span><b>' + shortName + '</b>';
+    '<a href="/">Home</a><span class="sep">/</span>' +
+    '<a href="/shop">Shop</a><span class="sep">/</span>' +
+    '<a href="/shop">' + catName + '</a><span class="sep">/</span><b>' + shortName + '</b>';
 
   /* ---------- gallery ---------- */
   const stage = $("#galleryStage"), thumbs = $("#galleryThumbs");
@@ -292,7 +294,7 @@
     '<p class="kicker">More crunch</p><h2>You may also <em>like</em></h2>' +
     '<div class="rel-grid">' +
       related.map((r) =>
-        '<a class="rel" href="product.html?id=' + r.id + '" style="--acc:' + r.acc + '">' +
+        '<a class="rel" href="/products/' + r.id + '" style="--acc:' + r.acc + '">' +
           '<div class="rel__art">' + pouchSVG(r) + '</div>' +
           '<h3>' + r.name.split(" (")[0] + '</h3>' +
           '<div class="rel__p">' + rupee(r.price) + '<small>' + rupee(r.mrp) + '</small></div>' +
@@ -326,7 +328,7 @@
   function updateCartUI() {
     const cart = TM.getCart(), body = $("#cartItems"), foot = $("#cartFoot");
     if (!cart.length) {
-      body.innerHTML = '<div class="cart__empty">' + ICON.lotus + '<p>Your basket is empty</p><a href="index.html#products">Shop the range</a></div>';
+      body.innerHTML = '<div class="cart__empty">' + ICON.lotus + '<p>Your basket is empty</p><a href="/shop">Shop the range</a></div>';
       foot.classList.add("is-empty"); updateSummary(); return;
     }
     foot.classList.remove("is-empty");

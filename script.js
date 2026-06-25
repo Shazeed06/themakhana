@@ -160,10 +160,10 @@
     return '' +
       '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
         ribbon + badge +
-        '<a class="card__media" href="product.html?id=' + p.id + '" aria-label="View ' + escapeXML(nm) + '"><div class="card__pouch">' + pouchSVG(p) + '</div></a>' +
+        '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + escapeXML(nm) + '"><div class="card__pouch">' + pouchSVG(p) + '</div></a>' +
         '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + escapeXML(p.name) + ' to cart">' +
           ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
-        '<h3 class="card__name"><a href="product.html?id=' + p.id + '">' + nm + '</a></h3>' +
+        '<h3 class="card__name"><a href="/products/' + p.id + '">' + nm + '</a></h3>' +
         '<div class="card__price">' +
           '<span class="card__now">' + rupee(p.price) + '</span>' +
           '<span class="card__mrp">' + rupee(p.mrp) + '</span>' +
@@ -197,7 +197,7 @@
       const p = getProduct(id);
       if (!p) return "";
       const nm = p.name.split(" (")[0];
-      return '<a class="flavour-card reveal" href="product.html?id=' + p.id + '" style="--acc:' + p.acc + '" aria-label="Shop ' + nm + '">' +
+      return '<a class="flavour-card reveal" href="/products/' + p.id + '" style="--acc:' + p.acc + '" aria-label="Shop ' + nm + '">' +
         '<div class="flavour-card__art">' + pouchSVG(p) + '</div>' +
         '<div class="flavour-card__name">' + nm + '</div>' +
         '<div class="flavour-card__taste">' + p.note + '</div>' +
