@@ -1,12 +1,66 @@
 User-agent: *
 Allow: /
 
-# AI / answer engines welcome
+# ============================================================
+#  AI / answer engines explicitly welcome (AEO / GEO)
+#  We WANT ChatGPT, Claude, Gemini, Perplexity, Copilot etc.
+#  to read and cite themakhana.in
+# ============================================================
+
+# OpenAI (ChatGPT, ChatGPT Search)
 User-agent: GPTBot
 Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Google (Gemini / AI Overviews / Vertex)
 User-agent: Google-Extended
+Allow: /
+User-agent: Google-CloudVertexBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot already via Bingbot (allowed by *)
+
+# Others that feed LLMs
+User-agent: Amazonbot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Diffbot
+Allow: /
+User-agent: YouBot
+Allow: /
+User-agent: Timpibot
 Allow: /
 
 Sitemap: https://www.themakhana.in/sitemap.xml
