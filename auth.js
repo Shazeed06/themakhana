@@ -26,10 +26,9 @@ window.TMAuth = (function () {
     });
     sb.auth.onAuthStateChange(function (_e, session) {
       user = session ? session.user : null;
-      refreshProfile().then(function () {
-        updateHeader();
-        if (user && afterLogin) { var cb = afterLogin; afterLogin = null; closeModal(); cb(user); }
-      });
+      // Keep header + profile in sync ONLY. The login/signup handlers now own
+      // showing the success view, closing the modal and running afterLogin.
+      refreshProfile().then(updateHeader);
     });
   }
 
@@ -76,8 +75,10 @@ window.TMAuth = (function () {
       ".tma-acct:hover{color:var(--primary-deep,#b8860b)}" +
       ".tma{position:fixed;inset:0;z-index:9999;display:none}" +
       ".tma.open{display:block}" +
-      ".tma__scrim{position:absolute;inset:0;background:rgba(20,15,5,.55)}" +
-      ".tma__panel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(440px,92vw);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:28px 26px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}" +
+      ".tma__scrim{position:absolute;inset:0;background:rgba(20,15,5,.55);opacity:0;transition:opacity .25s ease}" +
+      ".tma.open .tma__scrim{opacity:1}" +
+      ".tma__panel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.96);opacity:0;transition:opacity .28s ease,transform .28s cubic-bezier(.2,.8,.2,1);width:min(440px,92vw);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:28px 26px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}" +
+      ".tma.open .tma__panel{opacity:1;transform:translate(-50%,-50%) scale(1)}" +
       ".tma__close{position:absolute;top:14px;right:16px;border:none;background:none;font-size:26px;line-height:1;cursor:pointer;color:#888}" +
       ".tma__tabs{display:flex;gap:8px;margin-bottom:18px;background:#f3efe6;border-radius:50px;padding:4px}" +
       ".tma__tab{flex:1;border:none;background:none;padding:9px;border-radius:50px;font-weight:700;font-size:14px;cursor:pointer;color:#7a7363;font-family:inherit}" +
@@ -92,7 +93,22 @@ window.TMAuth = (function () {
       ".tma__btn:hover{background:#000}.tma__btn:disabled{opacity:.6;cursor:default}" +
       ".tma__err{color:#c0392b;font-size:13px;font-weight:600;margin-top:12px;min-height:1px}" +
       ".tma__ok{color:#1e8a4c;font-size:13.5px;font-weight:600;margin-top:12px}" +
-      ".tma__gate{font-size:13px;color:#6a6356;text-align:center;margin:-2px 0 14px}";
+      ".tma__gate{font-size:13px;color:#6a6356;text-align:center;margin:-2px 0 14px}" +
+      // success view
+      ".tma__success{text-align:center;padding:14px 4px 6px;animation:tmaFade .45s ease both}" +
+      ".tma__check{width:78px;height:78px;border-radius:50%;margin:6px auto 18px;background:#e8f6ee;display:flex;align-items:center;justify-content:center;animation:tmaPop .5s cubic-bezier(.2,.9,.3,1.4) both}" +
+      ".tma__check svg{width:40px;height:40px;fill:none;stroke:#1e8a4c;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}" +
+      ".tma__check svg path{stroke-dasharray:32;stroke-dashoffset:32;animation:tmaDraw .5s .2s ease forwards}" +
+      ".tma__success h2{font-size:23px;margin:0 0 8px}" +
+      ".tma__success p.msg{font-size:15px;color:#4a4438;line-height:1.5;margin:0 auto;max-width:330px}" +
+      ".tma__success .tma__gate{margin:14px 0 0}" +
+      ".tma__actions{margin-top:22px;display:flex;flex-direction:column;gap:10px}" +
+      ".tma__btn--ghost{background:#fff;color:#1c1c1c;border:1.5px solid #e3ddcf}" +
+      ".tma__btn--ghost:hover{background:#f7f3ea}" +
+      ".tma__actions .tma__btn{margin-top:0;text-decoration:none;display:block;text-align:center;box-sizing:border-box}" +
+      "@keyframes tmaFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}" +
+      "@keyframes tmaPop{0%{transform:scale(0)}60%{transform:scale(1.08)}100%{transform:scale(1)}}" +
+      "@keyframes tmaDraw{to{stroke-dashoffset:0}}";
     document.head.appendChild(st);
   }
 
@@ -104,8 +120,16 @@ window.TMAuth = (function () {
       '<div class="tma__scrim" data-tma-close></div>' +
       '<div class="tma__panel" role="dialog" aria-modal="true" aria-label="Account">' +
         '<button class="tma__close" type="button" data-tma-close aria-label="Close">&times;</button>' +
-        '<div class="tma__tabs"><button class="tma__tab" data-tab="login" type="button">Log in</button><button class="tma__tab" data-tab="signup" type="button">Sign up</button></div>' +
+        '<div class="tma__tabs" id="tmaTabs"><button class="tma__tab" data-tab="login" type="button">Log in</button><button class="tma__tab" data-tab="signup" type="button">Sign up</button></div>' +
         '<p class="tma__gate" id="tmaGate" hidden>Please log in or create an account to place your order.</p>' +
+        // success view (hidden by default)
+        '<div class="tma__success" id="tmaSuccess" hidden>' +
+          '<div class="tma__check"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>' +
+          '<h2 id="tmaSuccessTitle">All set!</h2>' +
+          '<p class="msg" id="tmaSuccessMsg"></p>' +
+          '<p class="tma__gate" id="tmaSuccessGate" hidden>Taking you to checkout…</p>' +
+          '<div class="tma__actions" id="tmaSuccessActions"></div>' +
+        '</div>' +
         // login form
         '<form id="tmaLogin">' +
           '<h2>Welcome back</h2><p class="sub">Log in to see your orders and check out faster.</p>' +
@@ -138,17 +162,74 @@ window.TMAuth = (function () {
     return w;
   }
 
+  function firstName() {
+    var fn = profile && profile.full_name ? profile.full_name : "";
+    if (!fn && user && user.user_metadata && user.user_metadata.full_name) fn = user.user_metadata.full_name;
+    return fn ? fn.trim().split(" ")[0] : "";
+  }
+
   function showTab(which) {
     var login = which !== "signup";
+    // leaving the success view -> restore the form view
+    document.getElementById("tmaSuccess").hidden = true;
+    document.getElementById("tmaTabs").hidden = false;
+    document.getElementById("tmaGate").hidden = !afterLogin;
     document.getElementById("tmaLogin").hidden = !login;
     document.getElementById("tmaSignup").hidden = login;
     modal.querySelectorAll(".tma__tab").forEach(function (t) { t.classList.toggle("active", t.getAttribute("data-tab") === which); });
   }
 
+  /* ---------- success view ----------
+     opts: { title, message, gate (bool), actions:[{label,href,primary,onClick}] } */
+  function showSuccess(opts) {
+    if (!modal) return;
+    // hide the form/tab chrome
+    document.getElementById("tmaTabs").hidden = true;
+    document.getElementById("tmaGate").hidden = true;
+    document.getElementById("tmaLogin").hidden = true;
+    document.getElementById("tmaSignup").hidden = true;
+
+    document.getElementById("tmaSuccessTitle").textContent = opts.title || "All set!";
+    document.getElementById("tmaSuccessMsg").innerHTML = opts.message || "";
+    document.getElementById("tmaSuccessGate").hidden = !opts.gate;
+
+    var wrap = document.getElementById("tmaSuccessActions");
+    wrap.innerHTML = "";
+    (opts.actions || []).forEach(function (a) {
+      var b = document.createElement(a.href ? "a" : "button");
+      b.className = "tma__btn" + (a.primary ? "" : " tma__btn--ghost");
+      b.textContent = a.label;
+      if (a.href) { b.href = a.href; }
+      else { b.type = "button"; }
+      if (a.onClick) b.addEventListener("click", a.onClick);
+      wrap.appendChild(b);
+    });
+
+    var sv = document.getElementById("tmaSuccess");
+    sv.hidden = false;
+    // restart the entry animation each time it's shown
+    sv.style.animation = "none"; void sv.offsetWidth; sv.style.animation = "";
+  }
+
+  // Shared "proceed after auth" logic for both login & signup success.
+  function proceedAfterAuth() {
+    if (afterLogin) {
+      var cb = afterLogin; afterLogin = null;
+      setTimeout(function () { closeModal(); cb(user); }, 1200);
+    }
+  }
+
+  // Build the two standard buttons shown when there's no checkout gate.
+  function defaultSuccessActions() {
+    return [
+      { label: "View my orders", href: "/account", primary: true },
+      { label: "Continue shopping", onClick: function () { closeModal(); } }
+    ];
+  }
+
   function openModal(which) {
     if (!enabled) return;
     if (!modal) buildModal();
-    document.getElementById("tmaGate").hidden = !afterLogin;
     showTab(which || "login");
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
@@ -157,6 +238,9 @@ window.TMAuth = (function () {
     if (!modal) return;
     modal.classList.remove("open");
     document.body.style.overflow = "";
+    // reset back to a form view so the next open is clean
+    document.getElementById("tmaSuccess").hidden = true;
+    document.getElementById("tmaTabs").hidden = false;
   }
 
   function onLogin(e) {
@@ -168,8 +252,21 @@ window.TMAuth = (function () {
       password: document.getElementById("tmaLPass").value
     }).then(function (r) {
       btn.disabled = false; btn.textContent = "Log in";
-      if (r.error) { err.textContent = r.error.message || "Could not log in"; return; }
-      // onAuthStateChange handles close + afterLogin
+      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't log you in. Please check your details and try again."; return; }
+      if (!(r.data && r.data.session)) { err.textContent = "Sorry, we couldn't log you in. Please try again."; return; }
+      user = r.data.session.user;
+      var gated = !!afterLogin;
+      refreshProfile().then(function () {
+        updateHeader();
+        var fn = firstName();
+        showSuccess({
+          title: "Welcome back!",
+          message: "You're logged in" + (fn ? ", " + esc(fn) : "") + ".",
+          gate: gated,
+          actions: gated ? [] : defaultSuccessActions()
+        });
+        proceedAfterAuth();
+      });
     });
   }
 
@@ -182,20 +279,41 @@ window.TMAuth = (function () {
     if (!/^[6-9]\d{9}$/.test(phone)) { err.textContent = "Enter a valid 10-digit mobile number"; return; }
     if (!/^\d{6}$/.test(pin)) { err.textContent = "Enter a valid 6-digit pincode"; return; }
     if (pass.length < 6) { err.textContent = "Password must be at least 6 characters"; return; }
-    btn.disabled = true; btn.textContent = "Creating…";
+    btn.disabled = true; btn.textContent = "Creating your account…";
+    var email = g("tmaSEmail"), nameGiven = g("tmaSName");
     sb.auth.signUp({
-      email: g("tmaSEmail"), password: pass,
+      email: email, password: pass,
       options: { data: {
-        full_name: g("tmaSName"), phone: phone, address: g("tmaSAddr"),
+        full_name: nameGiven, phone: phone, address: g("tmaSAddr"),
         city: g("tmaSCity"), state: g("tmaSState"), pincode: pin
       } }
     }).then(function (r) {
       btn.disabled = false; btn.textContent = "Create account";
-      if (r.error) { err.textContent = r.error.message || "Could not sign up"; return; }
-      // If email confirmation is OFF, session is active now (onAuthStateChange fires).
-      // If ON, there's no session yet - tell the user to confirm.
-      if (r.data && r.data.session) { /* logged in - handled by listener */ }
-      else { ok.textContent = "Account created! Please check your email to confirm, then log in."; showTab("login"); }
+      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't create your account. Please try again."; return; }
+      var first = (nameGiven ? nameGiven.trim().split(" ")[0] : "");
+      if (r.data && r.data.session) {
+        // Email auto-confirm is ON: the customer is logged in right away.
+        user = r.data.session.user;
+        var gated = !!afterLogin;
+        refreshProfile().then(function () {
+          updateHeader();
+          showSuccess({
+            title: "Account created!",
+            message: "Welcome" + (first ? ", " + esc(first) : "") + "! Your account is ready — you can track all your orders right here.",
+            gate: gated,
+            actions: gated ? [] : defaultSuccessActions()
+          });
+          proceedAfterAuth();
+        });
+      } else {
+        // Email confirmation is ON: no session yet.
+        showSuccess({
+          title: "Almost there!",
+          message: "We've sent a confirmation link to <strong>" + esc(email) + "</strong>. Please click it to verify your email, then log in.",
+          gate: false,
+          actions: [{ label: "Go to log in", primary: true, onClick: function () { showTab("login"); } }]
+        });
+      }
     });
   }
 

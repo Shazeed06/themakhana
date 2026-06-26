@@ -33,27 +33,54 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <style>
-.acct-wrap{overflow-x:hidden;min-height:60vh;padding-block:clamp(32px,5vw,64px)}
-.acct-empty,.acct-empty2{text-align:center;max-width:420px;margin:40px auto;display:flex;flex-direction:column;gap:14px;align-items:center}
-.acct-empty h2{font-size:26px;color:var(--secondary)}
-.acct-empty p,.acct-empty2 p{color:var(--ink-soft)}
-.acct-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:24px}
-.acct-head h1{font-size:clamp(26px,4vw,38px);font-weight:800;color:var(--secondary);letter-spacing:-.02em}
-.acct-sub{color:var(--ink-soft);font-size:14.5px;margin-top:4px}
-.acct-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:28px;max-width:560px}
-.acct-card h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin-bottom:6px}
-.acct-card p{color:var(--ink);font-size:15px}
-.acct-h2{font-size:20px;font-weight:800;color:var(--secondary);margin:0 0 14px}
-.ord{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px}
-.ord__top{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin-bottom:8px}
-.ord__top strong{color:var(--ink);font-size:15px}
-.ord__items{font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:10px}
-.ord__foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:10px}
+.acct-wrap{overflow-x:hidden;min-height:60vh;padding-block:clamp(36px,5vw,72px)}
+
+/* ---- Signed-out / coming-soon panel ---- */
+.acct-gate{max-width:480px;margin:8px auto;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(28px,5vw,44px) clamp(22px,4vw,38px);box-shadow:0 18px 50px -28px rgba(0,0,0,.22)}
+.acct-gate__badge{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;background:var(--primary, #F5C518);color:var(--secondary)}
+.acct-gate__badge svg{width:30px;height:30px}
+.acct-gate h2{font-size:clamp(23px,3.4vw,29px);font-weight:800;color:var(--secondary);letter-spacing:-.02em;margin-bottom:8px}
+.acct-gate__lede{color:var(--ink-soft);font-size:15px;line-height:1.6;margin-bottom:22px}
+.acct-perks{list-style:none;margin:0 0 26px;padding:0;display:flex;flex-direction:column;gap:13px;text-align:left}
+.acct-perks li{display:flex;align-items:flex-start;gap:11px;font-size:15px;color:var(--ink);line-height:1.45}
+.acct-perks svg{flex:0 0 auto;width:21px;height:21px;color:var(--secondary);margin-top:1px}
+.acct-gate .btn{width:100%}
+.acct-gate__fine{margin-top:14px;font-size:13px;color:var(--ink-soft)}
+
+/* ---- Loading ---- */
+.acct-loading{display:flex;align-items:center;justify-content:center;gap:11px;color:var(--ink-soft);font-size:15px;padding:14px 0}
+.acct-loading--page{min-height:42vh}
+.acct-spin{width:19px;height:19px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--secondary);animation:acctspin .7s linear infinite;flex:0 0 auto}
+@keyframes acctspin{to{transform:rotate(360deg)}}
+
+/* ---- Signed-in header ---- */
+.acct-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.acct-head h1{font-size:clamp(27px,4vw,40px);font-weight:800;color:var(--secondary);letter-spacing:-.02em;line-height:1.1}
+.acct-sub{color:var(--ink-soft);font-size:14.5px;margin-top:7px}
+.acct-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:34px;max-width:560px}
+.acct-card h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:8px;font-weight:700}
+.acct-card p{color:var(--ink);font-size:15px;line-height:1.55}
+.acct-h2{font-size:21px;font-weight:800;color:var(--secondary);margin:0 0 16px;letter-spacing:-.01em}
+
+/* ---- Orders ---- */
+.ord{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px;transition:border-color .15s ease,box-shadow .15s ease}
+.ord:hover{border-color:var(--primary-deep);box-shadow:0 10px 30px -22px rgba(0,0,0,.3)}
+.ord__top{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink-soft);margin-bottom:10px}
+.ord__top strong{color:var(--ink);font-size:15px;letter-spacing:.01em}
+.ord__items{font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:12px}
+.ord__foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px}
 .ord__pay{font-size:13px;color:var(--ink-soft);text-transform:capitalize}
-.ord__foot strong{font-size:17px}
-.acct-loading{color:var(--ink-soft)}
-.btn--ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);border-radius:50px;padding:9px 18px;font-weight:700;font-family:inherit;cursor:pointer}
-.btn--ghost:hover{border-color:var(--primary-deep)}
+.ord__foot strong{font-size:17px;color:var(--secondary)}
+
+/* ---- Empty states ---- */
+.acct-empty,.acct-empty2{text-align:center;max-width:440px;margin:24px auto;display:flex;flex-direction:column;gap:14px;align-items:center}
+.acct-empty h2{font-size:26px;color:var(--secondary);font-weight:800}
+.acct-empty p,.acct-empty2 p{color:var(--ink-soft);line-height:1.6}
+.acct-empty2{background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:34px 24px;margin-top:4px}
+.acct-empty2 h3{font-size:18px;font-weight:800;color:var(--secondary)}
+
+.btn--ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);border-radius:50px;padding:9px 18px;font-weight:700;font-family:inherit;cursor:pointer;transition:border-color .15s ease,color .15s ease}
+.btn--ghost:hover{border-color:var(--primary-deep);color:var(--secondary)}
 </style>
 </head>
 <body>
@@ -84,7 +111,7 @@
 
 <main id="main" class="acct-wrap">
   <div class="container">
-    <div id="acctRoot"><p class="acct-loading">Loading…</p></div>
+    <div id="acctRoot"><div class="acct-loading acct-loading--page"><span class="acct-spin" aria-hidden="true"></span><span>Getting your account ready…</span></div></div>
   </div>
 </main>
 
@@ -110,7 +137,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/supabase-config.js?v=2"></script>
-<script src="auth.js?v=1"></script>
+<script src="auth.js?v=2"></script>
 <script>
 (function () {
   var root = document.getElementById("acctRoot");
@@ -126,7 +153,19 @@
     }
     var u = window.TMAuth.user();
     if (!u) {
-      root.innerHTML = '<div class="acct-empty"><h2>Your account</h2><p>Log in or create an account to see your orders and saved details.</p><button class="btn btn--primary" id="acctLogin" type="button">Log in / Sign up</button></div>';
+      root.innerHTML =
+        '<div class="acct-gate">' +
+          '<div class="acct-gate__badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.6 3.6-6 8-6s8 2.4 8 6"/></svg></div>' +
+          '<h2>Sign in to your account</h2>' +
+          '<p class="acct-gate__lede">Welcome back to The Makhana. Sign in to pick up right where you left off.</p>' +
+          '<ul class="acct-perks">' +
+            '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Track your orders from roast to doorstep</span></li>' +
+            '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Faster checkout with saved delivery details</span></li>' +
+            '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Reorder your favourite foxnuts in one tap</span></li>' +
+          '</ul>' +
+          '<button class="btn btn--primary" id="acctLogin" type="button">Sign in / Create account</button>' +
+          '<p class="acct-gate__fine">New here? Creating an account takes just a moment.</p>' +
+        '</div>';
       document.getElementById("acctLogin").onclick = function(){ window.TMAuth.openModal("login"); };
       return;
     }
@@ -136,8 +175,8 @@
       '<div class="acct-head"><div><h1>Hi, ' + esc((p.full_name||"there").split(" ")[0]) + '</h1>' +
         '<p class="acct-sub">' + esc(u.email||"") + (p.phone ? (" &middot; " + esc(p.phone)) : "") + '</p></div>' +
         '<button class="btn--ghost" id="acctOut" type="button">Log out</button></div>' +
-      '<div class="acct-card"><h3>Delivery address</h3><p>' + esc(addr) + '</p></div>' +
-      '<h2 class="acct-h2">Your orders</h2><div id="acctOrders"><p class="acct-loading">Loading your orders…</p></div>';
+      '<div class="acct-card"><h3>Saved delivery address</h3><p>' + esc(addr) + '</p></div>' +
+      '<h2 class="acct-h2">Your orders</h2><div id="acctOrders"><div class="acct-loading"><span class="acct-spin" aria-hidden="true"></span><span>Fetching your orders…</span></div></div>';
     document.getElementById("acctOut").onclick = function(){ window.TMAuth.signOut().then(function(){ location.reload(); }); };
     window.TMAuth.getOrders().then(renderOrders);
   }
@@ -145,7 +184,7 @@
   function renderOrders(orders) {
     var box = document.getElementById("acctOrders"); if (!box) return;
     if (!orders || !orders.length) {
-      box.innerHTML = '<div class="acct-empty2"><p>You have no orders yet.</p><a class="btn btn--primary" href="/shop">Start shopping</a></div>';
+      box.innerHTML = '<div class="acct-empty2"><h3>No orders yet — your foxnut journey starts here</h3><p>Once you place your first order, it will show up here so you can track and reorder in a tap.</p><a class="btn btn--primary" href="/shop">Shop foxnuts</a></div>';
       return;
     }
     box.innerHTML = orders.map(function (o) {
