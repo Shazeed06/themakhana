@@ -17,3 +17,8 @@ WhatsApp*
 *_files/
 product/
 herosection/
+
+# Secrets / environment (NEVER commit real keys)
+.env
+.env.local
+.env.*.local
