@@ -183,6 +183,7 @@
       payOnline(data);
     } else {
       var orderId = "TM" + String(Date.now()).slice(-6);
+      saveToAccount({ order_no: orderId, method: "cod", paymentId: null, data: data });
       showDone(data.name, data.phone, orderId, false);
       if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "cod" });
     }
@@ -268,6 +269,7 @@
       .then(function (j) {
         if (j && j.valid) {
           var orderId = String(resp.razorpay_payment_id || ("TM" + Date.now())).replace("pay_", "");
+          saveToAccount({ order_no: orderId, method: "online", paymentId: resp.razorpay_payment_id, data: data });
           showDone(data.name, data.phone, orderId, true);
           if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "online", paymentId: resp.razorpay_payment_id });
         } else {
@@ -297,14 +299,45 @@
 
   function onKey(e) { if (e.key === "Escape") close(); }
 
+  function prefillFromProfile() {
+    if (!window.TMAuth || !window.TMAuth.enabled) return;
+    var p = window.TMAuth.profile(), u = window.TMAuth.user();
+    function set(id, v) { var el = document.getElementById(id); if (el && !el.value && v) el.value = v; }
+    if (p) { set("coName", p.full_name); set("coPhone", p.phone); set("coAddr", p.address); set("coCity", p.city); set("coState", p.state); set("coPin", p.pincode); set("coEmail", p.email); }
+    if (u && u.email) set("coEmail", u.email);
+  }
+
+  function saveToAccount(o) {
+    if (!window.TMAuth || !window.TMAuth.saveOrder) return;
+    var sub = 0; (o.data.items || []).forEach(function (i) { sub += i.price * i.qty; });
+    var ship = total - sub; if (ship < 0) ship = 0;
+    try {
+      window.TMAuth.saveOrder({
+        order_no: o.order_no, items: o.data.items, subtotal: sub, shipping: ship, total: total,
+        payment_method: o.method, payment_id: o.paymentId,
+        name: o.data.name, phone: o.data.phone, email: o.data.email, address: o.data.address
+      });
+    } catch (e) { /* never block the confirmation on a save error */ }
+  }
+
   function open(o) {
     opts = o;
+    // require login before ordering (only if Supabase auth is configured)
+    if (window.TMAuth && window.TMAuth.enabled && !window.TMAuth.user()) {
+      window.TMAuth.requireLogin().then(function (u) { if (u) reallyOpen(); });
+      return;
+    }
+    reallyOpen();
+  }
+
+  function reallyOpen() {
     if (!modal) build();
     document.getElementById("coDone").hidden = true;
     document.getElementById("coForm").hidden = false;
     clearPayErr();
     busy(false);
     Array.prototype.forEach.call(modal.querySelectorAll(".co-field.is-invalid"), function (f) { f.classList.remove("is-invalid"); });
+    prefillFromProfile();
     renderSummary();
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
