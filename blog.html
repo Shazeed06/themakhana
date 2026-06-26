@@ -109,6 +109,10 @@
 @media (max-width:900px){.blog-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.blog-grid{grid-template-columns:1fr}}
 .blog-wrap svg,.blog-wrap img{max-width:100%}
+.blog-pagination{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding-bottom:clamp(40px,6vw,72px)}
+.blog-pagination button{min-width:44px;height:44px;padding:0 12px;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;font-weight:700;font-size:15px;color:var(--ink);font-family:inherit;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.blog-pagination button:hover{border-color:var(--primary-deep)}
+.blog-pagination button.is-active{background:var(--primary);border-color:var(--primary);color:var(--secondary)}
 </style>
 </head>
 
@@ -334,6 +338,7 @@
         </article>
 
       </div>
+      <nav class="blog-pagination" id="blogPagination" aria-label="Blog pages"></nav>
     </div>
   </section>
 
@@ -354,6 +359,7 @@
           <img class="brand__logo" src="images/logo.png" alt="The Makhana" width="50" height="50" />
         </a>
         <p>Small-batch foxnuts, sourced from Bihar &amp; crafted in Delhi. Roasted, never fried.</p>
+        <p class="footer__contact" style="margin:14px 0 0;font-size:14px;line-height:1.9"><a href="mailto:themakhana.official@gmail.com" style="color:inherit;font-weight:600">themakhana.official@gmail.com</a><br /><a href="tel:+918287124651" style="color:inherit;font-weight:600">+91&nbsp;82871&nbsp;24651</a></p>
         <div class="footer__fssai"><span class="fssai__mark">FS</span><span>FSSAI certified &middot;</span><span class="fssai__num">Lic. 10024051001234</span></div>
       </div>
       <div class="footer__col"><h4>Shop</h4><a href="/shop">All foxnuts</a><a href="/products/peri">Peri Peri Punch</a><a href="/products/raw">Raw Phool Makhana</a><a href="/products/combo">Variety Combo</a></div>
@@ -389,6 +395,36 @@
       a.style.maxHeight = open ? a.scrollHeight + "px" : "0";
     });
   });
+})();
+
+(function () {
+  // --- Blog pagination: 10 posts per page ---
+  var PER = 10;
+  var grid = document.querySelector(".blog-grid");
+  var nav = document.getElementById("blogPagination");
+  if (!grid || !nav) return;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll(".bcard"));
+  if (cards.length <= PER) { nav.style.display = "none"; return; }
+  var pages = Math.ceil(cards.length / PER);
+  function render(page, scroll) {
+    cards.forEach(function (c, i) {
+      c.style.display = (i >= (page - 1) * PER && i < page * PER) ? "" : "none";
+    });
+    Array.prototype.forEach.call(nav.querySelectorAll("button"), function (b) {
+      var on = parseInt(b.getAttribute("data-page"), 10) === page;
+      b.classList.toggle("is-active", on);
+      if (on) { b.setAttribute("aria-current", "page"); } else { b.removeAttribute("aria-current"); }
+    });
+    if (scroll) window.scrollTo({ top: Math.max(0, grid.getBoundingClientRect().top + window.pageYOffset - 90), behavior: "smooth" });
+  }
+  var html = "";
+  for (var p = 1; p <= pages; p++) html += '<button type="button" data-page="' + p + '" aria-label="Go to page ' + p + '">' + p + "</button>";
+  nav.innerHTML = html;
+  nav.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (b) render(parseInt(b.getAttribute("data-page"), 10), true);
+  });
+  render(1, false);
 })();
 </script>
 </body>
