@@ -51,7 +51,7 @@
 
     link("canonical", canonical);
     meta("robots", "index,follow");
-    meta("theme-color", "#b5c99a");
+    meta("theme-color", "#97a97c");
 
     // Open Graph
     prop("og:type", "product");

@@ -242,7 +242,7 @@
             image: location.origin + "/images/logo.png",
             prefill: { name: data.name, contact: data.phone, email: data.email || "" },
             notes: { address: data.address },
-            theme: { color: "#b5c99a" },
+            theme: { color: "#97a97c" },
             handler: function (resp) { verifyAndFinish(resp, data); },
             modal: { ondismiss: function () { busy(false); showPayErr("Payment cancelled. You can try again or choose Cash on Delivery."); } }
           });
