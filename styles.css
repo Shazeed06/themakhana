@@ -854,3 +854,53 @@ html,body{max-width:100%;overflow-x:hidden}
   .feats__media{order:-1}
   .feats__list .feat{justify-content:flex-start}
 }
+
+
+/* ===== Premium hero (pheroA — editorial split) ===== */
+.pheroA{padding:clamp(28px,5vw,72px) 0 clamp(40px,6vw,84px)}
+.pheroA .container{max-width:1200px;margin-inline:auto;padding-inline:20px}
+.pheroA__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(32px,5vw,72px)}
+.pheroA__copy{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(16px,2vw,22px)}
+.pheroA__copy>*{margin:0}
+.pheroA__eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:clamp(11px,1.1vw,13px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary-text);background:var(--surface-2);border:1px solid var(--line);padding:8px 15px;border-radius:var(--r-pill)}
+.pheroA__eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--primary);flex:0 0 auto}
+.pheroA h1{font-size:clamp(38px,5.6vw,68px);line-height:1.04;letter-spacing:-.025em;font-weight:800;color:var(--secondary);text-wrap:balance;max-width:15ch}
+.pheroA h1 em{font-style:normal;color:var(--primary-deep)}
+.pheroA__sub{font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:var(--ink-soft);max-width:46ch}
+.pheroA__cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:4px}
+.pheroA__shop{display:inline-flex;align-items:center;gap:9px;background:var(--secondary);color:#fff;font-weight:700;font-size:16px;padding:15px 34px;border-radius:var(--r-pill);box-shadow:0 16px 30px -16px rgba(13,13,13,.55);transition:transform .18s ease,box-shadow .22s ease}
+.pheroA__shop:hover{transform:translateY(-2px);box-shadow:0 22px 36px -16px rgba(13,13,13,.6)}
+.pheroA__shop svg{transition:transform .22s ease}
+.pheroA__shop:hover svg{transform:translateX(4px)}
+.pheroA__link{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:15px;color:var(--secondary);border-bottom:2px solid var(--line);padding-bottom:2px;transition:border-color .2s ease,color .2s ease}
+.pheroA__link:hover{color:var(--primary-deep);border-color:var(--primary)}
+.pheroA__trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:8px;font-size:14px;font-weight:600;color:var(--ink-soft)}
+.pheroA__trust b{color:var(--secondary);font-weight:700}
+.pheroA__trust span{display:inline-flex;align-items:center;gap:8px}
+.pheroA__trust span+span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--primary);margin-right:8px}
+.pheroA__media{position:relative}
+.pheroA__frame{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 4px 12px rgba(20,20,20,.06),0 40px 70px -34px rgba(20,20,20,.4);aspect-ratio:4/5}
+.pheroA__frame img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block}
+.pheroA__badge{position:absolute;left:-14px;bottom:26px;z-index:3;display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:13px 18px;box-shadow:0 22px 40px -20px rgba(20,20,20,.45)}
+.pheroA__badgeIc{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--honey-tint);color:var(--primary-deep);flex:0 0 auto}
+.pheroA__badge b{display:block;font-size:15px;font-weight:800;color:var(--secondary);line-height:1.2}
+.pheroA__badge small{display:block;font-size:12px;color:var(--ink-soft);font-weight:600}
+.pheroA__pill{position:absolute;top:20px;right:-12px;z-index:3;background:var(--secondary);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;padding:9px 16px;border-radius:var(--r-pill);box-shadow:0 16px 30px -16px rgba(13,13,13,.55)}
+@media (max-width:720px){
+  .pheroA__grid{grid-template-columns:1fr;gap:clamp(28px,7vw,40px)}
+  .pheroA__copy{align-items:flex-start}
+  .pheroA__frame{aspect-ratio:5/4}
+  .pheroA__badge{left:12px;bottom:14px}
+  .pheroA__pill{right:12px}
+}
+.pheroA a:focus-visible{outline:2px solid var(--primary-deep);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:no-preference){
+  .pheroA__copy>*{opacity:0;animation:pheroAUp .7s cubic-bezier(.2,.7,.3,1) forwards}
+  .pheroA__copy>*:nth-child(2){animation-delay:.07s}
+  .pheroA__copy>*:nth-child(3){animation-delay:.14s}
+  .pheroA__copy>*:nth-child(4){animation-delay:.21s}
+  .pheroA__copy>*:nth-child(5){animation-delay:.28s}
+  .pheroA__media{opacity:0;animation:pheroAFade .9s ease .15s forwards}
+  @keyframes pheroAUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes pheroAFade{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+}
