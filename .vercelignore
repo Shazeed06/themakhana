@@ -1,0 +1,4 @@
+# Keep internal docs/config in GitHub but OUT of the public Vercel deploy
+*.md
+supabase-schema.sql
+.env.example
