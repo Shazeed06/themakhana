@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=9" />
+<link rel="stylesheet" href="styles.css?v=10" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -312,41 +312,100 @@
 
 <main id="main">
 
-<!-- ===== Hero (premium editorial split) ===== -->
-<section class="pheroA" aria-labelledby="hero-title">
-  <div class="container">
-    <div class="pheroA__grid">
-      <div class="pheroA__copy">
-        <span class="pheroA__eyebrow">Sourced from Bihar &middot; Roasted in Delhi</span>
-        <h1 id="hero-title">The crunch you can feel <em>genuinely good</em> about.</h1>
-        <p class="pheroA__sub">Premium phool makhana, hand-roasted in small batches &mdash; never fried, never junk. Just light, high-protein foxnuts with a crisp you'll keep reaching for.</p>
-        <div class="pheroA__cta">
-          <a class="pheroA__shop" href="#products">Shop Now
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="pheroA__link" href="#products">Explore Flavours
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-        <div class="pheroA__trust">
-          <span><b>High in plant protein</b></span>
-          <span>Gluten-free &amp; vegan</span>
-          <span>No fried oil</span>
-        </div>
-      </div>
-      <div class="pheroA__media">
-        <div class="pheroA__frame">
-          <img src="images/about-hero.jpg" alt="A white bowl of golden roasted makhana surrounded by fresh lemon halves, red chillies, herbs and small bowls of spices on a clean off-white background" width="1600" height="750" loading="eager" fetchpriority="high" decoding="async">
-        </div>
-        <span class="pheroA__pill">Small-batch roasted</span>
-        <div class="pheroA__badge">
-          <span class="pheroA__badgeIc" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          </span>
-          <span><b>High-protein &middot; Guilt-free</b><small>100% natural foxnuts</small></span>
+<!-- ===== Hero (cinematic full-bleed slider) ===== -->
+<section class="pheroB" aria-roledescription="carousel" aria-label="The Makhana highlights" tabindex="0">
+  <div class="pheroB__viewport">
+
+    <article class="pheroB__slide is-active" aria-roledescription="slide" aria-label="1 of 4">
+      <img class="pheroB__bg" src="images/about-hero.jpg" alt="A white bowl of golden roasted makhana surrounded by fresh lemon halves, red chillies, herbs and small bowls of spices on a clean off-white background" width="1600" height="750" style="object-position:70% center" loading="eager" fetchpriority="high" decoding="async">
+      <div class="pheroB__inner">
+        <div class="pheroB__content">
+          <span class="pheroB__eyebrow"><b></b>Bihar-sourced &middot; Delhi small-batch roasted</span>
+          <h1 id="hero-title" class="pheroB__title">Snack lighter.<br><em>Crunch prouder.</em></h1>
+          <p class="pheroB__sub">Premium phool makhana, hand-roasted in small batches and never fried. Plant-protein rich, gluten-free and gloriously crisp &mdash; the guilt-free crunch you can reach for any time of day.</p>
+          <div class="pheroB__cta">
+            <a class="pheroB__btn pheroB__btn--primary" href="#products">Shop Now <span aria-hidden="true">&rarr;</span></a>
+            <a class="pheroB__btn pheroB__btn--ghost" href="#products">Explore Flavours</a>
+          </div>
+          <div class="pheroB__badges">
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>High plant protein</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No fried oil &middot; vegan</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Small-batch roasted</span>
+          </div>
         </div>
       </div>
-    </div>
+    </article>
+
+    <article class="pheroB__slide" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true">
+      <img class="pheroB__bg" src="images/makhana-bowl.jpg" alt="A rustic dark bowl of roasted makhana foxnuts with a wooden spoon on a moody slate surface" width="1300" height="867" style="object-position:center" loading="lazy" decoding="async">
+      <div class="pheroB__inner">
+        <div class="pheroB__content">
+          <span class="pheroB__eyebrow"><b></b>Roasted, never fried</span>
+          <h2 class="pheroB__title">Light bites.<br><em>Big protein.</em></h2>
+          <p class="pheroB__sub">Every handful packs plant protein and fibre into a crunch that actually satisfies. Snacking that finally loves you back &mdash; at your desk, on the go, or at midnight.</p>
+          <div class="pheroB__cta">
+            <a class="pheroB__btn pheroB__btn--primary" href="#products">Shop Now <span aria-hidden="true">&rarr;</span></a>
+            <a class="pheroB__btn pheroB__btn--ghost" href="#products">Explore Flavours</a>
+          </div>
+          <div class="pheroB__badges">
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>High plant protein</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No fried oil &middot; vegan</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Small-batch roasted</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="pheroB__slide" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true">
+      <img class="pheroB__bg" src="images/lotus-seedpod.jpg" alt="A green lotus seed pod holding dark seeds &mdash; the natural source of makhana &mdash; among lotus leaves" width="1600" height="720" style="object-position:center" loading="lazy" decoding="async">
+      <div class="pheroB__inner">
+        <div class="pheroB__content">
+          <span class="pheroB__eyebrow"><b></b>100% natural &middot; single-origin</span>
+          <h2 class="pheroB__title">Straight from<br><em>the lotus.</em></h2>
+          <p class="pheroB__sub">Makhana is the humble seed of the lotus &mdash; hand-picked, sun-dried and slow-roasted. No additives, no preservatives, no shortcuts. Just nature's own superfood.</p>
+          <div class="pheroB__cta">
+            <a class="pheroB__btn pheroB__btn--primary" href="#products">Shop Now <span aria-hidden="true">&rarr;</span></a>
+            <a class="pheroB__btn pheroB__btn--ghost" href="#products">Explore Flavours</a>
+          </div>
+          <div class="pheroB__badges">
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>High plant protein</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No fried oil &middot; vegan</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Small-batch roasted</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="pheroB__slide" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true">
+      <img class="pheroB__bg" src="images/lotus-pond.jpg" alt="Pink lotus flowers blooming across a calm pond in Bihar, where the finest makhana is grown" width="1400" height="933" style="object-position:center" loading="lazy" decoding="async">
+      <div class="pheroB__inner">
+        <div class="pheroB__content">
+          <span class="pheroB__eyebrow"><b></b>Rooted in Bihar</span>
+          <h2 class="pheroB__title">Grown in<br><em>sacred waters.</em></h2>
+          <p class="pheroB__sub">Harvested from the lotus ponds of Bihar &mdash; the heartland of the world's finest makhana. Heritage and purity you can taste in every crisp bite.</p>
+          <div class="pheroB__cta">
+            <a class="pheroB__btn pheroB__btn--primary" href="#products">Shop Now <span aria-hidden="true">&rarr;</span></a>
+            <a class="pheroB__btn pheroB__btn--ghost" href="#products">Explore Flavours</a>
+          </div>
+          <div class="pheroB__badges">
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>High plant protein</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No fried oil &middot; vegan</span>
+            <span class="pheroB__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Small-batch roasted</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <button class="pheroB__arrow pheroB__arrow--prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button class="pheroB__arrow pheroB__arrow--next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+
+  <div class="pheroB__dots" role="tablist" aria-label="Select slide">
+    <button class="pheroB__dot is-active" type="button" data-i="0" role="tab" aria-current="true" aria-label="Slide 1"></button>
+    <button class="pheroB__dot" type="button" data-i="1" role="tab" aria-current="false" aria-label="Slide 2"></button>
+    <button class="pheroB__dot" type="button" data-i="2" role="tab" aria-current="false" aria-label="Slide 3"></button>
+    <button class="pheroB__dot" type="button" data-i="3" role="tab" aria-current="false" aria-label="Slide 4"></button>
   </div>
 </section>
 
@@ -649,6 +708,6 @@
 <script src="/supabase-config.js?v=2"></script>
 <script src="/auth.js?v=2"></script>
 <script src="checkout.js?v=7"></script>
-<script src="script.js?v=6"></script>
+<script src="script.js?v=7"></script>
 </body>
 </html>
