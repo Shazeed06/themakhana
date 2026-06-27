@@ -1,24 +1,24 @@
 /* ===================================================================
    THE MAKHANA - Golden Yellow + Deep Black design system
-   Palette: Primary #F5C518 · Secondary #0D0D0D · Accent #FFFDF5
-            Text Dark #1A1A1A · Text Light #6B7280 · Bg #FAFAF7
+   Palette: Primary #b5c99a · Secondary #0D0D0D · Accent #f4f7ef
+            Text Dark #1A1A1A · Text Light #6B7280 · Bg #ffffff
    =================================================================== */
 
 /* ---------- Tokens ---------- */
 :root{
-  --bg:#FAFAF7;
+  --bg:#ffffff;
   --surface:#FFFFFF;
-  --surface-2:#FFFDF5;
+  --surface-2:#f4f7ef;
   --secondary:#0D0D0D;
-  --primary:#F5C518;
-  --primary-deep:#B8860B;
-  --primary-text:#876600;
-  --honey-tint:#FEF6D0;
+  --primary:#b5c99a;
+  --primary-deep:#8aaa66;
+  --primary-text:#4f6b34;
+  --honey-tint:#eaf1e1;
   --ink:#1A1A1A;
   --ink-soft:#6B7280;
   --line:#EAE9E3;
   --good:#3F8F6B;
-  --focus:#B8860B;
+  --focus:#8aaa66;
 
   --r-card:22px;
   --r-pill:999px;
@@ -174,7 +174,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 /* ---------- Hero (bold centered banner) ---------- */
 .hero{position:relative;overflow-x:clip;text-align:center;min-height:calc(100vh - 106px);min-height:calc(100svh - 106px);
   display:flex;flex-direction:column;justify-content:center;
-  background:radial-gradient(125% 130% at 50% 0%,#FFDD55 0%,#F5C518 46%,#F0B200 100%)}
+  background:radial-gradient(125% 130% at 50% 0%,#cdd9b0 0%,#b5c99a 46%,#9bb377 100%)}
 .hero__arrow{display:none!important}
 .hero__inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:center;gap:clamp(24px,4vw,60px);width:100%;text-align:left;
   padding-top:clamp(18px,3vh,40px);padding-bottom:clamp(18px,3vh,40px)}
@@ -405,7 +405,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .story{background:var(--bg);position:relative;overflow:hidden}
 .story::before{content:"";position:absolute;inset:0;opacity:.03;filter:url(#grainFilter);pointer-events:none}
 .story::after{content:"";position:absolute;top:-20%;left:50%;width:60vw;height:60vw;max-width:700px;max-height:700px;
-  transform:translateX(-50%);background:radial-gradient(circle,rgba(245,197,24,0),transparent 60%);pointer-events:none}
+  transform:translateX(-50%);background:radial-gradient(circle,rgba(181,201,154,0),transparent 60%);pointer-events:none}
 .journey{position:relative;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:start}
 .journey__step{text-align:center;padding:8px}
 .journey__num{font-family:"Inter",serif;font-size:34px;font-weight:600;color:var(--primary-deep);display:block;margin-bottom:8px;font-style:italic}
@@ -456,7 +456,7 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 /* ---------- Gifting ---------- */
 .gifting{background:var(--bg);position:relative;overflow:hidden}
 .gifting::after{content:"";position:absolute;top:-30%;right:-10%;width:50vw;height:50vw;max-width:560px;max-height:560px;
-  background:radial-gradient(circle,rgba(245,197,24,0),transparent 62%);pointer-events:none}
+  background:radial-gradient(circle,rgba(181,201,154,0),transparent 62%);pointer-events:none}
 .gifting__inner{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
 .gifting__copy h2{font-size:clamp(34px,4.2vw,52px);line-height:1.06;margin-bottom:16px}
 .gifting__copy h2 em{color:var(--primary-deep)}
@@ -782,7 +782,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .co-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .co-label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:5px}
 .co-input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font-size:15px;transition:border-color .15s ease,box-shadow .15s ease}
-.co-input:focus{outline:none;border-color:var(--primary-deep);box-shadow:0 0 0 3px rgba(245,197,24,.28)}
+.co-input:focus{outline:none;border-color:var(--primary-deep);box-shadow:0 0 0 3px rgba(181,201,154,.28)}
 .co-field.is-invalid .co-input{border-color:#D14545;box-shadow:0 0 0 3px rgba(209,69,69,.16)}
 .co-field__err{display:none;font-size:12px;color:#D14545;margin-top:4px}
 .co-field.is-invalid .co-field__err{display:block}

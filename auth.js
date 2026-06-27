@@ -72,7 +72,7 @@ window.TMAuth = (function () {
     st.textContent =
       ".tma-acct{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:14px;color:var(--ink,#2a2a2a);text-decoration:none;padding:6px 10px;border-radius:50px}" +
       ".tma-acct svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}" +
-      ".tma-acct:hover{color:var(--primary-deep,#b8860b)}" +
+      ".tma-acct:hover{color:var(--primary-deep,#8aaa66)}" +
       ".tma{position:fixed;inset:0;z-index:9999;display:none}" +
       ".tma.open{display:block}" +
       ".tma__scrim{position:absolute;inset:0;background:rgba(20,15,5,.55);opacity:0;transition:opacity .25s ease}" +
@@ -87,7 +87,7 @@ window.TMAuth = (function () {
       ".tma p.sub{font-size:14px;color:#6a6356;margin:0 0 16px}" +
       ".tma label{display:block;font-size:12.5px;font-weight:700;color:#3a3a3a;margin:12px 0 5px}" +
       ".tma input{width:100%;padding:11px 13px;border:1.5px solid #e3ddcf;border-radius:11px;font-size:15px;font-family:inherit;box-sizing:border-box}" +
-      ".tma input:focus{outline:none;border-color:#F5C518}" +
+      ".tma input:focus{outline:none;border-color:#b5c99a}" +
       ".tma .row{display:flex;gap:10px}.tma .row>div{flex:1}" +
       ".tma__btn{width:100%;margin-top:18px;padding:13px;border:none;border-radius:50px;background:#1c1c1c;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit}" +
       ".tma__btn:hover{background:#000}.tma__btn:disabled{opacity:.6;cursor:default}" +
