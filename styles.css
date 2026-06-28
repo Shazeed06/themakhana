@@ -857,7 +857,7 @@ html,body{max-width:100%;overflow-x:hidden}
 
 
 /* ===== Premium hero slider (pheroB — cinematic full-bleed) ===== */
-.pheroB{position:relative;isolation:isolate;overflow:hidden;border-radius:22px;margin:18px auto;max-width:1240px;box-shadow:0 30px 70px -38px rgba(20,20,20,.55);background:#161616}
+.pheroB{position:relative;isolation:isolate;overflow:hidden;width:100%;margin:0;border-radius:0;background:#161616}
 .pheroB__viewport{display:grid}
 .pheroB__slide{grid-area:1/1;position:relative;display:flex;align-items:flex-end;min-height:clamp(460px,72vh,640px);opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
 .pheroB__slide.is-active{opacity:1;visibility:visible;transition:opacity .9s ease,visibility 0s}
@@ -899,7 +899,6 @@ html,body{max-width:100%;overflow-x:hidden}
   @keyframes pheroB-rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 }
 @media (max-width:720px){
-  .pheroB{border-radius:16px;margin-inline:12px}
   .pheroB__slide{min-height:clamp(560px,142vw,680px);align-items:flex-end}
   .pheroB__slide::after{background:linear-gradient(180deg,rgba(13,13,13,.40) 0%,rgba(13,13,13,.50) 26%,rgba(13,13,13,.86) 64%,rgba(13,13,13,.95) 100%)}
   .pheroB__inner{padding:22px 22px 56px}
