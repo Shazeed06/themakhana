@@ -146,12 +146,17 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
 .header.scrolled .brand__logo{height:60px}
 .brand__name{font-family:"Inter",sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em}
 .nav{display:flex;gap:30px}
-.nav a{font-weight:600;font-size:15px;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .2s ease}
+.nav a{font-weight:600;font-size:15px;color:var(--secondary);position:relative;padding:4px 0;transition:color .2s ease}
 .nav a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--primary);transition:width .25s ease}
-.nav a:hover{color:var(--ink)}
+.nav a:hover{color:var(--primary-deep)}
 .nav a:hover::after{width:100%}
 .nav a:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:3px}
 .header__actions{display:flex;align-items:center;gap:8px}
+/* account / login button — icon left + label right, single line */
+.header__actions .tma-acct{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--secondary);text-decoration:none;padding:8px 14px;border-radius:var(--r-pill);line-height:1;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.header__actions .tma-acct svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.header__actions .tma-acct:hover{background:var(--honey-tint);color:var(--primary-deep)}
+.header__actions .tma-acct:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .cart-btn{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:var(--r-pill);color:var(--ink);transition:background .2s ease}
 .cart-btn:hover{background:var(--honey-tint)}
 .cart-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
