@@ -328,15 +328,9 @@ window.TMAuth = (function () {
   }
   function signOut() { if (enabled) return sb.auth.signOut(); return Promise.resolve(); }
 
-  function saveOrder(o) {
-    if (!enabled || !user) return Promise.resolve({ skipped: true });
-    return sb.from("orders").insert({
-      user_id: user.id, order_no: o.order_no, items: o.items,
-      subtotal: o.subtotal, shipping: o.shipping, total: o.total,
-      payment_method: o.payment_method, payment_id: o.payment_id || null,
-      name: o.name, phone: o.phone, email: o.email, address: o.address
-    }).then(function (r) { return r; }).catch(function (e) { return { error: e }; });
-  }
+  // (No client-side saveOrder.) Orders are written ONLY by the server
+  // (api/verify-payment via the service role); the RLS insert policy is dropped so
+  // a logged-in user cannot forge a paid order. Account history is read-only below.
   function getOrders() {
     if (!enabled || !user) return Promise.resolve([]);
     return sb.from("orders").select("*").order("created_at", { ascending: false })

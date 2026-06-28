@@ -268,7 +268,7 @@
       .then(function (j) {
         if (j && j.valid) {
           var orderId = j.order_no || String(resp.razorpay_payment_id || ("TM" + Date.now())).replace("pay_", "");
-          showDone(data.name, data.phone, orderId, true);
+          showDone(data.name, data.phone, orderId, true, j.recorded !== false);
           if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "online", paymentId: resp.razorpay_payment_id });
         } else {
           busy(false);
@@ -278,11 +278,14 @@
       .catch(function () { busy(false); showPayErr("Could not confirm the order. If money was deducted, please contact us — we'll sort it out."); });
   }
 
-  function showDone(name, phone, orderId, paid) {
+  function showDone(name, phone, orderId, paid, recorded) {
+    if (recorded === undefined) recorded = true;
     document.getElementById("coForm").hidden = true;
     var done = document.getElementById("coDone");
     var payLine = paid
-      ? "Payment of <strong>" + money(total) + "</strong> received. We&rsquo;ll call you on <strong>" + esc(phone) + "</strong> to confirm delivery."
+      ? (recorded
+          ? "Payment of <strong>" + money(total) + "</strong> received. We&rsquo;ll call you on <strong>" + esc(phone) + "</strong> to confirm delivery."
+          : "Payment of <strong>" + money(total) + "</strong> received. Our team will confirm your order on <strong>" + esc(phone) + "</strong> shortly &mdash; you&rsquo;re all set.")
       : "We&rsquo;ll call you on <strong>" + esc(phone) + "</strong> to confirm delivery. Pay <strong>" + money(total) + "</strong> in cash when it arrives.";
     done.innerHTML =
       '<div class="co-done">' +
@@ -305,18 +308,9 @@
     if (u && u.email) set("coEmail", u.email);
   }
 
-  function saveToAccount(o) {
-    if (!window.TMAuth || !window.TMAuth.saveOrder) return;
-    var sub = 0; (o.data.items || []).forEach(function (i) { sub += i.price * i.qty; });
-    var ship = total - sub; if (ship < 0) ship = 0;
-    try {
-      window.TMAuth.saveOrder({
-        order_no: o.order_no, items: o.data.items, subtotal: sub, shipping: ship, total: total,
-        payment_method: o.method, payment_id: o.paymentId,
-        name: o.data.name, phone: o.data.phone, email: o.data.email, address: o.data.address
-      });
-    } catch (e) { /* never block the confirmation on a save error */ }
-  }
+  // NOTE: orders are persisted SERVER-SIDE only (api/verify-payment via the service
+  // role). The browser must never insert orders directly — that's the forgery vector
+  // the RLS lockdown closes. Do not re-add a client-side order-save here.
 
   function open(o) {
     opts = o;
