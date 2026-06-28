@@ -67,6 +67,10 @@
   .center{text-align:center;padding:50px 20px;color:var(--soft)}
   .spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--green-deep);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 12px}
   @keyframes sp{to{transform:rotate(360deg)}}
+  .testmail{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
+  .testmail__label{font-size:14px;font-weight:600;color:var(--ink)}
+  .testmail input{flex:1;min-width:170px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;background:#fff}
+  .testmail__msg{font-size:13.5px;font-weight:600}
   .hidden{display:none!important}
 </style>
 </head>
@@ -98,6 +102,13 @@
     </div>
 
     <div class="stats" id="stats"></div>
+
+    <div class="testmail">
+      <span class="testmail__label">&#128231; Send a test order-confirmation email:</span>
+      <input id="testTo" type="email" placeholder="email@example.com" />
+      <button class="btn btn--green" id="testBtn" type="button">Send test</button>
+      <span id="testMsg" class="testmail__msg"></span>
+    </div>
 
     <div class="toolbar">
       <input class="search" id="search" type="text" placeholder="Search by name, phone, email or order #…" />
@@ -153,6 +164,28 @@
     if (pass) { showLoading(); load(pass); }
   });
   $("#search").addEventListener("input", render);
+
+  (function () {
+    var tb = $("#testBtn"); if (!tb) return;
+    tb.addEventListener("click", function () {
+      var to = ($("#testTo").value || "").trim(); var m = $("#testMsg");
+      if (!to) { m.style.color = "#c0392b"; m.textContent = "Enter an email."; return; }
+      tb.disabled = true; tb.textContent = "Sending…"; m.textContent = "";
+      fetch("/api/send-order-email", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminKey: pass, notifyOwner: false, order: {
+          order_no: "TEST" + Math.floor(1000 + Math.random() * 9000), name: "Test Customer", email: to,
+          phone: "8287124651", address: "100 Inderpuri", city: "New Delhi", state: "Delhi", pincode: "110012",
+          items: [{ name: "Peri Peri Punch", qty: 2, price: 199 }, { name: "Test Product", qty: 1, price: 1 }],
+          subtotal: 399, shipping: 0, total: 399 } })
+      }).then(function (r) { return r.json().then(function (d) { return { s: r.status, d: d }; }); })
+        .then(function (res) {
+          tb.disabled = false; tb.textContent = "Send test";
+          if (res.s === 200) { m.style.color = "#1e8a4c"; m.textContent = "✓ Sent! Check the inbox."; }
+          else { m.style.color = "#c0392b"; m.textContent = (res.d && res.d.error) || "Failed to send."; }
+        }).catch(function () { tb.disabled = false; tb.textContent = "Send test"; m.style.color = "#c0392b"; m.textContent = "Network error."; });
+    });
+  })();
 
   /* ---- data ---- */
   function load(p) {

@@ -263,6 +263,13 @@
         if (j && j.valid) {
           var orderId = String(resp.razorpay_payment_id || ("TM" + Date.now())).replace("pay_", "");
           saveToAccount({ order_no: orderId, method: "online", paymentId: resp.razorpay_payment_id, data: data });
+          try {
+            var emSub = (data.items || []).reduce(function (s, it) { return s + (it.price || 0) * (it.qty || 1); }, 0);
+            fetch("/api/send-order-email", { method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ razorpay_order_id: resp.razorpay_order_id, razorpay_payment_id: resp.razorpay_payment_id, razorpay_signature: resp.razorpay_signature,
+                order: { order_no: orderId, name: data.name, email: data.email, phone: data.phone, address: data.address, items: data.items, subtotal: emSub, shipping: Math.max(0, total - emSub), total: total } })
+            }).catch(function () {});
+          } catch (e) {}
           showDone(data.name, data.phone, orderId, true);
           if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "online", paymentId: resp.razorpay_payment_id });
         } else {
