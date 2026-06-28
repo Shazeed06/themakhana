@@ -100,7 +100,11 @@
     });
     document.getElementById("coItems").innerHTML = rows;
     var freeShip = opts.freeShip || 599;
-    var ship = (sub === 0 || sub >= freeShip) ? 0 : 49;
+    // Every line item is a free-shipping product → no shipping charge.
+    var allFree = items.length > 0 && items.every(function (l) {
+      var p = gp(l.id); return p && p.freeShipping === true;
+    });
+    var ship = (sub === 0 || sub >= freeShip || allFree) ? 0 : 49;
     document.getElementById("coSub").textContent = money(sub);
     document.getElementById("coShip").textContent = ship === 0 ? "FREE" : money(ship);
     total = sub + ship;

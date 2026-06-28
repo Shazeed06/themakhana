@@ -139,11 +139,11 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
   border-color:color-mix(in srgb,var(--line) 60%,transparent);border-radius:999px;
   box-shadow:0 16px 42px -16px rgba(20,20,20,.30),0 4px 12px -6px rgba(20,20,20,.16);
 }
-.header__inner{display:flex;align-items:center;justify-content:space-between;height:120px;gap:24px;transition:height .45s cubic-bezier(.4,0,.2,1),padding .45s ease}
-.header.scrolled .header__inner{height:76px;padding-inline:clamp(26px,3vw,40px)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;height:84px;gap:24px;transition:height .45s cubic-bezier(.4,0,.2,1),padding .45s ease}
+.header.scrolled .header__inner{height:62px;padding-inline:clamp(26px,3vw,40px)}
 .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
-.brand__mark{display:none}.brand__logo{height:102px;width:auto;display:block;transition:height .45s cubic-bezier(.4,0,.2,1)}
-.header.scrolled .brand__logo{height:60px}
+.brand__mark{display:none}.brand__logo{height:72px;width:auto;display:block;transition:height .45s cubic-bezier(.4,0,.2,1)}
+.header.scrolled .brand__logo{height:46px}
 .brand__name{font-family:"Inter",sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em}
 .nav{display:flex;gap:30px}
 .nav a{font-weight:600;font-size:15px;color:var(--secondary);position:relative;padding:4px 0;transition:color .2s ease}
@@ -897,9 +897,9 @@ html,body{max-width:100%;overflow-x:clip}
 .pheroB__chip{display:inline-flex;align-items:center;gap:8px;font-size:clamp(12px,1.3vw,14px);font-weight:600;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);padding:9px 16px;border-radius:var(--r-pill);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .pheroB__chip svg{width:15px;height:15px;color:var(--primary);flex:0 0 auto}
 /* ---- slider controls ---- */
-.pheroB__dots{position:absolute;z-index:4;left:clamp(20px,5vw,68px);bottom:clamp(16px,2.2vw,24px);display:flex;gap:9px}
-.pheroB__dot{width:9px;height:9px;padding:0;border:0;border-radius:50px;background:rgba(255,255,255,.42);cursor:pointer;transition:width .25s ease,background .25s ease}
-.pheroB__dot.is-active{background:#fff;width:26px}
+.pheroB__dots{position:absolute;z-index:4;left:0;right:0;bottom:clamp(16px,2.2vw,24px);display:flex;justify-content:center;gap:9px}
+.pheroB__dot{width:7px;height:7px;padding:0;border:0;border-radius:50px;background:rgba(255,255,255,.32);cursor:pointer;transition:width .25s ease,background .25s ease}
+.pheroB__dot.is-active{background:rgba(255,255,255,.85);width:22px}
 .pheroB__dot:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (prefers-reduced-motion:no-preference){
   .pheroB__slide.is-active .pheroB__bg{animation:pheroB-kb 9s ease-out both}

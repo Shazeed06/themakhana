@@ -13,7 +13,8 @@
     { id:"pink",    name:"Himalayan Pink Salt",    price:179, mrp:229, category:"roasted", acc:"#C77A86", weight:"80g",  note:"clean, lightly salted",    ribbon:"",           ribbonType:"",           rating:4.7, reviews:64,  cat:"mountain" },
     { id:"classic", name:"Classic Lightly Salted", price:169, mrp:219, category:"roasted", acc:"#C9A227", weight:"80g",  note:"pure, plain, perfect",     ribbon:"",           ribbonType:"",           rating:4.6, reviews:110, cat:"seed" },
     { id:"raw",     name:"Raw Phool Makhana",      price:249, mrp:299, category:"raw",     acc:"#6E8B6F", weight:"100g", note:"premium handpicked, big pops", ribbon:"RAW",     ribbonType:"acc",        rating:4.9, reviews:140, cat:"lotus" },
-    { id:"combo",   name:"Variety Combo (5 packs)",price:799, mrp:1095,category:"combo",   acc:"#B9760C", weight:"400g", note:"all flavours, perfect gifting", ribbon:"COMBO",  ribbonType:"acc",        rating:5.0, reviews:57,  cat:"combo" }
+    { id:"combo",   name:"Variety Combo (5 packs)",price:799, mrp:1095,category:"combo",   acc:"#B9760C", weight:"400g", note:"all flavours, perfect gifting", ribbon:"COMBO",  ribbonType:"acc",        rating:5.0, reviews:57,  cat:"combo" },
+    { id:"test",    name:"Test Product",           price:1,   mrp:1,   category:"roasted", acc:"#97a97c", weight:"1g",   note:"₹1 test order — free shipping", ribbon:"TEST",   ribbonType:"new",        rating:5.0, reviews:1,   cat:"seed", freeShipping:true }
   ];
 
   const REVIEWS = [
@@ -239,6 +240,11 @@
   const saveCart = () => { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {} };
   const getProduct = (id) => PRODUCTS.find((p) => p.id === id);
   const cartCount = () => cart.reduce((s, i) => s + i.qty, 0);
+  // True when the cart is non-empty AND every line item is a free-shipping product.
+  const cartAllFreeShip = () => {
+    if (!cart.length) return false;
+    return cart.every((l) => { const p = getProduct(l.id); return p && p.freeShipping === true; });
+  };
 
   function addToCart(id) {
     const line = cart.find((i) => i.id === id);
@@ -298,12 +304,16 @@
     $("#cartSaveRow").style.display = saved > 0 ? "flex" : "none";
 
     // Free-shipping progress nudge
+    const allFree = cartAllFreeShip();
     const nudge = $("#shipNudge"), nText = $("#shipNudgeText"), nFill = $("#shipNudgeFill");
     if (nudge && nText && nFill) {
       const remaining = FREE_SHIP_THRESHOLD - subtotal;
-      const pctFill = Math.max(0, Math.min(100, Math.round((subtotal / FREE_SHIP_THRESHOLD) * 100)));
+      const pctFill = allFree ? 100 : Math.max(0, Math.min(100, Math.round((subtotal / FREE_SHIP_THRESHOLD) * 100)));
       nFill.style.width = pctFill + "%";
-      if (subtotal > 0 && remaining > 0) {
+      if (allFree) {
+        nudge.classList.add("ship-nudge--done");
+        nText.innerHTML = ICON.check + "<span>You've unlocked free shipping!</span>";
+      } else if (subtotal > 0 && remaining > 0) {
         nudge.classList.remove("ship-nudge--done");
         nText.innerHTML = ICON.truck + "<span>You're " + rupee(remaining) + " away from free shipping</span>";
       } else if (subtotal > 0) {
@@ -621,10 +631,16 @@
     if (slides.length < 2) return;
     let idx = 0, timer = null;
     const DELAY = 5500;
+    function loadSlide(i) {
+      const img = slides[i] && slides[i].querySelector(".pheroB__bg[data-src]");
+      if (img) { img.src = img.getAttribute("data-src"); img.removeAttribute("data-src"); }
+    }
     function go(n) {
       idx = (n + slides.length) % slides.length;
+      loadSlide(idx);
       slides.forEach((s, i) => { const on = i === idx; s.classList.toggle("is-active", on); s.setAttribute("aria-hidden", on ? "false" : "true"); });
       dots.forEach((d, i) => { const on = i === idx; d.classList.toggle("is-active", on); d.setAttribute("aria-current", on ? "true" : "false"); });
+      setTimeout(() => loadSlide((idx + 1) % slides.length), 600);
     }
     function start() { stop(); timer = setInterval(() => go(idx + 1), DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }

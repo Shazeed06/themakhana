@@ -14,7 +14,8 @@ window.TM = (function () {
     { id:"pink",    name:"Himalayan Pink Salt",    price:179, mrp:229, category:"roasted", acc:"#C77A86", weight:"80g",  note:"clean, lightly salted",         ribbon:"",           ribbonType:"",           rating:4.7, reviews:64,  cat:"mountain" },
     { id:"classic", name:"Classic Lightly Salted", price:169, mrp:219, category:"roasted", acc:"#C9A227", weight:"80g",  note:"pure, plain, perfect",          ribbon:"",           ribbonType:"",           rating:4.6, reviews:110, cat:"seed" },
     { id:"raw",     name:"Raw Phool Makhana",      price:249, mrp:299, category:"raw",     acc:"#6E8B6F", weight:"100g", note:"premium handpicked, big pops",  ribbon:"RAW",        ribbonType:"acc",        rating:4.9, reviews:140, cat:"lotus" },
-    { id:"combo",   name:"Variety Combo (5 packs)",price:799, mrp:1095,category:"combo",   acc:"#B9760C", weight:"400g", note:"all flavours, perfect gifting", ribbon:"COMBO",      ribbonType:"acc",        rating:5.0, reviews:57,  cat:"combo" }
+    { id:"combo",   name:"Variety Combo (5 packs)",price:799, mrp:1095,category:"combo",   acc:"#B9760C", weight:"400g", note:"all flavours, perfect gifting", ribbon:"COMBO",      ribbonType:"acc",        rating:5.0, reviews:57,  cat:"combo" },
+    { id:"test",    name:"Test Product",           price:1,   mrp:1,   category:"roasted", acc:"#97a97c", weight:"1g",   note:"₹1 test order — free shipping", ribbon:"TEST",       ribbonType:"new",        rating:5.0, reviews:1,   cat:"seed",  freeShipping:true }
   ];
 
   /* ---------- Per-product detail copy ---------- */
