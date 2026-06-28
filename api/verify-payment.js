@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     res.status(405).json({ valid: false, error: "Method not allowed" });
     return;
   }
-  const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
+  const KEY_SECRET = (process.env.RAZORPAY_KEY_SECRET || "").trim();
   if (!KEY_SECRET) { res.status(500).json({ valid: false, error: "Not configured" }); return; }
   try {
     let body = req.body;

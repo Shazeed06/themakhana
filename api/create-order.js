@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
-  const KEY_ID = process.env.RAZORPAY_KEY_ID;
-  const KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
+  const KEY_ID = (process.env.RAZORPAY_KEY_ID || "").trim();
+  const KEY_SECRET = (process.env.RAZORPAY_KEY_SECRET || "").trim();
   if (!KEY_ID || !KEY_SECRET) {
     res.status(500).json({ error: "Payment is not set up yet. Please choose Cash on Delivery." });
     return;
