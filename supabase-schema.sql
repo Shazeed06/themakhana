@@ -39,6 +39,11 @@ create table if not exists public.orders (
 
 create index if not exists orders_user_id_idx on public.orders(user_id);
 create index if not exists orders_created_idx  on public.orders(created_at desc);
+-- Race-safe idempotency: one payment can never produce two order rows (or two emails).
+-- verify-payment + the razorpay-webhook both insert; this unique index makes a duplicate
+-- insert fail with 409, which the recorder treats as "already recorded".
+create unique index if not exists orders_payment_id_uniq
+  on public.orders (payment_id) where payment_id is not null;
 
 -- ---------- Auto-create a profile row on signup ----------
 -- Reads the name/phone/address passed in auth signUp options.data
