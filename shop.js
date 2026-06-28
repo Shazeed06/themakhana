@@ -22,10 +22,23 @@
       '<div class="card__price"><span class="card__now">' + TM.rupee(p.price) + '</span><span class="card__mrp">' + TM.rupee(p.mrp) + '</span></div>' +
       '</article>';
   }
+  // Reveal scroll-animation elements. shop.html does NOT load script.js (which
+  // owns the global reveal observer), so without this the .reveal product cards
+  // stay at opacity:0 forever on motion-enabled devices (i.e. real phones).
+  function reveal() {
+    var els = $$('.reveal:not(.in)');
+    if (!els.length) return;
+    // Reveal immediately (staggered) — robust on every device, no dependence on
+    // scroll position or motion settings; the .reveal->.in transition fades them in.
+    requestAnimationFrame(function () {
+      els.forEach(function (el, i) { setTimeout(function () { el.classList.add('in'); }, Math.min(i * 35, 420)); });
+    });
+  }
   function renderGrid(filter) {
     var list = TM.PRODUCTS.filter(function (p) { return filter === 'all' || p.category === filter; });
     $('#productGrid').innerHTML = list.map(cardHTML).join('');
     var fc = $('#filterCount'); if (fc) fc.textContent = 'Showing ' + list.length + ' product' + (list.length === 1 ? '' : 's');
+    reveal();
   }
 
   function count() { return TM.getCart().reduce(function (s, i) { return s + i.qty; }, 0); }
