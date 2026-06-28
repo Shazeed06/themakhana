@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Orders Admin · The Makhana</title>
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<style>
+  :root{
+    --green:#97a97c; --green-deep:#74865b; --ink:#1A1A1A; --soft:#6B7280;
+    --line:#E6EBDF; --bg:#f6f8f2; --card:#ffffff; --good:#1e8a4c; --bad:#c0392b; --r:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin-inline:auto;padding:clamp(16px,3vw,32px)}
+  /* ---- login ---- */
+  .login{min-height:100vh;display:grid;place-items:center;padding:20px}
+  .login__card{width:min(400px,94vw);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px 30px;box-shadow:0 30px 70px -34px rgba(20,20,20,.4);text-align:center}
+  .login__logo{width:74px;height:74px;border-radius:50%;margin:0 auto 14px;display:block}
+  .login__card h1{font-size:21px;margin:0 0 4px}
+  .login__card p{font-size:14px;color:var(--soft);margin:0 0 20px}
+  .field{text-align:left;margin-bottom:14px}
+  label{display:block;font-size:12.5px;font-weight:700;margin:0 0 5px}
+  input[type=password],input[type=text].search{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:#fff}
+  input:focus{outline:none;border-color:var(--green)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;padding:12px 22px;border-radius:50px;background:var(--ink);color:#fff;transition:transform .15s ease,background .2s ease}
+  .btn:hover{background:#000;transform:translateY(-1px)}
+  .btn--green{background:var(--green-deep)}.btn--green:hover{background:var(--green)}
+  .btn--ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+  .btn--ghost:hover{background:#f1f4ec;transform:none}
+  .btn:disabled{opacity:.6;cursor:default;transform:none}
+  .err{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:12px;min-height:1px}
+  /* ---- dashboard ---- */
+  .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
+  .top h1{font-size:clamp(20px,3vw,26px);margin:0;display:flex;align-items:center;gap:10px}
+  .top__logo{width:40px;height:40px;border-radius:50%}
+  .top__actions{display:flex;gap:10px;flex-wrap:wrap}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+  .stat b{display:block;font-size:clamp(22px,3.4vw,30px);font-weight:800;letter-spacing:-.02em}
+  .stat span{font-size:12.5px;font-weight:600;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px}
+  .toolbar .search{flex:1;min-width:200px}
+  .muted{color:var(--soft);font-size:14px}
+  /* order cards */
+  .orders{display:grid;gap:14px}
+  .order{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:0 14px 30px -26px rgba(20,20,20,.5)}
+  .order__head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
+  .order__no{font-weight:800;font-size:16px}
+  .order__date{font-size:13px;color:var(--soft)}
+  .order__total{font-weight:800;font-size:19px}
+  .badge{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:50px}
+  .badge--online{background:#e7f0e3;color:var(--green-deep)}
+  .badge--cod{background:#fdf0dc;color:#9a6a13}
+  .badge--status{background:#eef1f5;color:#4a5666}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}}
+  .blk h4{margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--soft)}
+  .blk p{margin:0;font-size:14.5px;word-break:break-word}
+  .blk a{color:var(--green-deep);font-weight:600;text-decoration:none}
+  .items{list-style:none;margin:8px 0 0;padding:0}
+  .items li{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:3px 0;border-bottom:1px dashed var(--line)}
+  .items li:last-child{border-bottom:none}
+  .pill{display:inline-block;background:#f1f4ec;border:1px solid var(--line);border-radius:8px;padding:2px 8px;font-size:12.5px;font-weight:700;margin-top:4px}
+  .center{text-align:center;padding:50px 20px;color:var(--soft)}
+  .spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--green-deep);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 12px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+
+  <!-- ===== Login ===== -->
+  <div class="login" id="loginView">
+    <form class="login__card" id="loginForm">
+      <img class="login__logo" src="/images/logo.png?v=2" alt="The Makhana" />
+      <h1>Orders Admin</h1>
+      <p>Enter your admin password to view all orders.</p>
+      <div class="field">
+        <label for="pw">Admin password</label>
+        <input id="pw" type="password" autocomplete="current-password" required />
+      </div>
+      <button class="btn btn--green" id="loginBtn" type="submit" style="width:100%">Unlock dashboard</button>
+      <div class="err" id="loginErr"></div>
+    </form>
+  </div>
+
+  <!-- ===== Dashboard ===== -->
+  <div class="wrap hidden" id="dashView">
+    <div class="top">
+      <h1><img class="top__logo" src="/images/logo.png?v=2" alt="" /> Orders</h1>
+      <div class="top__actions">
+        <button class="btn btn--ghost" id="refreshBtn" type="button">↻ Refresh</button>
+        <button class="btn btn--ghost" id="logoutBtn" type="button">Log out</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <input class="search" id="search" type="text" placeholder="Search by name, phone, email or order #…" />
+      <span class="muted" id="count"></span>
+    </div>
+
+    <div id="ordersWrap">
+      <div class="center" id="loadingState"><div class="spin"></div>Loading orders…</div>
+      <div class="orders hidden" id="orders"></div>
+      <div class="center hidden" id="emptyState">No orders yet.</div>
+      <div class="center hidden" id="errState"></div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (s) { return document.querySelector(s); };
+  var pass = null, all = [];
+
+  var rupee = function (n) { return "₹" + Number(n || 0).toLocaleString("en-IN"); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[<>&"]/g, function (c) { return ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]; }); };
+  function fmtDate(d) {
+    if (!d) return "";
+    try { return new Date(d).toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+    catch (e) { return String(d); }
+  }
+
+  /* ---- auth ---- */
+  $("#loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var p = $("#pw").value;
+    if (!p) return;
+    var btn = $("#loginBtn"), err = $("#loginErr");
+    err.textContent = ""; btn.disabled = true; btn.textContent = "Checking…";
+    load(p).then(function (ok) {
+      btn.disabled = false; btn.textContent = "Unlock dashboard";
+      if (ok === true) {
+        pass = p;
+        $("#loginView").classList.add("hidden");
+        $("#dashView").classList.remove("hidden");
+      } else {
+        err.textContent = ok || "Wrong password.";
+      }
+    });
+  });
+  $("#logoutBtn").addEventListener("click", function () {
+    pass = null; all = []; $("#pw").value = "";
+    $("#dashView").classList.add("hidden");
+    $("#loginView").classList.remove("hidden");
+  });
+  $("#refreshBtn").addEventListener("click", function () {
+    if (pass) { showLoading(); load(pass); }
+  });
+  $("#search").addEventListener("input", render);
+
+  /* ---- data ---- */
+  function load(p) {
+    showLoading();
+    return fetch("/api/admin-orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: p })
+    }).then(function (r) {
+      return r.json().then(function (d) { return { status: r.status, d: d }; });
+    }).then(function (res) {
+      if (res.status === 200) { all = res.d.orders || []; render(); return true; }
+      if (res.status === 401) { return "Wrong password."; }
+      showError((res.d && res.d.error) || "Could not load orders.");
+      return (res.d && res.d.error) || "Could not load orders.";
+    }).catch(function () {
+      showError("Network error. Please try again.");
+      return "Network error.";
+    });
+  }
+
+  function showLoading() {
+    $("#loadingState").classList.remove("hidden");
+    $("#orders").classList.add("hidden");
+    $("#emptyState").classList.add("hidden");
+    $("#errState").classList.add("hidden");
+  }
+  function showError(msg) {
+    $("#loadingState").classList.add("hidden");
+    $("#orders").classList.add("hidden");
+    $("#emptyState").classList.add("hidden");
+    var e = $("#errState"); e.classList.remove("hidden"); e.textContent = msg;
+  }
+
+  /* ---- render ---- */
+  function render() {
+    $("#loadingState").classList.add("hidden");
+    $("#errState").classList.add("hidden");
+    renderStats();
+
+    var q = ($("#search").value || "").trim().toLowerCase();
+    var list = all.filter(function (o) {
+      if (!q) return true;
+      return [o.name, o.phone, o.email, o.order_no].some(function (v) {
+        return String(v || "").toLowerCase().indexOf(q) !== -1;
+      });
+    });
+
+    $("#count").textContent = list.length + " of " + all.length + " order" + (all.length === 1 ? "" : "s");
+
+    if (!all.length) {
+      $("#orders").classList.add("hidden");
+      $("#emptyState").classList.remove("hidden");
+      return;
+    }
+    $("#emptyState").classList.add("hidden");
+    var wrap = $("#orders");
+    wrap.classList.remove("hidden");
+    wrap.innerHTML = list.map(orderCard).join("");
+  }
+
+  function renderStats() {
+    var revenue = 0, online = 0, cod = 0;
+    all.forEach(function (o) {
+      revenue += Number(o.total || 0);
+      if (String(o.payment_method || "").toLowerCase().indexOf("cod") !== -1 || String(o.payment_method || "").toLowerCase().indexOf("cash") !== -1) cod++;
+      else online++;
+    });
+    var stats = [
+      { b: all.length, s: "Total orders" },
+      { b: rupee(revenue), s: "Total revenue" },
+      { b: online, s: "Online paid" },
+      { b: cod, s: "Cash on delivery" }
+    ];
+    $("#stats").innerHTML = stats.map(function (s) {
+      return '<div class="stat"><b>' + esc(s.b) + "</b><span>" + esc(s.s) + "</span></div>";
+    }).join("");
+  }
+
+  function orderCard(o) {
+    var method = String(o.payment_method || "").toLowerCase();
+    var isCod = method.indexOf("cod") !== -1 || method.indexOf("cash") !== -1;
+    var payBadge = '<span class="badge ' + (isCod ? "badge--cod" : "badge--online") + '">' + (isCod ? "Cash on Delivery" : "Paid Online") + "</span>";
+    var statusBadge = o.status ? '<span class="badge badge--status">' + esc(o.status) + "</span>" : "";
+
+    var items = Array.isArray(o.items) ? o.items : [];
+    var itemsHtml = items.length
+      ? '<ul class="items">' + items.map(function (it) {
+          var name = esc(it.name || it.id || "Item");
+          var qty = it.qty || it.quantity || 1;
+          var price = (it.price != null) ? "<span>" + rupee(it.price * qty) + "</span>" : "<span></span>";
+          return "<li><span>" + name + " &times; " + esc(qty) + "</span>" + price + "</li>";
+        }).join("") + "</ul>"
+      : '<p class="muted">—</p>';
+
+    var addr = [o.address, o.city, o.state, o.pincode].filter(Boolean).join(", ");
+
+    return '' +
+      '<div class="order">' +
+        '<div class="order__head">' +
+          '<div><span class="order__no">#' + esc(o.order_no || o.id || "—") + "</span>" +
+            '<div class="order__date">' + esc(fmtDate(o.created_at)) + "</div></div>" +
+          "<div>" + payBadge + " " + statusBadge + '</div>' +
+          '<div class="order__total">' + rupee(o.total) + "</div>" +
+        "</div>" +
+        '<div class="grid2">' +
+          '<div class="blk"><h4>Customer</h4><p><strong>' + esc(o.name || "—") + "</strong></p>" +
+            (o.phone ? '<p><a href="tel:' + esc(o.phone) + '">' + esc(o.phone) + "</a></p>" : "") +
+            (o.email ? '<p><a href="mailto:' + esc(o.email) + '">' + esc(o.email) + "</a></p>" : "") +
+          "</div>" +
+          '<div class="blk"><h4>Delivery address</h4><p>' + (addr ? esc(addr) : "—") + "</p></div>" +
+          '<div class="blk"><h4>Items</h4>' + itemsHtml + "</div>" +
+          '<div class="blk"><h4>Payment</h4>' +
+            "<p>" + (isCod ? "Cash on Delivery" : "Online") + "</p>" +
+            (o.payment_id ? '<p class="pill">' + esc(o.payment_id) + "</p>" : "") +
+            '<p class="muted" style="margin-top:6px">Subtotal ' + rupee(o.subtotal) + " · Shipping " + (Number(o.shipping) ? rupee(o.shipping) : "Free") + "</p>" +
+          "</div>" +
+        "</div>" +
+      "</div>";
+  }
+})();
+</script>
+</body>
+</html>
