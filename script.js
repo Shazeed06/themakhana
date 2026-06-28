@@ -626,13 +626,9 @@
       slides.forEach((s, i) => { const on = i === idx; s.classList.toggle("is-active", on); s.setAttribute("aria-hidden", on ? "false" : "true"); });
       dots.forEach((d, i) => { const on = i === idx; d.classList.toggle("is-active", on); d.setAttribute("aria-current", on ? "true" : "false"); });
     }
-    function start() { if (reduceMotion) return; stop(); timer = setInterval(() => go(idx + 1), DELAY); }
+    function start() { stop(); timer = setInterval(() => go(idx + 1), DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     dots.forEach((d) => d.addEventListener("click", () => { go(+d.dataset.i); start(); }));
-    const prev = root.querySelector(".pheroB__arrow--prev");
-    const next = root.querySelector(".pheroB__arrow--next");
-    if (prev) prev.addEventListener("click", () => { go(idx - 1); start(); });
-    if (next) next.addEventListener("click", () => { go(idx + 1); start(); });
     root.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") { go(idx - 1); start(); }
       else if (e.key === "ArrowRight") { go(idx + 1); start(); }
