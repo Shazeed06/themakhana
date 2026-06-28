@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   const KEY_ID = (process.env.RAZORPAY_KEY_ID || "").trim();
   const KEY_SECRET = (process.env.RAZORPAY_KEY_SECRET || "").trim();
   if (!KEY_ID || !KEY_SECRET) {
-    res.status(500).json({ error: "Payment is not set up yet. Please choose Cash on Delivery." });
+    res.status(500).json({ error: "Payment is temporarily unavailable. Please try again shortly." });
     return;
   }
   try {

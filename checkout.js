@@ -1,5 +1,5 @@
 /* ===================================================================
-   THE MAKHANA - shared checkout flow (COD + Razorpay online payment)
+   THE MAKHANA - shared checkout flow (Razorpay online payment)
    window.Checkout.open({ items, getProduct, rupee, freeShip, onPlaced })
    - items: [{id, qty}]   - getProduct: (id) => {name, price,...}
    - rupee: optional formatter   - freeShip: free-shipping threshold
@@ -53,10 +53,8 @@
               field("coPin", "Pincode", "text", "postal-code", 'inputmode="numeric" maxlength="6"') +
             '</fieldset>' +
             '<fieldset class="co-group"><legend>Payment</legend>' +
-              '<label class="co-pay"><input type="radio" name="pay" value="online" />' +
+              '<label class="co-pay"><input type="radio" name="pay" value="online" checked />' +
                 '<span><strong>Pay Online</strong><small>UPI, Cards, Netbanking &amp; Wallets — secure via Razorpay</small></span></label>' +
-              '<label class="co-pay"><input type="radio" name="pay" value="cod" checked />' +
-                '<span><strong>Cash on Delivery</strong><small>Pay in cash when your order arrives</small></span></label>' +
             '</fieldset>' +
           '</div>' +
           '<aside class="checkout__summary">' +
@@ -65,9 +63,9 @@
             '<div class="co-line"><span>Subtotal</span><span id="coSub"></span></div>' +
             '<div class="co-line"><span>Shipping</span><span id="coShip"></span></div>' +
             '<div class="co-line co-line--total"><span>Total</span><span id="coTotal"></span></div>' +
-            '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Place order</button>' +
+            '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Pay</button>' +
             '<p class="co-pay-err" id="coPayErr" hidden style="color:#c0392b;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
-            '<p class="co-secure">' + CHECK + ' Cash on delivery · 7-day easy returns</p>' +
+            '<p class="co-secure">' + CHECK + ' 100% secure payment via Razorpay · 7-day returns</p>' +
           '</aside>' +
         '</form>' +
         '<div class="checkout__done" id="coDone" hidden></div>' +
@@ -114,18 +112,16 @@
 
   function selectedMethod() {
     var r = modal.querySelector('input[name="pay"]:checked');
-    return r ? r.value : "cod";
+    return r ? r.value : "online";
   }
 
   function updatePayUI() {
     if (!modal) return;
     var method = selectedMethod();
     var btn = document.getElementById("coPlace");
-    if (btn && !btn.disabled) btn.textContent = method === "online" ? ("Pay " + money(total)) : "Place order";
+    if (btn && !btn.disabled) btn.textContent = "Pay " + money(total);
     var sec = modal.querySelector(".co-secure");
-    if (sec) sec.innerHTML = CHECK + (method === "online"
-      ? " 100% secure payment via Razorpay · 7-day returns"
-      : " Cash on delivery · 7-day easy returns");
+    if (sec) sec.innerHTML = CHECK + " 100% secure payment via Razorpay · 7-day returns";
   }
 
   function setErr(id, msg) {
@@ -183,14 +179,7 @@
     if (firstBad) { firstBad.focus(); return; }
 
     var data = gatherData();
-    if (selectedMethod() === "online") {
-      payOnline(data);
-    } else {
-      var orderId = "TM" + String(Date.now()).slice(-6);
-      saveToAccount({ order_no: orderId, method: "cod", paymentId: null, data: data });
-      showDone(data.name, data.phone, orderId, false);
-      if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "cod" });
-    }
+    payOnline(data);
   }
 
   /* ---------- Razorpay online payment ---------- */
@@ -231,7 +220,7 @@
       })
       .then(function (res) {
         if (!res.ok || !res.j || !res.j.orderId) {
-          throw new Error((res.j && res.j.error) || "Online payment isn't available right now — please choose Cash on Delivery.");
+          throw new Error((res.j && res.j.error) || "Online payment isn't available right now — please try again in a moment.");
         }
         var o = res.j;
         loadRazorpay(function (loaded) {
@@ -248,14 +237,14 @@
             notes: { address: data.address },
             theme: { color: "#97a97c" },
             handler: function (resp) { verifyAndFinish(resp, data); },
-            modal: { ondismiss: function () { busy(false); showPayErr("Payment cancelled. You can try again or choose Cash on Delivery."); } }
+            modal: { ondismiss: function () { busy(false); showPayErr("Payment cancelled. You can try again."); } }
           });
-          rzp.on("payment.failed", function () { busy(false); showPayErr("Payment failed. Please try again or choose Cash on Delivery."); });
+          rzp.on("payment.failed", function () { busy(false); showPayErr("Payment failed. Please try again."); });
           busy(true, "Opening payment…");
           rzp.open();
         });
       })
-      .catch(function (err) { busy(false); showPayErr((err && err.message) || "Could not start payment. Please try Cash on Delivery."); });
+      .catch(function (err) { busy(false); showPayErr((err && err.message) || "Could not start payment. Please try again."); });
   }
 
   function verifyAndFinish(resp, data) {
