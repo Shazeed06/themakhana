@@ -6,7 +6,7 @@
    Env: RESEND_API_KEY (required), ADMIN_PASSWORD, RAZORPAY_KEY_SECRET. */
 const crypto = require("crypto");
 
-var LOGO = "https://www.themakhana.in/images/logo.png";
+var LOGO = "https://www.themakhana.in/images/logo.png?v=3";
 
 function safeEqual(a, b) {
   const ab = Buffer.from(String(a)), bb = Buffer.from(String(b));
