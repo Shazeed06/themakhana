@@ -189,7 +189,7 @@
     }
     box.innerHTML = orders.map(function (o) {
       var items = (o.items||[]).map(function(i){ return esc(i.name) + " × " + i.qty; }).join(", ");
-      var pay = o.payment_method === "online" ? "Paid online" : "Cash on Delivery";
+      var pay = "Paid online";
       return '<div class="ord"><div class="ord__top"><strong>#' + esc(o.order_no||"") + '</strong><span>' + dt(o.created_at) + '</span></div>' +
         '<div class="ord__items">' + (items||"-") + '</div>' +
         '<div class="ord__foot"><span class="ord__pay">' + pay + ' &middot; ' + esc(o.status||"placed") + '</span><strong>' + fmt(o.total) + '</strong></div></div>';
