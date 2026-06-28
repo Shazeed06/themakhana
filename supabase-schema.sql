@@ -91,9 +91,11 @@ drop policy if exists "orders_select_own" on public.orders;
 create policy "orders_select_own" on public.orders
   for select using (auth.uid() = user_id);
 
+-- Orders are written ONLY by the server (api/verify-payment) using the SERVICE
+-- ROLE key, which bypasses RLS. Clients must NOT be able to insert orders
+-- directly — otherwise a logged-in user could forge a 'paid' order without
+-- paying. So there is deliberately NO client INSERT policy on orders.
 drop policy if exists "orders_insert_own" on public.orders;
-create policy "orders_insert_own" on public.orders
-  for insert with check (auth.uid() = user_id);
 
 -- NOTE: The brand/admin views all customers + orders from the Supabase
 -- Dashboard (Table Editor), which uses the service role and bypasses RLS.

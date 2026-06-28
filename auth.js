@@ -350,10 +350,15 @@ window.TMAuth = (function () {
     get enabled() { return enabled; },
     user: function () { return user; },
     profile: function () { return profile; },
+    token: function () {
+      if (!enabled || !sb) return Promise.resolve(null);
+      return sb.auth.getSession()
+        .then(function (r) { return (r.data && r.data.session) ? r.data.session.access_token : null; })
+        .catch(function () { return null; });
+    },
     openModal: openModal,
     requireLogin: requireLogin,
     signOut: signOut,
-    saveOrder: saveOrder,
     getOrders: getOrders,
     refreshProfile: refreshProfile
   };

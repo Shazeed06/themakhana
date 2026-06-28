@@ -207,8 +207,7 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: total,
-        items: data.items,
+        items: (opts.items || []).map(function (l) { return { id: l.id, qty: l.qty }; }),
         customer: { name: data.name, phone: data.phone, email: data.email, address: data.address }
       })
     })
@@ -248,28 +247,27 @@
   }
 
   function verifyAndFinish(resp, data) {
-    busy(true, "Verifying payment…");
-    fetch("/api/verify-payment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        razorpay_order_id: resp.razorpay_order_id,
-        razorpay_payment_id: resp.razorpay_payment_id,
-        razorpay_signature: resp.razorpay_signature
-      })
+    busy(true, "Confirming your order…");
+    // The server (verify-payment) verifies the signature, records the order with
+    // the service role and emails the customer — the browser no longer writes the
+    // order. We pass the Supabase access token so the server ties it to the user.
+    var tokenP = (window.TMAuth && window.TMAuth.token) ? window.TMAuth.token() : Promise.resolve(null);
+    tokenP.then(function (token) {
+      return fetch("/api/verify-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          razorpay_order_id: resp.razorpay_order_id,
+          razorpay_payment_id: resp.razorpay_payment_id,
+          razorpay_signature: resp.razorpay_signature,
+          accessToken: token
+        })
+      });
     })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (j && j.valid) {
-          var orderId = String(resp.razorpay_payment_id || ("TM" + Date.now())).replace("pay_", "");
-          saveToAccount({ order_no: orderId, method: "online", paymentId: resp.razorpay_payment_id, data: data });
-          try {
-            var emSub = (data.items || []).reduce(function (s, it) { return s + (it.price || 0) * (it.qty || 1); }, 0);
-            fetch("/api/send-order-email", { method: "POST", headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ razorpay_order_id: resp.razorpay_order_id, razorpay_payment_id: resp.razorpay_payment_id, razorpay_signature: resp.razorpay_signature,
-                order: { order_no: orderId, name: data.name, email: data.email, phone: data.phone, address: data.address, items: data.items, subtotal: emSub, shipping: Math.max(0, total - emSub), total: total } })
-            }).catch(function () {});
-          } catch (e) {}
+          var orderId = j.order_no || String(resp.razorpay_payment_id || ("TM" + Date.now())).replace("pay_", "");
           showDone(data.name, data.phone, orderId, true);
           if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "online", paymentId: resp.razorpay_payment_id });
         } else {
@@ -277,7 +275,7 @@
           showPayErr("We could not verify the payment. If money was deducted it will be auto-refunded, or contact us and we'll sort it out.");
         }
       })
-      .catch(function () { busy(false); showPayErr("Could not verify the payment. If money was deducted, please contact us."); });
+      .catch(function () { busy(false); showPayErr("Could not confirm the order. If money was deducted, please contact us — we'll sort it out."); });
   }
 
   function showDone(name, phone, orderId, paid) {
