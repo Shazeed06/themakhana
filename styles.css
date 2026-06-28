@@ -519,18 +519,6 @@ h1,h2,h3{font-family:"Inter",system-ui,-apple-system,sans-serif;font-weight:700;
   width:0;transition:width .4s ease}
 .ship-nudge--done .ship-nudge__text{color:var(--good)}
 
-/* ---------- Sticky mobile buy bar ---------- */
-.buybar{
-  position:fixed;left:0;right:0;bottom:0;z-index:80;display:none;align-items:center;justify-content:space-between;gap:14px;
-  padding:11px 16px calc(11px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--surface) 96%,transparent);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);
-  box-shadow:0 -8px 24px -18px rgba(13,13,13,.5);transform:translateY(120%);transition:transform .35s ease;
-}
-.buybar.show{transform:translateY(0)}
-.buybar__info{display:flex;flex-direction:column;line-height:1.2}
-.buybar__label{font-size:12px;font-weight:600;color:var(--ink-soft)}
-.buybar__price{font-family:"Inter",serif;font-size:18px;font-weight:600;color:var(--ink)}
-.buybar .btn{padding:12px 22px;white-space:nowrap}
 
 /* ---------- Footer ---------- */
 .footer{background:var(--bg);color:var(--ink-soft);border-top:1px solid var(--line)}
@@ -643,8 +631,6 @@ html,body{max-width:100%;overflow-x:clip}
   .gifting__inner{grid-template-columns:1fr;gap:32px}
   .closer__inner{flex-direction:column;align-items:flex-start}
   .closer__cta{width:100%}
-  .buybar{display:flex}
-  body.has-buybar{padding-bottom:74px}
 }
 
 /* Touch tap-target hardening - only on coarse pointers, so desktop visuals
