@@ -175,11 +175,7 @@
   let productsRendered = false;
   function renderProducts(filter) {
     activeFilter = filter || "all";
-    // The ₹1 "test" product is hidden from customers; visit any page with ?test=1 to
-    // see + buy it for a live payment test. It stays in PRODUCTS so the cart can price it.
-    const showTest = /[?&]test=1/.test(location.search);
-    const list = (activeFilter === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter))
-      .filter((p) => p.id !== "test" || showTest);
+    const list = activeFilter === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter);
     grid.style.opacity = "0";
     grid.innerHTML = list.map(cardHTML).join("");
     filterCount.textContent = "Showing " + list.length + " product" + (list.length === 1 ? "" : "s");

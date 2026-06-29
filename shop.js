@@ -35,9 +35,7 @@
     });
   }
   function renderGrid(filter) {
-    // ₹1 "test" product hidden from customers; show it only with ?test=1 for a live test.
-    var showTest = /[?&]test=1/.test(location.search);
-    var list = TM.PRODUCTS.filter(function (p) { return (filter === 'all' || p.category === filter) && (p.id !== 'test' || showTest); });
+    var list = TM.PRODUCTS.filter(function (p) { return filter === 'all' || p.category === filter; });
     $('#productGrid').innerHTML = list.map(cardHTML).join('');
     var fc = $('#filterCount'); if (fc) fc.textContent = 'Showing ' + list.length + ' product' + (list.length === 1 ? '' : 's');
     reveal();
