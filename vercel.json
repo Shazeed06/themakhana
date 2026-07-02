@@ -65,6 +65,10 @@
     {
       "source": "/blog-what-is-makhana",
       "destination": "/blog/blog-what-is-makhana"
+    },
+    {
+      "source": "/blog-best-time-to-eat-makhana",
+      "destination": "/blog/blog-best-time-to-eat-makhana"
     }
   ],
   "redirects": [
@@ -146,6 +150,11 @@
     {
       "source": "/blog/blog-what-is-makhana",
       "destination": "/blog-what-is-makhana",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-best-time-to-eat-makhana",
+      "destination": "/blog-best-time-to-eat-makhana",
       "permanent": true
     }
   ]

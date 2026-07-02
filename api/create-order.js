@@ -5,6 +5,7 @@
    verify-payment can record an authoritative order after the payment succeeds.
    Env: RAZORPAY_KEY_ID + RAZORPAY_KEY_SECRET (Vercel). */
 var catalog = require("../lib/catalog");
+var coupons = require("../lib/coupons");
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
@@ -28,6 +29,10 @@ module.exports = async (req, res) => {
       return;
     }
 
+    // Server-side coupon: recompute the discount here; the client's number is ignored.
+    var cr = coupons.applyCoupon(body.coupon, priced);
+    var finalTotal = Math.max(1, priced.total - cr.discount);
+
     var customer = body.customer || {};
     // compact cart string, capped at 250 chars at an ITEM boundary (never cut mid-item)
     var cartCompact = "";
@@ -41,7 +46,9 @@ module.exports = async (req, res) => {
       cart: cartCompact,
       sub: String(priced.subtotal),
       ship: String(priced.shipping),
-      tot: String(priced.total),
+      coup: (cr.code || ""),
+      disc: String(cr.discount),
+      tot: String(finalTotal),
       name: String(customer.name || "").slice(0, 120),
       phone: String(customer.phone || "").slice(0, 20),
       email: String(customer.email || "").slice(0, 120),
@@ -53,7 +60,7 @@ module.exports = async (req, res) => {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": "Basic " + auth },
       body: JSON.stringify({
-        amount: priced.total * 100,     // paise — SERVER computed
+        amount: finalTotal * 100,       // paise — SERVER computed (discounted)
         currency: "INR",
         receipt: "TM" + Date.now(),
         notes: notes
@@ -64,7 +71,7 @@ module.exports = async (req, res) => {
       res.status(502).json({ error: (data && data.error && data.error.description) || "Could not start payment" });
       return;
     }
-    res.status(200).json({ orderId: data.id, amount: priced.total, currency: data.currency, keyId: KEY_ID });
+    res.status(200).json({ orderId: data.id, amount: finalTotal, currency: data.currency, keyId: KEY_ID });
   } catch (e) {
     res.status(500).json({ error: "Server error while starting payment" });
   }

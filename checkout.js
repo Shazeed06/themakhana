@@ -17,6 +17,9 @@
   // - paymentCaptured: handler fired → a later modal dismiss must be a no-op.
   // - payFailed: payment.failed message must not be overwritten by a later dismiss.
   var closedSinceSubmit = false, paymentCaptured = false, payFailed = false;
+  // Applied coupon state: null or { code, discount, label }. Server is authoritative;
+  // this is only used to render the summary and to pass the code to create-order.
+  var appliedCoupon = null;
   var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>';
 
   function esc(s) { return String(s).replace(/[<>&"]/g, function (c) { return ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]; }); }
@@ -65,8 +68,16 @@
           '<aside class="checkout__summary">' +
             '<h3>Order summary</h3>' +
             '<div class="co-items" id="coItems"></div>' +
+            '<div class="co-coupon">' +
+              '<div class="co-coupon__row">' +
+                '<input id="coCoupon" class="co-coupon__input" type="text" placeholder="Coupon code" autocomplete="off" maxlength="24" />' +
+                '<button id="coApply" class="co-coupon__btn" type="button">Apply</button>' +
+              '</div>' +
+              '<p class="co-coupon__msg" id="coCouponMsg" hidden></p>' +
+            '</div>' +
             '<div class="co-line"><span>Subtotal</span><span id="coSub"></span></div>' +
             '<div class="co-line"><span>Shipping</span><span id="coShip"></span></div>' +
+            '<div class="co-line co-line--discount" id="coDiscountLine" hidden><span id="coDiscountLabel">Discount</span><span id="coDiscount"></span></div>' +
             '<div class="co-line co-line--total"><span>Total</span><span id="coTotal"></span></div>' +
             '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Pay</button>' +
             '<p class="co-pay-err" id="coPayErr" hidden style="color:#DB0007;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
@@ -80,6 +91,7 @@
     modal = wrap;
     wrap.addEventListener("click", function (e) { if (e.target.closest("[data-co-close]")) close(); });
     document.getElementById("coForm").addEventListener("submit", onSubmit);
+    document.getElementById("coApply").addEventListener("click", applyCoupon);
     // live-clear error styling as the user types
     wrap.addEventListener("input", function (e) {
       var f = e.target.closest(".co-field");
@@ -90,6 +102,65 @@
       if (e.target && e.target.name === "pay") { clearPayErr(); updatePayUI(); }
     });
     return wrap;
+  }
+
+  function setCouponMsg(text, kind) {
+    var m = document.getElementById("coCouponMsg");
+    if (!m) return;
+    m.classList.remove("is-ok", "is-err");
+    if (!text) { m.textContent = ""; m.hidden = true; return; }
+    if (kind) m.classList.add(kind);
+    m.textContent = text;
+    m.hidden = false;
+  }
+
+  function applyCoupon() {
+    var input = document.getElementById("coCoupon");
+    var code = (input ? input.value || "" : "").trim();
+    if (!code) {
+      // empty → clear any applied coupon and hide the discount line + msg
+      appliedCoupon = null;
+      setCouponMsg("", null);
+      renderSummary();
+      return;
+    }
+    var btn = document.getElementById("coApply");
+    if (btn) { btn.disabled = true; btn.textContent = "Checking…"; }
+    fetch("/api/validate-coupon", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code: code,
+        items: (opts.items || []).map(function (l) { return { id: l.id, qty: l.qty }; })
+      })
+    })
+      .then(function (r) {
+        return r.text().then(function (t) {
+          var j = null; try { j = JSON.parse(t); } catch (e) { j = null; }
+          return j;
+        });
+      })
+      .then(function (j) {
+        if (closedSinceSubmit || !modal) return; // checkout was closed while the request was in flight
+        if (j && j.ok) {
+          appliedCoupon = { code: j.code, discount: j.discount, label: j.label };
+          setCouponMsg((j.code || code) + " applied — you saved " + money(j.discount), "is-ok");
+        } else {
+          appliedCoupon = null;
+          setCouponMsg((j && j.error) || "This code isn't valid.", "is-err");
+        }
+        renderSummary();
+      })
+      .catch(function () {
+        if (closedSinceSubmit || !modal) return;
+        appliedCoupon = null;
+        setCouponMsg("Could not check that code. Please try again.", "is-err");
+        renderSummary();
+      })
+      .then(function () {
+        var b = document.getElementById("coApply");
+        if (b) { b.disabled = false; b.textContent = "Apply"; }
+      });
   }
 
   function renderSummary() {
@@ -110,9 +181,22 @@
     });
     var flatShip = (typeof opts.flatShip === "number") ? opts.flatShip : 49;
     var ship = (sub === 0 || sub >= freeShip || allFree) ? 0 : flatShip;
+    // Discount applies to the product subtotal only — never to shipping. Math.min
+    // caps it to the current subtotal (e.g. if the cart shrank after applying).
+    var discount = appliedCoupon ? Math.min(appliedCoupon.discount, sub) : 0;
     document.getElementById("coSub").textContent = money(sub);
     document.getElementById("coShip").textContent = ship === 0 ? "FREE" : money(ship);
-    total = sub + ship;
+    var dLine = document.getElementById("coDiscountLine");
+    if (dLine) {
+      if (discount > 0) {
+        document.getElementById("coDiscountLabel").textContent = "Discount (" + appliedCoupon.code + ")";
+        document.getElementById("coDiscount").textContent = "−" + money(discount);
+        dLine.hidden = false;
+      } else {
+        dLine.hidden = true;
+      }
+    }
+    total = sub + ship - discount;
     document.getElementById("coTotal").textContent = money(total);
     updatePayUI();
   }
@@ -218,6 +302,7 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: (opts.items || []).map(function (l) { return { id: l.id, qty: l.qty }; }),
+        coupon: (appliedCoupon ? appliedCoupon.code : ""),
         customer: { name: data.name, phone: data.phone, email: data.email, address: data.address }
       })
     })
@@ -233,6 +318,10 @@
           throw new Error((res.j && res.j.error) || "Online payment isn't available right now — please try again in a moment.");
         }
         var o = res.j;
+        // The server returns the DISCOUNTED total it actually charged (amount, in
+        // rupees). Adopt it so the button, Razorpay description and confirmation
+        // reflect the true charge. order_id remains authoritative for the amount.
+        total = (typeof o.amount === "number") ? o.amount : total;
         loadRazorpay(function (loaded) {
           if (closedSinceSubmit) { busy(false); return; }
           if (!loaded) { busy(false); showPayErr("Could not load the payment window. Check your connection and try again."); return; }
@@ -345,6 +434,13 @@
     document.getElementById("coForm").hidden = false;
     clearPayErr();
     busy(false);
+    // start every checkout with a clean coupon slate
+    appliedCoupon = null;
+    var cInput = document.getElementById("coCoupon");
+    if (cInput) cInput.value = "";
+    setCouponMsg("", null);
+    var dLine0 = document.getElementById("coDiscountLine");
+    if (dLine0) dLine0.hidden = true;
     Array.prototype.forEach.call(modal.querySelectorAll(".co-field.is-invalid"), function (f) { f.classList.remove("is-invalid"); });
     prefillFromProfile();
     renderSummary();

@@ -140,7 +140,7 @@ window.TM = (function () {
     if (p.category === "raw")
       return ["100% natural", "Single ingredient", "Gluten free", "High protein"];
     if (p.category === "combo")
-      return ["5 flavours", "Perfect for gifting", "No preservatives", "Roasted, never fried"];
+      return ["3 flavours", "Perfect for gifting", "No preservatives", "Roasted, never fried"];
     return ["Roasted, never fried", "No palm oil", "Gluten free", "High protein"];
   }
 
@@ -201,7 +201,7 @@ window.TM = (function () {
     if (p.category === "raw")
       base.push({ q: "How do I roast raw makhana?", a: "Heat a little ghee or olive oil in a pan, add the makhana and roast on low heat for 5-7 minutes, stirring, until crisp. Season to taste and enjoy." });
     else if (p.category === "combo")
-      base.push({ q: "Which flavours are in the box?", a: "Peri Peri Punch, Chatpata Pudina, Cream & Onion, Salt & Pepper and Himalayan Pink Salt - one pack of each." });
+      base.push({ q: "Which flavours are in the box?", a: "Raw Phool Makhana, Peri Peri Punch and Chatpata Pudina — one pack of each (80g each, 240g total)." });
     else
       base.push({ q: "Is this flavour very spicy?", a: p.id === "peri" ? "It has a bold, smoky kick - flavourful and zingy, but balanced enough to keep snacking." : "Not at all - it's a balanced, everyday flavour the whole family can enjoy." });
     return base;
