@@ -142,8 +142,8 @@ h1,h2,h3{font-family:"Lexend",system-ui,-apple-system,sans-serif;font-weight:700
 .header__inner{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
 .header.scrolled .header__inner{height:64px}
 .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
-.brand__mark{display:none}.brand__logo{height:44px;width:auto;display:block}
-.header.scrolled .brand__logo{height:44px}
+.brand__mark{display:none}.brand__logo{height:34px;width:auto;display:block}
+.header.scrolled .brand__logo{height:30px}
 .brand__name{font-family:"Lexend",Helvetica,sans-serif;font-weight:700;font-size:22px;letter-spacing:-.02em}
 .nav{display:flex;gap:34px}
 .nav a{font-weight:500;font-size:15px;color:var(--ink);letter-spacing:0;position:relative;padding:6px 0;transition:color .2s ease}
