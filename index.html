@@ -43,8 +43,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=24" />
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=25" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -240,7 +240,9 @@
       </div>
     </article>
 
-    <div class="pheroB__dots" role="tablist" aria-label="Select slide">
+  </div>
+
+  <div class="pheroB__dots" role="tablist" aria-label="Select slide">
     <button class="pheroB__dot is-active" type="button" data-i="0" role="tab" aria-current="true" aria-label="Slide 1"></button>
     <button class="pheroB__dot" type="button" data-i="1" role="tab" aria-current="false" aria-label="Slide 2"></button>
     <button class="pheroB__dot" type="button" data-i="2" role="tab" aria-current="false" aria-label="Slide 3"></button>
@@ -411,8 +413,9 @@
 <section class="feats section" id="benefits" aria-labelledby="feats-title">
   <div class="container">
     <header class="sec-head sec-head--center reveal">
-      <h2 id="feats-title">High on flavour, heavy on protein.</h2>
-      <p class="sec-sub body">Built for the bold &mdash; wholesome, high-protein foxnuts for everyday snacking.</p>
+      <p class="kicker">Why makhana</p>
+      <h2 id="feats-title">High on flavour, heavy on protein</h2>
+      <p class="sec-sub body">Wholesome, high-protein foxnuts for everyday snacking.</p>
     </header>
     <div class="feats__split">
       <div class="feats__media reveal">
@@ -439,8 +442,9 @@
 <!-- ===== Reviews ===== -->
 <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
   <div class="container">
-    <header class="sec-head reviews__head reveal">
-      <h2 id="reviews-title">Happy Customers</h2>
+    <header class="sec-head sec-head--center reviews__head reveal">
+      <p class="kicker">Loved across India</p>
+      <h2 id="reviews-title">Happy customers</h2>
     </header>
     <div class="reviews__agg reveal" id="reviewsAgg"></div>
     <div class="reviews__grid" id="reviewsGrid"></div>
@@ -460,17 +464,22 @@
 
 <!-- ===== FAQ (AEO / GEO - answer-engine optimised) ===== -->
 <style>
-.faq-sec{padding-block:clamp(48px,7vw,84px)}
-.faq-kicker{text-align:center;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--primary-text);margin-bottom:10px}
-.faq-title{text-align:center;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.02em;color:var(--secondary)}
-.faq-title em{font-style:italic;font-weight:600;color:var(--primary-deep)}
-.faq-list{max-width:780px;margin:30px auto 0;display:flex;flex-direction:column;gap:12px}
-.faq-d{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.faq-d summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:700;font-size:16px;color:var(--secondary);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faq-sec{padding-block:var(--sec-pad);background:#fff}
+.faq-kicker{display:flex;align-items:center;justify-content:center;gap:16px;text-align:center;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
+.faq-kicker::before,.faq-kicker::after{content:"";flex:0 1 90px;height:1px}
+.faq-kicker::before{background:linear-gradient(270deg,var(--tint-red-line),transparent)}
+.faq-kicker::after{background:linear-gradient(90deg,var(--tint-red-line),transparent)}
+.faq-title{text-align:center;font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.faq-title em{font-style:normal;color:var(--primary)}
+.faq-list{max-width:760px;margin:36px auto 0;display:flex;flex-direction:column;gap:12px}
+.faq-d{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--sh-card);transition:box-shadow .2s ease}
+.faq-d:hover{box-shadow:var(--sh-card-hover)}
+.faq-d summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:600;font-size:16px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:14px}
 .faq-d summary::-webkit-details-marker{display:none}
-.faq-d summary::after{content:"+";font-size:24px;line-height:1;color:var(--primary-deep);flex:0 0 auto}
+.faq-d summary::after{content:"+";font-size:22px;line-height:1;color:var(--primary);flex:0 0 auto}
 .faq-d[open] summary::after{content:"\2212"}
-.faq-d[open] summary{color:var(--primary-deep)}
+.faq-d[open]{border-color:#FF7E8B;background:var(--tint-red)}
+.faq-d[open] summary{color:var(--ink)}
 .faq-d__a{padding:0 20px 18px;color:var(--ink-soft);line-height:1.7;font-size:15px}
 .faq-d__a p{margin:0}
 </style>
