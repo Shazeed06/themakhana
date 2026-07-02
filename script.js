@@ -6,13 +6,13 @@
 
   /* ---------- Data ---------- */
   const PRODUCTS = [
-    { id:"peri",    name:"Peri Peri Punch",        price:199, mrp:249, category:"roasted", acc:"#C0492F", weight:"80g",  note:"spicy, zingy, addictive", ribbon:"BESTSELLER", ribbonType:"bestseller", rating:4.8, reviews:124, cat:"chilli" },
-    { id:"pudina",  name:"Chatpata Pudina",        price:199, mrp:249, category:"roasted", acc:"#4F7A52", weight:"80g",  note:"tangy mint chaat hit",     ribbon:"NEW",        ribbonType:"new",        rating:4.7, reviews:98,  cat:"mint" },
-    { id:"cream",   name:"Cream & Onion",          price:199, mrp:249, category:"roasted", acc:"#8A6BB0", weight:"80g",  note:"creamy, savoury, moreish", ribbon:"",           ribbonType:"",           rating:4.7, reviews:86,  cat:"onion" },
-    { id:"salt",    name:"Salt & Pepper",          price:179, mrp:229, category:"roasted", acc:"#4A5A66", weight:"80g",  note:"classic, perfectly seasoned", ribbon:"",        ribbonType:"",           rating:4.6, reviews:72,  cat:"pepper" },
-    { id:"pink",    name:"Himalayan Pink Salt",    price:179, mrp:229, category:"roasted", acc:"#C77A86", weight:"80g",  note:"clean, lightly salted",    ribbon:"",           ribbonType:"",           rating:4.7, reviews:64,  cat:"mountain" },
-    { id:"classic", name:"Classic Lightly Salted", price:169, mrp:219, category:"roasted", acc:"#C9A227", weight:"80g",  note:"pure, plain, perfect",     ribbon:"",           ribbonType:"",           rating:4.6, reviews:110, cat:"seed" },
-    { id:"raw",     name:"Raw Phool Makhana",      price:249, mrp:299, category:"raw",     acc:"#6E8B6F", weight:"100g", note:"premium handpicked, big pops", ribbon:"RAW",     ribbonType:"acc",        rating:4.9, reviews:140, cat:"lotus" },
+    { id:"peri",    name:"Peri Peri Punch",        price:199, mrp:249, category:"roasted", acc:"#C0492F", weight:"80g",  note:"spicy, zingy, addictive", ribbon:"BESTSELLER", ribbonType:"bestseller", rating:4.8, reviews:124, cat:"chilli", images:["/images/products/peri.jpg","/images/products/peri-2.jpg"] },
+    { id:"pudina",  name:"Chatpata Pudina",        price:199, mrp:249, category:"roasted", acc:"#4F7A52", weight:"80g",  note:"tangy mint chaat hit",     ribbon:"NEW",        ribbonType:"new",        rating:4.7, reviews:98,  cat:"mint", images:["/images/products/pudina.jpg","/images/products/pudina-2.jpg"] },
+    { id:"cream",   name:"Cream & Onion",          price:199, mrp:249, category:"roasted", acc:"#8A6BB0", weight:"80g",  note:"creamy, savoury, moreish", ribbon:"",           ribbonType:"",           rating:4.7, reviews:86,  cat:"onion", images:["/images/products/cream.jpg","/images/products/cream-2.jpg"] },
+    { id:"salt",    name:"Salt & Pepper",          price:179, mrp:229, category:"roasted", acc:"#4A5A66", weight:"80g",  note:"classic, perfectly seasoned", ribbon:"",        ribbonType:"",           rating:4.6, reviews:72,  cat:"pepper", images:["/images/products/salt.jpg"] },
+    { id:"pink",    name:"Himalayan Pink Salt",    price:179, mrp:229, category:"roasted", acc:"#C77A86", weight:"80g",  note:"clean, lightly salted",    ribbon:"",           ribbonType:"",           rating:4.7, reviews:64,  cat:"mountain", images:["/images/products/pink.jpg"] },
+    { id:"classic", name:"Classic Lightly Salted", price:169, mrp:219, category:"roasted", acc:"#C9A227", weight:"80g",  note:"pure, plain, perfect",     ribbon:"",           ribbonType:"",           rating:4.6, reviews:110, cat:"seed", images:["/images/products/classic.jpg"] },
+    { id:"raw",     name:"Raw Phool Makhana",      price:249, mrp:299, category:"raw",     acc:"#6E8B6F", weight:"100g", note:"premium handpicked, big pops", ribbon:"RAW",     ribbonType:"acc",        rating:4.9, reviews:140, cat:"lotus", images:["/images/products/raw.jpg"] },
     { id:"combo",   name:"Variety Combo (5 packs)",price:799, mrp:1095,category:"combo",   acc:"#B9760C", weight:"400g", note:"all flavours, perfect gifting", ribbon:"COMBO",  ribbonType:"acc",        rating:5.0, reviews:57,  cat:"combo" },
     { id:"test",    name:"Test Product",           price:1,   mrp:1,   category:"roasted", acc:"#97a97c", weight:"1g",   note:"₹1 test order — free shipping", ribbon:"TEST",   ribbonType:"new",        rating:5.0, reviews:1,   cat:"seed", freeShipping:true }
   ];
@@ -158,10 +158,13 @@
     const isCombo = p.category === "combo";
     const badge = isCombo ? "" : '<span class="disc-badge">-' + pct(p) + "%</span>";
     const nm = p.name.split(" (")[0];
+    const media = (p.images && p.images[0])
+      ? '<img class="card__img" src="' + p.images[0] + '" alt="" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
+      : '<div class="card__pouch">' + pouchSVG(p) + '</div>';
     return '' +
       '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
         ribbon + badge +
-        '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + escapeXML(nm) + '"><div class="card__pouch">' + pouchSVG(p) + '</div></a>' +
+        '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + escapeXML(nm) + '">' + media + '</a>' +
         '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + escapeXML(p.name) + ' to cart">' +
           ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
         '<h3 class="card__name"><a href="/products/' + p.id + '">' + nm + '</a></h3>' +

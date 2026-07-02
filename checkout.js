@@ -65,7 +65,7 @@
             '<div class="co-line co-line--total"><span>Total</span><span id="coTotal"></span></div>' +
             '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Pay</button>' +
             '<p class="co-pay-err" id="coPayErr" hidden style="color:#DB0007;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
-            '<p class="co-secure">' + CHECK + ' 100% secure payment via Razorpay · 7-day returns</p>' +
+            '<p class="co-secure">' + CHECK + ' Secure payment via Razorpay · 7-day returns on unopened packs</p>' +
           '</aside>' +
         '</form>' +
         '<div class="checkout__done" id="coDone" hidden></div>' +
@@ -121,7 +121,7 @@
     var btn = document.getElementById("coPlace");
     if (btn && !btn.disabled) btn.textContent = "Pay " + money(total);
     var sec = modal.querySelector(".co-secure");
-    if (sec) sec.innerHTML = CHECK + " 100% secure payment via Razorpay · 7-day returns";
+    if (sec) sec.innerHTML = CHECK + " Secure payment via Razorpay · 7-day returns on unopened packs";
   }
 
   function setErr(id, msg) {
@@ -272,7 +272,7 @@
           if (opts.onPlaced) opts.onPlaced({ id: orderId, name: data.name, phone: data.phone, total: total, method: "online", paymentId: resp.razorpay_payment_id });
         } else {
           busy(false);
-          showPayErr("We could not verify the payment. If money was deducted it will be auto-refunded, or contact us and we'll sort it out.");
+          showPayErr("We could not verify the payment. If money was deducted, contact us with your payment reference and we'll resolve it promptly.");
         }
       })
       .catch(function () { busy(false); showPayErr("Could not confirm the order. If money was deducted, please contact us — we'll sort it out."); });
@@ -284,9 +284,9 @@
     var done = document.getElementById("coDone");
     var payLine = paid
       ? (recorded
-          ? "Payment of <strong>" + money(total) + "</strong> received. We&rsquo;ll call you on <strong>" + esc(phone) + "</strong> to confirm delivery."
+          ? "Payment of <strong>" + money(total) + "</strong> received. A confirmation email is on its way &mdash; we&rsquo;ll reach out on <strong>" + esc(phone) + "</strong> if anything needs confirming."
           : "Payment of <strong>" + money(total) + "</strong> received. Our team will confirm your order on <strong>" + esc(phone) + "</strong> shortly &mdash; you&rsquo;re all set.")
-      : "We&rsquo;ll call you on <strong>" + esc(phone) + "</strong> to confirm delivery. Pay <strong>" + money(total) + "</strong> in cash when it arrives.";
+      : "Payment pending &mdash; your order is not confirmed until payment completes.";
     done.innerHTML =
       '<div class="co-done">' +
         '<div class="co-done__tick">' + CHECK + '</div>' +

@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=28" />
+<link rel="stylesheet" href="styles.css?v=29" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -137,7 +137,7 @@
 
 <!-- ===== Announcement bar ===== -->
 <div class="announce" id="announce">
-  <p class="announce__text">Free shipping over &#8377;599&nbsp;&nbsp;&middot;&nbsp;&nbsp;Roasted, never fried&nbsp;&nbsp;&middot;&nbsp;&nbsp;Sourced from Bihar &middot; Made in Delhi</p>
+  <p class="announce__text">Free shipping on &#8377;599+&nbsp;&nbsp;&middot;&nbsp;&nbsp;Roasted, never fried&nbsp;&nbsp;&middot;&nbsp;&nbsp;Sourced from Bihar &middot; Made in Delhi</p>
   <button class="announce__close" id="announceClose" aria-label="Dismiss announcement">
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
   </button>
@@ -317,6 +317,83 @@
         <div class="qsteps__dotsdeco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
     </div>
+    <!-- Mobile-only swipeable card carousel (hidden on desktop via CSS) -->
+    <div class="qsteps__mslider" id="qstepsMslider" aria-hidden="true">
+      <div class="qsteps__mtrack" id="qstepsMtrack">
+        <div class="qsteps__mslide">
+          <div class="qsteps__mdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="qsteps__mcard">
+            <video class="qsteps__mmedia" data-mmedia="0" muted loop playsinline preload="none" aria-label="Calm pond water with floating leaves — where foxnuts are harvested">
+              <source src="videos/pond.mp4" type="video/mp4">
+            </video>
+            <div class="qsteps__mnote" aria-hidden="true">
+              <ol>
+                <li><b>01</b> Hand-harvested foxnuts</li>
+                <li><b>02</b> Small-batch roasting</li>
+                <li><b>03</b> Airtight freshness seal</li>
+              </ol>
+            </div>
+          </div>
+          <h3 class="qsteps__mtitle">Handpicked from Bihar&rsquo;s ponds</h3>
+          <p class="qsteps__mdesc">Foxnuts gathered by hand at first light from the lotus ponds of Madhubani &mdash; the heartland of the world&rsquo;s finest makhana.</p>
+        </div>
+        <div class="qsteps__mslide">
+          <div class="qsteps__mdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="qsteps__mcard">
+            <video class="qsteps__mmedia" data-mmedia="1" muted loop playsinline preload="none" aria-label="Roasted makhana on a hot griddle being dusted with red spice">
+              <source src="videos/makhana-spice.mp4" type="video/mp4">
+            </video>
+            <div class="qsteps__mnote" aria-hidden="true">
+              <ol>
+                <li><b>01</b> Hand-harvested foxnuts</li>
+                <li><b>02</b> Small-batch roasting</li>
+                <li><b>03</b> Airtight freshness seal</li>
+              </ol>
+            </div>
+          </div>
+          <h3 class="qsteps__mtitle">Slow-roasted, never fried</h3>
+          <p class="qsteps__mdesc">Small batches, cold-pressed oil and patient roasting give the crunch its crispness &mdash; no deep fryers, no shortcuts, ever.</p>
+        </div>
+        <div class="qsteps__mslide">
+          <div class="qsteps__mdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="qsteps__mcard">
+            <video class="qsteps__mmedia" data-mmedia="2" muted loop playsinline preload="none" aria-label="Plain white makhana puffs piling up on a clean kitchen counter">
+              <source src="videos/makhana-toss.mp4" type="video/mp4">
+            </video>
+            <div class="qsteps__mnote" aria-hidden="true">
+              <ol>
+                <li><b>01</b> Hand-harvested foxnuts</li>
+                <li><b>02</b> Small-batch roasting</li>
+                <li><b>03</b> Airtight freshness seal</li>
+              </ol>
+            </div>
+          </div>
+          <h3 class="qsteps__mtitle">Clean-label quality checks</h3>
+          <p class="qsteps__mdesc">No palm oil, no maida, no MSG. Every batch is tasted and checked before it earns the seal.</p>
+        </div>
+        <div class="qsteps__mslide">
+          <div class="qsteps__mdots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="qsteps__mcard">
+            <img class="qsteps__mmedia" data-mmedia="3" src="images/hero-box.jpg" alt="The Makhana variety gift box packed with sealed pouches of all flavours" loading="lazy" decoding="async" width="1300" height="867">
+            <div class="qsteps__mnote" aria-hidden="true">
+              <ol>
+                <li><b>01</b> Hand-harvested foxnuts</li>
+                <li><b>02</b> Small-batch roasting</li>
+                <li><b>03</b> Airtight freshness seal</li>
+              </ol>
+            </div>
+          </div>
+          <h3 class="qsteps__mtitle">Sealed fresh, shipped fast</h3>
+          <p class="qsteps__mdesc">Airtight-packed in Delhi within hours of roasting and shipped pan-India &mdash; crunch preserved to your door.</p>
+        </div>
+      </div>
+      <div class="qsteps__mpager">
+        <button class="qsteps__mpgdot is-active" type="button" data-mdot="0" aria-current="true" aria-label="Step 1"></button>
+        <button class="qsteps__mpgdot" type="button" data-mdot="1" aria-current="false" aria-label="Step 2"></button>
+        <button class="qsteps__mpgdot" type="button" data-mdot="2" aria-current="false" aria-label="Step 3"></button>
+        <button class="qsteps__mpgdot" type="button" data-mdot="3" aria-current="false" aria-label="Step 4"></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -327,6 +404,16 @@
   var steps = Array.prototype.slice.call(list.querySelectorAll("[data-step]"));
   var timer = null, idx = 1;
   var media = Array.prototype.slice.call(document.querySelectorAll(".qsteps__mel"));
+  var mq = window.matchMedia("(max-width: 860px)");
+
+  // Mobile slider refs
+  var mslider = document.getElementById("qstepsMslider");
+  var track = document.getElementById("qstepsMtrack");
+  var mslides = track ? Array.prototype.slice.call(track.querySelectorAll(".qsteps__mslide")) : [];
+  var mpgdots = mslider ? Array.prototype.slice.call(mslider.querySelectorAll("[data-mdot]")) : [];
+  var mmedia = mslider ? Array.prototype.slice.call(mslider.querySelectorAll("[data-mmedia]")) : [];
+  var midx = 0;
+
   function open(i) {
     idx = (i + steps.length) % steps.length;
     steps.forEach(function (s, j) {
@@ -338,7 +425,7 @@
       var on = +m.getAttribute("data-qmedia") === idx;
       m.classList.toggle("is-active", on);
       if (m.tagName === "VIDEO") {
-        if (on) { var p = m.play(); if (p && p.catch) p.catch(function () {}); }
+        if (on && !mq.matches) { var p = m.play(); if (p && p.catch) p.catch(function () {}); }
         else m.pause();
       }
     });
@@ -346,11 +433,73 @@
   steps.forEach(function (s, j) {
     s.querySelector(".qstep__btn").addEventListener("click", function () { open(j); restart(); });
   });
-  function tick() { open(idx + 1); }
-  function restart() { if (timer) clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(tick, 4500); }
-  list.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); timer = null; });
-  list.addEventListener("mouseleave", restart);
+
+  function msetActive(i) {
+    if (!mslides.length) return;
+    midx = (i + mslides.length) % mslides.length;
+    mpgdots.forEach(function (d, j) {
+      d.classList.toggle("is-active", j === midx);
+      d.setAttribute("aria-current", j === midx ? "true" : "false");
+    });
+    mmedia.forEach(function (m) {
+      var on = +m.getAttribute("data-mmedia") === midx;
+      m.classList.toggle("is-active", on);
+      if (m.tagName === "VIDEO") {
+        if (on && mq.matches) { var p = m.play(); if (p && p.catch) p.catch(function () {}); }
+        else m.pause();
+      }
+    });
+  }
+  function mgo(i) {
+    if (!track) return;
+    msetActive(i);
+    var x = midx * track.clientWidth;
+    try { track.scrollTo({ left: x, behavior: "smooth" }); } catch (e) { track.scrollLeft = x; }
+  }
+  if (track) {
+    var mdeb = null;
+    track.addEventListener("scroll", function () {
+      if (mdeb) clearTimeout(mdeb);
+      mdeb = setTimeout(function () {
+        var i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+        i = Math.max(0, Math.min(mslides.length - 1, i));
+        if (i !== midx) { msetActive(i); restart(); }
+      }, 120);
+    }, { passive: true });
+  }
+  mpgdots.forEach(function (d, j) {
+    d.addEventListener("click", function () { mgo(j); restart(); });
+  });
+
+  function tick() { if (mq.matches && track) mgo(midx + 1); else open(idx + 1); }
+  function restart() { if (timer) clearInterval(timer); timer = null; if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(tick, 4500); }
+
+  // Hover-pause ONLY on devices that truly hover: on touch a tap fires
+  // mouseenter but mouseleave never comes, so the timer would die forever.
+  if (matchMedia("(hover: hover)").matches) {
+    list.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); timer = null; });
+    list.addEventListener("mouseleave", restart);
+  }
+
+  function syncMode() {
+    var mob = mq.matches;
+    if (mslider) { if (mob) mslider.removeAttribute("aria-hidden"); else mslider.setAttribute("aria-hidden", "true"); }
+    var grid = document.querySelector(".qsteps__grid");
+    if (grid) { if (mob) grid.setAttribute("aria-hidden", "true"); else grid.removeAttribute("aria-hidden"); }
+    if (mob) {
+      media.forEach(function (m) { if (m.tagName === "VIDEO") m.pause(); });
+      msetActive(midx);
+    } else {
+      mmedia.forEach(function (m) { if (m.tagName === "VIDEO") m.pause(); });
+      open(idx);
+    }
+  }
+  var onMq = function () { syncMode(); restart(); };
+  if (mq.addEventListener) mq.addEventListener("change", onMq);
+  else if (mq.addListener) mq.addListener(onMq);
+
   open(idx);
+  syncMode();
   restart();
 
   // Never-stop watchdog: browsers pause offscreen/battery-saver videos — resume them.
@@ -358,7 +507,8 @@
     if (document.hidden) return;
     var brand = document.getElementById("brandAnim");
     if (brand && brand.paused) { var p = brand.play(); if (p && p.catch) p.catch(function () {}); }
-    media.forEach(function (m) {
+    var pool = mq.matches ? mmedia : media;
+    pool.forEach(function (m) {
       if (m.tagName === "VIDEO" && m.classList.contains("is-active") && m.paused) {
         var q = m.play(); if (q && q.catch) q.catch(function () {});
       }
@@ -506,8 +656,8 @@
 <section class="usp" id="assure" aria-label="Why shop with us">
   <div class="container usp__row">
     <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7zM7.5 18a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM17.5 18a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/></svg></span><div><h4>Free Shipping</h4><p>For orders over &#8377;599</p></div></div>
-    <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7l8-4 8 4v5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4>Money Guarantee</h4><p>Within 7 days for an exchange</p></div></div>
-    <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0M3 14a2 2 0 0 1 2-2h1v6H5a2 2 0 0 1-2-2zM21 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"/></svg></span><div><h4>Online Support</h4><p>24 hours a day, 7 days a week</p></div></div>
+    <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7l8-4 8 4v5c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span><div><h4>7-Day Exchange</h4><p>Unopened packs, within 7 days of delivery</p></div></div>
+    <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0M3 14a2 2 0 0 1 2-2h1v6H5a2 2 0 0 1-2-2zM21 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"/></svg></span><div><h4>Online Support</h4><p>Replies within 24 hours</p></div></div>
     <div class="usp__item reveal"><span class="usp__ic"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg></span><div><h4>Secure Payment</h4><p>UPI, Cards, Netbanking &amp; Wallets</p></div></div>
   </div>
 </section>
@@ -696,8 +846,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/supabase-config.js?v=2"></script>
 <script src="/auth.js?v=6"></script>
-<script src="checkout.js?v=13"></script>
-<script src="script.js?v=14"></script>
+<script src="checkout.js?v=14"></script>
+<script src="script.js?v=15"></script>
 <script src="/nav.js?v=1" defer></script>
 </body>
 </html>

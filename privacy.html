@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=28" />
+<link rel="stylesheet" href="styles.css?v=29" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -88,7 +88,7 @@
 
 <!-- ===== Announcement bar ===== -->
 <div class="announce" id="announce">
-  <p class="announce__text">Free shipping over &#8377;599&nbsp;&nbsp;&middot;&nbsp;&nbsp;Roasted, never fried&nbsp;&nbsp;&middot;&nbsp;&nbsp;Sourced from Bihar &middot; Made in Delhi</p>
+  <p class="announce__text">Free shipping on &#8377;599+&nbsp;&nbsp;&middot;&nbsp;&nbsp;Roasted, never fried&nbsp;&nbsp;&middot;&nbsp;&nbsp;Sourced from Bihar &middot; Made in Delhi</p>
 </div>
 
 <!-- ===== Header ===== -->
@@ -147,59 +147,83 @@
   <section class="policy">
     <div class="container" style="padding:0">
       <h1>Privacy Policy</h1>
-      <p class="policy__upd">Last updated: 22 June 2026</p>
+      <p class="policy__upd">Last updated: 3 July 2026</p>
       <div class="policy-body">
 
-        <p>The Makhana ("we", "us", "our") is a direct-to-consumer brand based in Delhi, India, selling roasted and raw makhana (foxnuts) through our website at themakhana.in. This Privacy Policy explains what personal information we collect when you visit our website or place an order, how we use it, and the choices you have. By using our website, you agree to the practices described here.</p>
+        <p>The Makhana ("we", "us", "our") is a direct-to-consumer brand based in Delhi, India, selling roasted and raw makhana (foxnuts) through our website at themakhana.in. This Privacy Policy explains what personal information we collect when you visit our website, create an account or place an order, how we use it, who we share it with, and the rights you have. We handle personal data in line with applicable Indian law, including the Information Technology Act, 2000 and its rules, and the Digital Personal Data Protection Act, 2023 (DPDP Act). By using our website, you agree to the practices described here.</p>
 
         <h2>Information We Collect</h2>
         <p>We collect only the information we need to process your orders and run our business. This may include:</p>
         <ul>
-          <li>Your name and the name of anyone you are shipping to.</li>
-          <li>Contact details such as your email address and phone number.</li>
-          <li>Your shipping and billing address.</li>
-          <li>Order information, such as the products you buy and your order history.</li>
-          <li>Basic technical details such as your device type and pages visited, collected through cookies (see below).</li>
+          <li><strong>Account details</strong> — if you create an account, your email address and a password. Passwords are stored in securely hashed form by our authentication provider (Supabase); we never see or store your password in plain text.</li>
+          <li><strong>Profile and delivery details</strong> — your name, phone number, and shipping address (including city, state and pincode), plus the name and address of anyone you are shipping to.</li>
+          <li><strong>Order information</strong> — the products you buy, order amounts, order status and your order history, which we record on our servers to fulfil and support your orders.</li>
+          <li><strong>Payment confirmation data</strong> — a payment reference ID and payment status returned by our payment gateway, Razorpay, so we can match your payment to your order.</li>
+          <li><strong>Usage and device data</strong> — basic technical details such as device type, browser, approximate location and pages visited, collected through cookies and the analytics tools described below.</li>
         </ul>
-        <p>We do <strong>not</strong> store your debit card, credit card or UPI details. All payments are handled directly by our payment partners on secure systems, and card details never reach our servers.</p>
+        <p>We do <strong>not</strong> collect or store your debit card, credit card, UPI or net-banking credentials. All payments are handled directly by <strong>Razorpay</strong>, an RBI-regulated payment gateway, on its own secure systems. Your card and banking details are entered on Razorpay's payment interface and never reach our servers.</p>
 
         <h2>How We Use It</h2>
         <p>We use your information to:</p>
         <ul>
-          <li>Process, pack and deliver your orders.</li>
-          <li>Send order confirmations, shipping updates and delivery notifications.</li>
+          <li>Process, pack and deliver your orders, and record them so we can support you later.</li>
+          <li>Send order confirmations and order-related emails (sent through our email provider, Resend).</li>
           <li>Respond to your questions and provide customer support.</li>
           <li>Send you offers and updates, but only if you have chosen to receive them.</li>
-          <li>Improve our website, products and overall service.</li>
-          <li>Meet our legal and accounting obligations.</li>
+          <li>Understand how the website is used so we can improve it, our products and our service.</li>
+          <li>Prevent fraud and misuse, and meet our legal, tax and accounting obligations.</li>
         </ul>
 
-        <h2>Cookies</h2>
-        <p>Our website uses cookies and similar technologies to remember your cart, keep you signed in, and understand how visitors use the site. You can control or disable cookies through your browser settings. Please note that some parts of the website may not work as expected if cookies are turned off.</p>
+        <h2>Cookies &amp; Analytics</h2>
+        <p>Our website uses cookies, local storage and similar technologies to remember your cart, keep you signed in, and understand how visitors use the site. Specifically, we use:</p>
+        <ul>
+          <li><strong>Google Analytics 4 (GA4)</strong> — to measure traffic and understand how visitors move through the site (pages visited, approximate location, device and browser information).</li>
+          <li><strong>Microsoft Clarity</strong> — to generate <strong>heatmaps and session recordings</strong> of how visitors interact with our pages (clicks, scrolls and mouse movement). Clarity is configured by Microsoft to mask sensitive input; we do not use it to capture your passwords or payment details, which are entered on Razorpay's systems, not on our pages.</li>
+        </ul>
+        <p>These tools set their own cookies and process data under their providers' privacy policies. You can control or disable cookies through your browser settings, use browser extensions such as the Google Analytics opt-out add-on, or browse in private mode. Some parts of the website (such as the cart and sign-in) may not work as expected if cookies and local storage are turned off.</p>
+
+        <h2>Where Your Data Is Stored</h2>
+        <p>Account, profile and order data are stored with <strong>Supabase</strong>, our database and authentication provider, on secured infrastructure. Payment data is held by <strong>Razorpay</strong>. Transactional emails are sent through <strong>Resend</strong>. Each of these providers acts as a processor for us and is bound by its own security and privacy commitments.</p>
 
         <h2>Sharing With Third Parties</h2>
-        <p>We do not sell your personal information. We share it only with trusted partners who help us run our business, and only as far as needed to do so. These include:</p>
+        <p>We do <strong>not sell or rent</strong> your personal information to anyone. We share it only with trusted service providers who help us run our business, and only to the extent needed:</p>
         <ul>
-          <li>Courier and logistics partners, to deliver your order to your address.</li>
-          <li>Payment partners, to securely process your payment.</li>
-          <li>Service providers who support our website, email and analytics.</li>
+          <li><strong>Courier and logistics partners</strong> — your name, address and phone number, to deliver your order.</li>
+          <li><strong>Razorpay</strong> — to securely process your payment and any refunds.</li>
+          <li><strong>Supabase</strong> — to store account and order data.</li>
+          <li><strong>Resend</strong> — to send order confirmation and support emails.</li>
+          <li><strong>Google (GA4) and Microsoft (Clarity)</strong> — usage analytics as described above.</li>
         </ul>
-        <p>We may also disclose information if required to do so by law or by a valid request from a public authority.</p>
+        <p>We may also disclose information if required to do so by law, by a court order, or by a valid request from a public authority.</p>
+
+        <h2>Data Retention</h2>
+        <p>We keep your account and order information for as long as you have an account with us and thereafter for as long as needed to handle returns, refunds and disputes and to meet legal, tax and accounting requirements. When data is no longer needed, we delete it or anonymise it.</p>
 
         <h2>Data Security</h2>
-        <p>We take reasonable steps to protect your information using appropriate technical and organisational measures. Payments are processed over secure, encrypted connections. While no method of transmission over the internet is completely secure, we work to keep your data safe and limit access to it.</p>
+        <p>We take reasonable security safeguards to protect your information using appropriate technical and organisational measures. The website is served over HTTPS, payments are processed on Razorpay's encrypted systems, and access to stored data is restricted. While no method of transmission over the internet is completely secure, we work to keep your data safe and limit access to it, and we will inform you and the relevant authorities of any data breach as required by applicable law.</p>
 
         <h2>Your Rights</h2>
-        <p>You have the right to access the personal information we hold about you, to ask us to correct it if it is inaccurate, and to request that we delete it where there is no ongoing need to keep it. To make any such request, please email us at <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a> and we will respond within a reasonable time.</p>
+        <p>Under applicable Indian law, including the DPDP Act, 2023, you have the right to:</p>
+        <ul>
+          <li><strong>Access</strong> — ask for a summary of the personal information we hold about you.</li>
+          <li><strong>Correction</strong> — ask us to correct or update inaccurate or incomplete information (you can also edit your saved details from your account page).</li>
+          <li><strong>Deletion</strong> — ask us to delete your account and personal information where we no longer need to keep it for orders in progress or legal requirements.</li>
+          <li><strong>Withdraw consent</strong> — opt out of promotional messages at any time; order-related emails will still be sent because they are needed to fulfil your purchase.</li>
+          <li><strong>Grievance redressal</strong> — raise a complaint about how your data is handled, and escalate to the Data Protection Board of India if you are not satisfied with our response.</li>
+        </ul>
+        <p>To exercise any of these rights, email us at <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a> from the email address linked to your account, with the subject line "Privacy Request".</p>
+
+        <h2>Grievance Contact</h2>
+        <p>For privacy questions, complaints or data requests, contact our grievance contact: <strong>The Makhana — Privacy &amp; Grievance Desk</strong>, Delhi, India; email <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a>; phone <a href="tel:+918287124651">+91 82871 24651</a>. We acknowledge privacy complaints within <strong>48 hours</strong> and aim to resolve them within <strong>30 days</strong> of receipt, in line with applicable Indian IT rules and the DPDP Act.</p>
 
         <h2>Children's Privacy</h2>
         <p>Our website and products are intended for adults. We do not knowingly collect personal information from children. If you believe a child has provided us with their details, please contact us so we can remove it.</p>
 
         <h2>Changes</h2>
-        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for legal reasons. When we do, we will revise the "Last updated" date at the top of this page. We encourage you to review this page periodically.</p>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, providers or legal requirements. When we do, we will revise the "Last updated" date at the top of this page. We encourage you to review this page periodically.</p>
 
         <h2>Contact</h2>
-        <p>If you have any questions about this Privacy Policy or how we handle your information, please email us at <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a>. The Makhana is based in Delhi, India.</p>
+        <p>If you have any questions about this Privacy Policy or how we handle your information, please email us at <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a> or call <a href="tel:+918287124651">+91 82871 24651</a>. The Makhana is based in Delhi, India.</p>
 
       </div>
     </div>
