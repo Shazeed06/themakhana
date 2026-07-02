@@ -23,15 +23,15 @@
 </script>
 
 <!-- ===== SEO ===== -->
-<title>About Us - The Makhana | Premium Foxnuts from Bihar</title>
-<meta name="description" content="The story of The Makhana - a premium D2C brand handpicking phool makhana in Bihar. Roasted in cold-pressed oil, never fried. High-protein & gluten-free." />
+<title>About The Makhana | Roasted Never Fried Foxnuts from Bihar</title>
+<meta name="description" content="Meet The Makhana: foxnuts handpicked in Bihar's lotus ponds, slow-roasted in cold-pressed oil in Delhi. No palm oil, no maida. Roasted, never fried." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://www.themakhana.in/about" />
 <meta name="theme-color" content="#DB0007" />
 
 <!-- Open Graph -->
-<meta property="og:title" content="About Us - The Makhana | Premium Foxnuts from Bihar" />
-<meta property="og:description" content="Rooted in tradition, crafted for modern snacking. Handpicked phool makhana from Bihar - roasted in cold-pressed oil, never fried." />
+<meta property="og:title" content="About The Makhana | Roasted Never Fried Foxnuts from Bihar" />
+<meta property="og:description" content="Foxnuts handpicked in Bihar's lotus ponds, slow-roasted in cold-pressed oil in Delhi. No palm oil, no maida. Roasted, never fried." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.themakhana.in/about" />
 <meta property="og:site_name" content="The Makhana" />
@@ -39,8 +39,8 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="About Us - The Makhana | Premium Foxnuts from Bihar" />
-<meta name="twitter:description" content="Rooted in tradition, crafted for modern snacking. Handpicked phool makhana from Bihar - roasted in cold-pressed oil, never fried." />
+<meta name="twitter:title" content="About The Makhana | Roasted Never Fried Foxnuts from Bihar" />
+<meta name="twitter:description" content="Foxnuts handpicked in Bihar's lotus ponds, slow-roasted in cold-pressed oil in Delhi. No palm oil, no maida. Roasted, never fried." />
 <meta name="twitter:image" content="https://www.themakhana.in/images/about-hero.jpg" />
 
 <!-- ===== Fonts + shared design system ===== -->
@@ -87,7 +87,7 @@
     {
       "@type": "AboutPage",
       "url": "https://www.themakhana.in/about",
-      "name": "About Us - The Makhana",
+      "name": "About The Makhana",
       "description": "The story of The Makhana - premium phool makhana sourced from Bihar, roasted in cold-pressed oil and never deep-fried.",
       "isPartOf": { "@id": "https://www.themakhana.in/#organization" }
     }
@@ -97,71 +97,79 @@
 
 <style>
 /* ===========================================================
-   About page - clean, minimal, on shared tokens (styles.css)
+   About page — "The Makhana Wall" (painted-brick street style)
    =========================================================== */
 .about-wrap{overflow-x:hidden}
 .nav a[aria-current="page"]{color:var(--ink)}
 .nav a[aria-current="page"]::after{width:100%}
 
-/* ---------- Hero ---------- */
-.ab-hero{padding-top:clamp(36px,5.5vw,68px);text-align:center}
-.ab-hero .kicker{justify-content:center;margin-bottom:16px}
-.ab-hero h1{font-size:clamp(40px,6.4vw,82px);line-height:1;letter-spacing:-.03em;font-weight:800;color:var(--secondary);text-wrap:balance}
-.ab-hero h1 em{font-style:italic;font-weight:600;color:var(--primary-deep)}
-.ab-hero__sub{max-width:600px;margin:20px auto 0;font-size:clamp(16px,1.9vw,20px);line-height:1.7;color:var(--ink-soft)}
-.ab-hero__img{margin-top:clamp(30px,4vw,52px);border-radius:clamp(16px,2vw,26px);overflow:hidden;border:1px solid var(--line);box-shadow:0 34px 64px -36px rgba(20,20,20,.45)}
-.ab-hero__img img{display:block;width:100%;height:auto}
+/* ---------- Painted-wall hero ---------- */
+.wall-hero{position:relative;background:#f1eee7 url("images/wall-red.svg") center/cover no-repeat;text-align:center;padding:clamp(72px,11vw,150px) 20px clamp(84px,12vw,170px)}
+.wall-hero__kicker{display:inline-block;background:#0D0D0D;color:#FFBC0D;font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;padding:9px 18px;border-radius:4px;transform:rotate(-1.6deg);box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.wall-hero h1{margin:26px auto 0;max-width:900px;font-size:clamp(44px,8vw,104px);line-height:.96;letter-spacing:-.02em;font-weight:800;color:#fff;text-transform:uppercase;text-shadow:0 3px 0 rgba(0,0,0,.18),0 14px 34px rgba(0,0,0,.22);transform:rotate(-1.2deg);text-wrap:balance}
+.wall-hero h1 .spray{color:#FFBC0D}
+.wall-hero__sub{max-width:640px;margin:22px auto 0;font-size:clamp(16px,2vw,20px);line-height:1.65;color:#fff;font-weight:600;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.wall-hero__tear{position:absolute;left:0;right:0;bottom:-1px;height:26px;background:var(--surface,#fff);clip-path:polygon(0 62%,3% 30%,7% 70%,11% 25%,15% 66%,19% 34%,24% 74%,28% 28%,33% 62%,38% 36%,43% 72%,48% 26%,53% 64%,58% 32%,63% 70%,68% 28%,73% 66%,78% 34%,83% 72%,88% 30%,93% 64%,97% 36%,100% 60%,100% 100%,0 100%)}
 
-/* ---------- Story - elegant statements ---------- */
-.ab-story{padding-block:clamp(56px,9vw,118px)}
-.ab-story__inner{max-width:760px;margin-inline:auto;text-align:center}
-.ab-story p{font-size:clamp(20px,2.7vw,31px);line-height:1.46;letter-spacing:-.012em;color:var(--secondary);font-weight:500;margin-bottom:clamp(22px,3vw,34px);text-wrap:balance}
-.ab-story p:last-child{margin-bottom:0}
-.ab-story em{font-style:italic;color:var(--primary-deep)}
-.ab-story strong{font-weight:800}
-.ab-story .muted{color:var(--ink-soft);font-weight:400;font-size:clamp(16px,2vw,21px);line-height:1.62}
+/* ---------- Wall of promises (posters stuck on the wall) ---------- */
+.wall-promises{padding-block:clamp(56px,8vw,104px);background:
+  linear-gradient(rgba(255,255,255,.94),rgba(255,255,255,.94)),
+  repeating-linear-gradient(0deg,#eae6dd 0 2px,transparent 2px 60px),
+  repeating-linear-gradient(90deg,#eee9e0 0 2px,transparent 2px 110px),#f6f3ed}
+.wall-promises__head{text-align:center;max-width:640px;margin:0 auto clamp(38px,5vw,58px)}
+.wall-promises__label{display:inline-block;background:#FFBC0D;color:#0D0D0D;font-size:12.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:8px 16px;border-radius:4px;transform:rotate(1.2deg);box-shadow:3px 3px 0 rgba(0,0,0,.18)}
+.wall-promises__head h2{margin-top:18px;font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.04;text-transform:uppercase}
+.wall-promises__head p{margin-top:10px;color:var(--ink-soft);font-size:clamp(15px,1.8vw,18px);font-weight:600}
+.poster-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,2.4vw,28px)}
+.poster{position:relative;background:#fff;border:2.5px solid #0D0D0D;border-radius:6px;padding:34px 22px 26px;text-align:center;box-shadow:7px 7px 0 rgba(13,13,13,.9);transition:transform .25s ease,box-shadow .25s ease}
+.poster:nth-child(1){transform:rotate(-1.6deg)}
+.poster:nth-child(2){transform:rotate(1.1deg)}
+.poster:nth-child(3){transform:rotate(-.9deg)}
+.poster:nth-child(4){transform:rotate(1.5deg)}
+.poster:hover{transform:rotate(0) translateY(-6px);box-shadow:10px 12px 0 rgba(219,0,7,.85)}
+.poster::before{content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-2deg);width:86px;height:22px;background:rgba(255,188,13,.92);border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 5px rgba(0,0,0,.12)}
+.poster__ic{width:60px;height:60px;border-radius:50%;background:#DB0007;color:#fff;display:grid;place-items:center;margin:0 auto 16px}
+.poster__ic svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.poster h3{font-size:17.5px;font-weight:800;color:#0D0D0D;margin-bottom:8px;letter-spacing:.01em;text-transform:uppercase;line-height:1.2}
+.poster p{font-size:14px;line-height:1.55;color:var(--ink-soft);font-weight:500}
 
-/* ---------- Promise checklist ---------- */
-.ab-promise{background:var(--surface-2);border-block:1px solid var(--line);padding-block:clamp(48px,7vw,90px)}
-.ab-promise__head{text-align:center;max-width:600px;margin:0 auto clamp(34px,4vw,52px)}
-.ab-promise__head h2{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.08}
-.ab-promise__head p{margin-top:12px;color:var(--ink-soft);font-size:clamp(15px,1.8vw,18px);line-height:1.7}
-.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,24px)}
-.promise{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-.promise:hover{transform:translateY(-5px);box-shadow:0 24px 42px -28px rgba(20,20,20,.42);border-color:color-mix(in srgb,var(--primary) 45%,var(--line))}
-.promise__ic{width:58px;height:58px;border-radius:50%;background:var(--honey-tint);color:var(--primary-deep);display:grid;place-items:center;margin:0 auto 16px}
-.promise__ic svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.promise h3{font-size:17px;font-weight:800;color:var(--secondary);margin-bottom:7px;letter-spacing:-.01em}
-.promise p{font-size:14px;line-height:1.55;color:var(--ink-soft)}
-
-/* ---------- Origin band ---------- */
-.ab-made{padding-block:clamp(52px,8vw,106px)}
-.ab-made__inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
-.ab-made__media img{width:100%;height:100%;max-height:460px;object-fit:cover;border-radius:22px;border:1px solid var(--line);box-shadow:var(--sh-card);display:block}
-.ab-made__copy .kicker{margin-bottom:14px}
-.ab-made__copy h2{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.08;margin-bottom:16px}
-.ab-made__copy h2 em{font-style:italic;font-weight:600;color:var(--primary-deep)}
-.ab-made__copy p{font-size:clamp(15px,1.8vw,18px);line-height:1.8;color:var(--ink-soft);margin-bottom:16px;max-width:540px}
+/* ---------- Origin story ---------- */
+.ab-made{padding-block:clamp(56px,8.5vw,110px)}
+.ab-made__inner{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.ab-made__label{display:inline-block;background:#DB0007;color:#fff;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:8px 16px;border-radius:4px;transform:rotate(-1.2deg);box-shadow:3px 3px 0 rgba(0,0,0,.18);margin-bottom:18px}
+.ab-made__copy h2{font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.05;margin-bottom:18px;text-transform:uppercase}
+.ab-made__copy h2 em{font-style:normal;color:var(--primary)}
+.ab-made__copy p{font-size:clamp(15px,1.8vw,17.5px);line-height:1.8;color:var(--ink-soft);margin-bottom:16px;max-width:560px}
+.ab-made__media{position:relative}
+.ab-made__media img{width:100%;height:100%;max-height:470px;object-fit:cover;border-radius:8px;border:2.5px solid #0D0D0D;box-shadow:10px 10px 0 #FFBC0D;display:block}
 .ab-made__stats{display:flex;gap:clamp(22px,4vw,46px);margin-top:26px}
 .ab-made__stats b{display:block;font-size:clamp(26px,3.4vw,40px);font-weight:800;color:var(--secondary);line-height:1;letter-spacing:-.02em}
-.ab-made__stats b em{font-style:normal;color:var(--primary-deep)}
-.ab-made__stats span{font-size:13px;color:var(--ink-soft);margin-top:6px;display:block}
+.ab-made__stats b em{font-style:normal;color:var(--primary)}
+.ab-made__stats span{font-size:13px;color:var(--ink-soft);margin-top:6px;display:block;font-weight:600}
 
-/* ---------- Closing CTA ---------- */
-.cta-band{background:radial-gradient(120% 130% at 0% 0%,rgba(219,0,7,.22),transparent 55%),var(--secondary);color:#fff;border-radius:clamp(20px,3vw,32px);padding:clamp(38px,5vw,74px);text-align:center;margin-block:clamp(20px,3vw,40px) clamp(54px,8vw,96px)}
-.cta-band h2{font-size:clamp(30px,4.6vw,54px);font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:14px}
-.cta-band h2 em{font-style:italic;font-weight:600;color:var(--primary)}
-.cta-band p{font-size:clamp(15px,1.9vw,18px);line-height:1.7;color:#CFCDC6;max-width:540px;margin:0 auto 28px}
-.cta-band__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-.cta-band .btn--ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
-.cta-band .btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+/* ---------- Stencil badge strip ---------- */
+.stencil-strip{background:#FFBC0D;border-block:3px solid #0D0D0D;padding:clamp(20px,3vw,30px) 0}
+.stencil-strip__row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,3vw,34px)}
+.stencil{font-size:clamp(13px,1.6vw,16px);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#0D0D0D;display:flex;align-items:center;gap:10px}
+.stencil::before{content:"★";color:#DB0007}
 
+/* ---------- Painted CTA wall ---------- */
+.wall-cta{position:relative;margin-top:clamp(54px,8vw,96px);background:#f1eee7 url("images/wall-red.svg") center/cover no-repeat;text-align:center;padding:clamp(64px,9.5vw,130px) 20px}
+.wall-cta h2{font-size:clamp(32px,5.6vw,72px);font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1;text-transform:uppercase;transform:rotate(-1.2deg);text-shadow:0 3px 0 rgba(0,0,0,.18),0 14px 30px rgba(0,0,0,.25);margin-bottom:26px;text-wrap:balance}
+.wall-cta h2 .spray{color:#FFBC0D}
+.wall-cta .btn{background:#FFBC0D;color:#0D0D0D;border:2.5px solid #0D0D0D;font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:5px 5px 0 rgba(0,0,0,.35);font-size:16px;padding:16px 34px}
+.wall-cta .btn:hover{transform:translateY(-3px);box-shadow:7px 8px 0 rgba(0,0,0,.4);background:#ffca3d}
+.wall-cta__sub{margin-top:20px;font-size:14.5px;color:#fff;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.wall-cta__sub a{color:#FFBC0D;font-weight:800;text-decoration:none}
+.wall-cta__tear{position:absolute;left:0;right:0;top:-1px;height:26px;background:var(--surface,#fff);clip-path:polygon(0 0,100% 0,100% 38%,97% 66%,93% 32%,88% 70%,83% 28%,78% 64%,73% 34%,68% 72%,63% 30%,58% 68%,53% 36%,48% 74%,43% 28%,38% 64%,33% 38%,28% 72%,24% 26%,19% 66%,15% 34%,11% 75%,7% 30%,3% 70%,0 38%)}
+
+@media (max-width:900px){ .poster-grid{grid-template-columns:1fr 1fr} }
 @media (max-width:760px){
-  .promise-grid{grid-template-columns:1fr 1fr}
-  .ab-made__inner{grid-template-columns:1fr;gap:30px}
+  .ab-made__inner{grid-template-columns:1fr;gap:34px}
   .ab-made__media{order:-1}
 }
-@media (max-width:460px){ .promise-grid{grid-template-columns:1fr} }
+@media (max-width:480px){ .poster-grid{grid-template-columns:1fr} .poster{max-width:340px;margin-inline:auto} }
+@media (prefers-reduced-motion:reduce){ .poster,.wall-cta .btn{transition:none} }
 .about-wrap svg,.about-wrap img{max-width:100%}
 </style>
 </head>
@@ -208,72 +216,56 @@
 
 <main id="main" class="about-wrap">
 
-  <!-- ===== Hero ===== -->
-  <section class="ab-hero" aria-labelledby="ab-hero-title">
-    <div class="container">
-      <p class="kicker">Our Story &middot; Made in Delhi</p>
-      <h1 id="ab-hero-title">Makhana, <em>made better.</em></h1>
-      <p class="ab-hero__sub">India's oldest superfood &mdash; handpicked from the lotus ponds of Bihar and slow-roasted in cold-pressed oil, never fried. This is The Makhana.</p>
-      <figure class="ab-hero__img">
-        <img src="images/about-hero.jpg" alt="A bowl of roasted makhana surrounded by olive oil, lemon, fresh herbs, red chilli and salt" width="1200" height="562" />
-      </figure>
-    </div>
+  <!-- ===== Painted-wall hero ===== -->
+  <section class="wall-hero" aria-labelledby="ab-hero-title">
+    <span class="wall-hero__kicker">Our Story &middot; Sprayed Fresh</span>
+    <h1 id="ab-hero-title">Roasted. <span class="spray">Never quiet.</span></h1>
+    <p class="wall-hero__sub">India's oldest superfood, handpicked in Bihar, roasted in Delhi &mdash; and fried absolutely nowhere.</p>
+    <div class="wall-hero__tear" aria-hidden="true"></div>
   </section>
 
-  <!-- ===== Story ===== -->
-  <section class="ab-story">
+  <!-- ===== Wall of promises ===== -->
+  <section class="wall-promises" aria-labelledby="promise-title">
     <div class="container">
-      <div class="ab-story__inner">
-        <p>Every great snack begins with respect for its ingredient. Ours begins with a single lotus seed.</p>
-        <p class="muted">For generations, families in Bihar have waded into the lotus ponds at first light, gathering foxnuts by hand &mdash; a craft older than most of the food on our shelves.</p>
-        <p>We started The Makhana to carry that craft forward, honestly &mdash; to take a humble, quiet seed and give it the care it has always <em>deserved.</em></p>
-        <p class="muted">So we keep it simple. Handpicked, slow-roasted in cold-pressed oil, sealed fresh. Never deep-fried. Never drowned in palm oil. Nothing to hide on the label.</p>
-        <p>Light enough for an everyday handful. Good enough for a festive gift. <strong>Honest enough that you never think twice.</strong></p>
+      <div class="wall-promises__head">
+        <span class="wall-promises__label">The Wall of Promises</span>
+        <h2 id="promise-title">Read it. Hold us to it.</h2>
+        <p>Four promises, pasted up for everyone to see &mdash; on every pouch, every batch.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== Our promise ===== -->
-  <section class="ab-promise" aria-labelledby="promise-title">
-    <div class="container">
-      <div class="ab-promise__head">
-        <h2 id="promise-title">Our promise, in every pouch</h2>
-        <p>The standards we hold ourselves to, before anything ever reaches your bowl.</p>
-      </div>
-      <div class="promise-grid">
-        <article class="promise">
-          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2.5 5 5.5 5 8a5 5 0 0 1-10 0c0-2.5 2-5.5 5-8z"/></svg></span>
-          <h3>Roasted, never fried</h3>
-          <p>Slow-roasted in cold-pressed oil for crunch without the grease.</p>
+      <div class="poster-grid">
+        <article class="poster">
+          <span class="poster__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2.5 5 5.5 5 8a5 5 0 0 1-10 0c0-2.5 2-5.5 5-8z"/></svg></span>
+          <h3>Roasted. Never fried.</h3>
+          <p>Slow-roasted in cold-pressed oil &mdash; all the crunch, none of the grease.</p>
         </article>
-        <article class="promise">
-          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg></span>
-          <h3>No palm oil, no maida</h3>
-          <p>No palm oil, no maida, no MSG, no hidden additives &mdash; ever.</p>
+        <article class="poster">
+          <span class="poster__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13c3-1 6-4 7-9 1 5 4 8 7 9-3 1-6 4-7 9-1-5-4-8-7-9z"/></svg></span>
+          <h3>Clean label. Loud flavour.</h3>
+          <p>No palm oil, no maida, no MSG &mdash; just clean, chatpata crunch.</p>
         </article>
-        <article class="promise">
-          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
-          <h3>High in protein</h3>
-          <p>Plant-powered, naturally gluten-free and non-GMO snacking.</p>
+        <article class="poster">
+          <span class="poster__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3>Protein that shows up.</h3>
+          <p>Plant-powered and naturally gluten-free &mdash; a snack that pulls its weight.</p>
         </article>
-        <article class="promise">
-          <span class="promise__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg></span>
-          <h3>Handpicked in Bihar</h3>
-          <p>Sourced direct from Bihar's farming families, every season.</p>
+        <article class="poster">
+          <span class="poster__ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.1"/></svg></span>
+          <h3>Handpicked. Not mass-picked.</h3>
+          <p>Pulled by hand from Bihar's lotus ponds by families who've mastered the craft.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ===== Origin band ===== -->
+  <!-- ===== Origin story ===== -->
   <section class="ab-made" aria-labelledby="made-title">
     <div class="container">
       <div class="ab-made__inner">
         <div class="ab-made__copy">
-          <p class="kicker">From farm to pack</p>
-          <h2 id="made-title">Sourced from <em>Bihar.</em> Made in Delhi.</h2>
-          <p>Bihar is the makhana capital of the world &mdash; its lotus ponds and centuries-old craft give us the finest foxnuts. We hand-pack every batch with care in Delhi.</p>
-          <p>We work hand-in-hand with local growers, paying fairly and sourcing seasonally, so the families who harvest our foxnuts share in their success.</p>
+          <span class="ab-made__label">The Origin Story</span>
+          <h2 id="made-title">From Bihar's ponds <em>to your desk.</em></h2>
+          <p>Before sunrise in Madhubani, Bihar, farming families wade into lotus ponds and gather foxnuts by hand &mdash; the same way their grandparents did. It's a craft older than almost anything on a supermarket shelf, and it deserves better than a deep fryer. That's where we come in.</p>
+          <p>We bring those handpicked seeds to Delhi, slow-roast them in cold-pressed oil, and seal every batch fresh. No palm oil. No maida. No shortcuts. Just an honest, high-protein crunch that moves easily from your work desk to the festive gift box &mdash; and never apologises for either.</p>
           <div class="ab-made__stats">
             <div><b>500<em>+</em></b><span>farmer families</span></div>
             <div><b>100<em>%</em></b><span>Bihar-sourced</span></div>
@@ -287,16 +279,24 @@
     </div>
   </section>
 
-  <!-- ===== Closing CTA ===== -->
-  <section class="container">
-    <div class="cta-band">
-      <h2>Taste the <em>difference.</em></h2>
-      <p>From Bihar's lotus ponds to your bowl &mdash; discover the crunch that tradition and care can create.</p>
-      <div class="cta-band__btns">
-        <a href="/#products" class="btn btn--primary">Shop the range</a>
-        <a href="/#gifting" class="btn btn--ghost">Explore gifting</a>
+  <!-- ===== Stencil badge strip ===== -->
+  <section class="stencil-strip" aria-label="Our standards">
+    <div class="container">
+      <div class="stencil-strip__row">
+        <span class="stencil">100% Veg</span>
+        <span class="stencil">Roasted in cold-pressed oil</span>
+        <span class="stencil">No palm oil. Ever.</span>
+        <span class="stencil">Handpicked foxnuts</span>
       </div>
     </div>
+  </section>
+
+  <!-- ===== Painted CTA wall ===== -->
+  <section class="wall-cta" aria-labelledby="cta-title">
+    <div class="wall-cta__tear" aria-hidden="true"></div>
+    <h2 id="cta-title">Enough reading. <span class="spray">Start crunching.</span></h2>
+    <a href="/shop" class="btn">Shop the range</a>
+    <p class="wall-cta__sub">Free shipping over &#8377;599 &middot; Say hi at <a href="mailto:themakhana.official@gmail.com">themakhana.official@gmail.com</a></p>
   </section>
 
 </main>
@@ -327,7 +327,7 @@
   </div>
 </footer>
 
-<!-- ===== Inline script: cart count + FAQ accordion ===== -->
+<!-- ===== Inline script: cart count ===== -->
 <script>
 (function () {
   // --- Saved cart count from localStorage('makhana_cart') ---
@@ -339,19 +339,6 @@
     if (el) el.textContent = count;
     if (btn) btn.setAttribute("aria-label", "Go to shop, " + count + (count === 1 ? " item" : " items") + " in cart");
   } catch (e) { /* no-op */ }
-
-  // --- FAQ accordion ---
-  var items = document.querySelectorAll("#faqList .faq-item");
-  items.forEach(function (item) {
-    var q = item.querySelector(".faq-item__q");
-    var a = item.querySelector(".faq-item__a");
-    if (!q || !a) return;
-    q.addEventListener("click", function () {
-      var open = item.classList.toggle("open");
-      q.setAttribute("aria-expanded", open ? "true" : "false");
-      a.style.maxHeight = open ? a.scrollHeight + "px" : "0";
-    });
-  });
 })();
 </script>
 </body>

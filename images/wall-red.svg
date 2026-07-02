@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- The Makhana — original painted-brick wall (street-art style, brand red).
+       Inspired by the painted-wall aesthetic; drawn from scratch, no third-party assets. -->
+  <defs>
+    <!-- brick courses -->
+    <pattern id="bricks" width="220" height="120" patternUnits="userSpaceOnUse">
+      <rect width="220" height="120" fill="#e3ded4"/>
+      <!-- row 1 -->
+      <rect x="4" y="4" width="102" height="52" rx="2" fill="#f5f2ec"/>
+      <rect x="114" y="4" width="102" height="52" rx="2" fill="#f1eee7"/>
+      <!-- row 2 (offset) -->
+      <rect x="-51" y="64" width="102" height="52" rx="2" fill="#f3f0e9"/>
+      <rect x="59" y="64" width="102" height="52" rx="2" fill="#f6f3ed"/>
+      <rect x="169" y="64" width="102" height="52" rx="2" fill="#f0ece5"/>
+    </pattern>
+    <!-- rough paint edge -->
+    <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.032" numOctaves="4" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="52" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough2" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="3" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- paint grain -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="t"/>
+      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .06 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- wall -->
+  <rect width="1600" height="900" fill="url(#bricks)"/>
+  <!-- subtle wall shading -->
+  <rect width="1600" height="900" fill="#3a2f25" opacity="0.05"/>
+
+  <!-- big rolled paint patch -->
+  <g filter="url(#rough)">
+    <path d="M120 180 Q300 90 700 120 Q1100 70 1360 150 Q1520 210 1490 420 Q1530 640 1330 740 Q1000 830 620 790 Q260 820 160 640 Q60 480 110 340 Z" fill="#DB0007"/>
+  </g>
+  <!-- second coat (darker roller band) -->
+  <g filter="url(#rough2)" opacity="0.55">
+    <path d="M240 300 Q500 240 900 270 Q1250 250 1380 340 Q1420 470 1300 560 Q1000 650 640 620 Q340 650 260 520 Q210 400 240 300 Z" fill="#AF0006"/>
+  </g>
+  <!-- lighter dry-roller streaks -->
+  <g filter="url(#rough2)" opacity="0.35" fill="#ff3b30">
+    <path d="M300 220 Q700 180 1200 210 L1200 250 Q700 220 300 260 Z"/>
+    <path d="M280 660 Q700 700 1250 660 L1250 700 Q700 740 280 700 Z"/>
+  </g>
+
+  <!-- brick lines showing through the paint -->
+  <g stroke="#8f0005" stroke-width="3" opacity="0.16">
+    <line x1="140" y1="240" x2="1460" y2="240"/>
+    <line x1="120" y1="360" x2="1500" y2="360"/>
+    <line x1="130" y1="480" x2="1500" y2="480"/>
+    <line x1="150" y1="600" x2="1470" y2="600"/>
+    <line x1="200" y1="720" x2="1380" y2="720"/>
+  </g>
+
+  <!-- splatter -->
+  <g fill="#DB0007">
+    <circle cx="118" cy="132" r="9"/><circle cx="74" cy="210" r="5"/><circle cx="1462" cy="130" r="7"/>
+    <circle cx="1530" cy="330" r="6"/><circle cx="1522" cy="600" r="9"/><circle cx="96" cy="700" r="7"/>
+    <circle cx="182" cy="806" r="5"/><circle cx="1420" cy="800" r="6"/><circle cx="1560" cy="480" r="4"/>
+    <circle cx="60" cy="420" r="4"/>
+  </g>
+  <g fill="#FFBC0D">
+    <circle cx="170" cy="96" r="5"/><circle cx="1500" cy="212" r="5"/><circle cx="1470" cy="700" r="4"/>
+    <circle cx="120" cy="560" r="4"/><circle cx="1560" cy="120" r="3.5"/><circle cx="220" cy="760" r="3.5"/>
+  </g>
+  <!-- drips -->
+  <g fill="#AF0006" opacity="0.85">
+    <path d="M480 776 q4 44 -2 60 q-8 -6 -6 -60 Z"/>
+    <path d="M980 790 q5 56 -1 74 q-9 -8 -7 -74 Z"/>
+    <path d="M1240 748 q4 38 -2 52 q-8 -6 -6 -52 Z"/>
+  </g>
+
+  <!-- overall grain -->
+  <rect width="1600" height="900" fill="none" filter="url(#grain)"/>
+</svg>
