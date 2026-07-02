@@ -860,27 +860,18 @@ html,body{max-width:100%;overflow-x:clip}
 .pheroB__slide.is-active{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s}
 .pheroB__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
 .pheroB__slide::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(62% 54% at 50% 32%,rgba(0,0,0,.48),rgba(0,0,0,.16) 72%,rgba(0,0,0,.10) 100%)}
-.pheroB__slide--grad{background:linear-gradient(155deg,#F03A44 0%,#DB0007 52%,#8E0005 100%)}
-.pheroB__slide--grad::after{background:none}
-.pheroB__slide--sun{background:linear-gradient(155deg,#FFD34D 0%,#FFBC0D 52%,#E8A800 100%)}
-.pheroB__slide--sun::after{background:none}
-.pheroB__slide--sun .pheroB__title{color:#1A1A1A;text-shadow:none}
-.pheroB__slide--sun .pheroB__sub{color:rgba(26,26,26,.82);text-shadow:none}
-.pheroB__slide--sun .pheroB__btn{background:#111;color:#fff}
-.pheroB__slide--sun .pheroB__btn:hover{background:#000}
+.pheroB__slide--light::after{background:none}
+.pheroB__slide--light .pheroB__title{color:#1A1A1A;text-shadow:none}
+.pheroB__slide--light .pheroB__sub{color:rgba(26,26,26,.85);text-shadow:none}
 .pheroB__inner{position:relative;z-index:2;height:100%;display:flex;justify-content:center;padding:clamp(72px,12vh,120px) 20px 0}
 .pheroB__content{text-align:center;max-width:840px;color:#fff}
 .pheroB__title{font-size:clamp(26px,3.4vw,46px);line-height:1.22;letter-spacing:-.015em;font-weight:800;margin:0;color:#fff;text-wrap:balance;text-shadow:0 2px 14px rgba(0,0,0,.30)}
-.pheroB__slide--grad .pheroB__title{text-shadow:none}
 .pheroB__sub{font-size:clamp(14px,1.5vw,19px);line-height:1.55;margin:14px 0 0;font-weight:500;color:rgba(255,255,255,.94);text-shadow:0 1px 10px rgba(0,0,0,.25)}
-.pheroB__slide--grad .pheroB__sub{text-shadow:none}
 .pheroB__btn{display:inline-block;margin-top:clamp(18px,3vh,28px);padding:11px 24px;border-radius:9px;background:var(--primary);color:#fff;font-weight:700;font-size:14.5px;letter-spacing:.01em;text-decoration:none;box-shadow:0 8px 22px -8px rgba(0,0,0,.45);transition:background .2s ease,transform .2s ease}
 .pheroB__btn:hover{background:var(--primary-deep);transform:translateY(-1px)}
 .pheroB__btn--dark{background:#111}
 .pheroB__btn--dark:hover{background:#000}
 .pheroB__btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.pheroB__packs{position:absolute;left:0;right:0;bottom:-8px;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:clamp(12px,3vw,40px);pointer-events:none}
-.pheroB__packs svg{width:clamp(72px,9.5vw,124px);height:auto;filter:drop-shadow(0 14px 22px rgba(0,0,0,.30))}
 .pheroB__dots{position:absolute;z-index:4;left:0;right:0;bottom:clamp(14px,2vw,22px);display:flex;justify-content:center;gap:9px}
 .pheroB__dot{width:7px;height:7px;padding:0;border:0;border-radius:50px;background:rgba(255,255,255,.34);cursor:pointer;transition:width .25s ease,background .25s ease}
 .pheroB__dot.is-active{background:rgba(255,255,255,.9);width:22px}
@@ -896,7 +887,6 @@ html,body{max-width:100%;overflow-x:clip}
   .pheroB__inner{padding:clamp(52px,9vh,80px) 18px 0}
   .pheroB__title{font-size:clamp(24px,6.4vw,32px)}
   .pheroB__sub{font-size:14.5px}
-  .pheroB__packs svg{width:clamp(56px,15vw,84px)}
 }
 
 /* ===== Quality at every step (hyperpure-style: accordion + video) ===== */
