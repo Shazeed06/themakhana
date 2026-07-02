@@ -64,7 +64,7 @@
             '<div class="co-line"><span>Shipping</span><span id="coShip"></span></div>' +
             '<div class="co-line co-line--total"><span>Total</span><span id="coTotal"></span></div>' +
             '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Pay</button>' +
-            '<p class="co-pay-err" id="coPayErr" hidden style="color:#c0392b;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
+            '<p class="co-pay-err" id="coPayErr" hidden style="color:#DB0007;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
             '<p class="co-secure">' + CHECK + ' 100% secure payment via Razorpay · 7-day returns</p>' +
           '</aside>' +
         '</form>' +
@@ -234,7 +234,7 @@
             image: location.origin + "/images/logo.png",
             prefill: { name: data.name, contact: data.phone, email: data.email || "" },
             notes: { address: data.address },
-            theme: { color: "#97a97c" },
+            theme: { color: "#DB0007" },
             handler: function (resp) { verifyAndFinish(resp, data); },
             modal: { ondismiss: function () { busy(false); showPayErr("Payment cancelled. You can try again."); } }
           });

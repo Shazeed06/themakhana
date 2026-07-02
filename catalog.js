@@ -251,7 +251,7 @@ window.TM = (function () {
     const rx = r, ry = r * 0.86;
     const speck = roasted ? '<circle cx="' + (cx + r * .25) + '" cy="' + (cy - r * .15) + '" r="1.1" fill="' + acc + '" opacity=".5"/>' : '';
     return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
-      '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FBF3E0"/>' +
+      '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FFF8E7"/>' +
       '<ellipse cx="' + cx + '" cy="' + (cy + ry * .22) + '" rx="' + (rx * .82) + '" ry="' + (ry * .62) + '" fill="#EBDCB6" opacity=".55"/>' +
       '<path d="M' + (cx - rx * .55) + ' ' + (cy - ry * .12) + 'q' + (rx * .55) + ' ' + (ry * .34) + ' ' + (rx * 1.1) + ' 0" fill="none" stroke="#CBB488" stroke-width="1.3" stroke-linecap="round"/>' +
       '<ellipse cx="' + (cx - rx * .32) + '" cy="' + (cy - ry * .4) + '" rx="' + (rx * .3) + '" ry="' + (ry * .2) + '" fill="#fff" opacity=".7"/>' +
@@ -284,12 +284,12 @@ window.TM = (function () {
   '<rect x="68" y="112" width="124" height="11" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
   '<rect x="68" y="280" width="124" height="20" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
   '<rect x="68" y="108" width="124" height="206" fill="url(#barrel-' + id + ')" clip-path="url(#body-' + id + ')"/>' +
-  '<circle cx="130" cy="152" r="21" fill="#FFFDF7"/>' +
+  '<circle cx="130" cy="152" r="21" fill="#FFFFFF"/>' +
   '<circle cx="130" cy="152" r="21" fill="none" stroke="' + acc + '" stroke-width="2.4"/>' +
   '<g transform="translate(130 152)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round"><path d="M0 -9c2.6 3.4 3.9 6.8 3.9 9.4a3.9 3.9 0 0 1-7.8 0c0-2.6 1.3-6 3.9-9.4z"/><path d="M-10 4c3.4 0 6 1.3 7.6 3.4M10 4c-3.4 0-6 1.3-7.6 3.4"/></g>' +
   '<text x="130" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="13" letter-spacing="1.3" fill="#3A2E18">THE MAKHANA</text>' +
   '<text x="130" y="214" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="8.5" letter-spacing="1.5" fill="#8A754C">' + (p.category === "raw" ? "RAW" : "ROASTED") + ' · ' + p.weight + '</text>' +
-  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFDF7"/>' +
+  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFFFF"/>' +
   '<text x="130" y="263" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10" letter-spacing=".4" fill="' + shade(acc, -34) + '">' + escapeXML(ribbonName) + '</text>' +
   puffs +
   '<path d="M65 104 L65 113 Q65 118 130 120 Q195 118 195 113 L195 104 Z" fill="' + shade(acc, -20) + '"/>' +

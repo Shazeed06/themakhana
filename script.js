@@ -77,7 +77,7 @@
       .map((m) => {
         const cx = m[0], cy = m[1], r = m[2], rot = m[3], rx = r, ry = r * 0.86;
         return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">' +
-          '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FBF3E0"/>' +
+          '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="#FFF8E7"/>' +
           '<ellipse cx="' + cx + '" cy="' + (cy + ry * 0.22) + '" rx="' + (rx * 0.8) + '" ry="' + (ry * 0.6) + '" fill="#E7D5AC" opacity=".6"/>' +
           '<path d="M' + (cx - rx * 0.5) + ' ' + (cy - ry * 0.1) + 'q' + (rx * 0.5) + ' ' + (ry * 0.32) + ' ' + rx + ' 0" fill="none" stroke="#C9B07F" stroke-width="1.1" stroke-linecap="round"/>' +
           '<ellipse cx="' + (cx - rx * 0.3) + '" cy="' + (cy - ry * 0.4) + '" rx="' + (rx * 0.28) + '" ry="' + (ry * 0.18) + '" fill="#fff" opacity=".75"/>' +
@@ -110,7 +110,7 @@
   '<rect x="68" y="112" width="124" height="11" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
   '<rect x="68" y="280" width="124" height="20" fill="' + acc + '" clip-path="url(#body-' + id + ')"/>' +
   '<rect x="68" y="108" width="124" height="206" fill="url(#barrel-' + id + ')" clip-path="url(#body-' + id + ')"/>' +
-  '<circle cx="130" cy="152" r="21" fill="#FFFDF7"/>' +
+  '<circle cx="130" cy="152" r="21" fill="#FFFFFF"/>' +
   '<circle cx="130" cy="152" r="21" fill="none" stroke="' + acc + '" stroke-width="2.4"/>' +
   '<g transform="translate(130 152)" fill="none" stroke="' + acc + '" stroke-width="2" stroke-linecap="round">' +
     '<path d="M0 -9c2.6 3.4 3.9 6.8 3.9 9.4a3.9 3.9 0 0 1-7.8 0c0-2.6 1.3-6 3.9-9.4z"/>' +
@@ -118,7 +118,7 @@
   '</g>' +
   '<text x="130" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="13" letter-spacing="1.3" fill="#3A2E18">THE MAKHANA</text>' +
   '<text x="130" y="214" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="8.5" letter-spacing="1.5" fill="#8A754C">' + (p.category === "raw" ? "RAW" : "ROASTED") + ' · ' + p.weight + '</text>' +
-  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFDF7"/>' +
+  '<rect x="80" y="248" width="100" height="22" rx="6" fill="#FFFFFF"/>' +
   '<text x="130" y="263" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="10" letter-spacing=".4" fill="' + shade(acc, -34) + '">' + escapeXML(ribbonName) + '</text>' +
   puffs +
   '<path d="M65 104 L65 113 Q65 118 130 120 Q195 118 195 113 L195 104 Z" fill="' + shade(acc, -20) + '"/>' +
@@ -431,7 +431,7 @@
   /* ---------- Confetti ---------- */
   function confettiBurst(x, y, acc) {
     if (reduceMotion) return;
-    const colors = ["#fff", acc, "#F0AC1A", "#FBF3E0"];
+    const colors = ["#fff", acc, "#FFBC0D", "#FFF8E7"];
     for (let i = 0; i < 12; i++) {
       const c = document.createElement("span");
       c.className = "confetti";

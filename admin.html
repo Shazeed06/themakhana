@@ -8,8 +8,8 @@
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <style>
   :root{
-    --green:#97a97c; --green-deep:#74865b; --ink:#1A1A1A; --soft:#6B7280;
-    --line:#E6EBDF; --bg:#f6f8f2; --card:#ffffff; --good:#1e8a4c; --bad:#c0392b; --r:16px;
+    --green:#AF0006; --green-deep:#DB0007; --ink:#1A1A1A; --soft:#6B7280;
+    --line:#E8E8E8; --bg:#F7F7F7; --card:#ffffff; --good:#1e8a4c; --bad:#DB0007; --r:16px;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
@@ -29,7 +29,7 @@
   .btn:hover{background:#000;transform:translateY(-1px)}
   .btn--green{background:var(--green-deep)}.btn--green:hover{background:var(--green)}
   .btn--ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
-  .btn--ghost:hover{background:#f1f4ec;transform:none}
+  .btn--ghost:hover{background:#F7F7F7;transform:none}
   .btn:disabled{opacity:.6;cursor:default;transform:none}
   .err{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:12px;min-height:1px}
   /* ---- dashboard ---- */
@@ -52,8 +52,8 @@
   .order__date{font-size:13px;color:var(--soft)}
   .order__total{font-weight:800;font-size:19px}
   .badge{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:50px}
-  .badge--online{background:#e7f0e3;color:var(--green-deep)}
-  .badge--cod{background:#fdf0dc;color:#9a6a13}
+  .badge--online{background:#FFF8E7;color:var(--green-deep)}
+  .badge--cod{background:#FFBC0D;color:#1A1A1A}
   .badge--status{background:#eef1f5;color:#4a5666}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
   @media(max-width:620px){.grid2{grid-template-columns:1fr}}
@@ -63,7 +63,7 @@
   .items{list-style:none;margin:8px 0 0;padding:0}
   .items li{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:3px 0;border-bottom:1px dashed var(--line)}
   .items li:last-child{border-bottom:none}
-  .pill{display:inline-block;background:#f1f4ec;border:1px solid var(--line);border-radius:8px;padding:2px 8px;font-size:12.5px;font-weight:700;margin-top:4px}
+  .pill{display:inline-block;background:#F7F7F7;border:1px solid var(--line);border-radius:8px;padding:2px 8px;font-size:12.5px;font-weight:700;margin-top:4px}
   .center{text-align:center;padding:50px 20px;color:var(--soft)}
   .spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--green-deep);border-radius:50%;animation:sp 1s linear infinite;margin:0 auto 12px}
   @keyframes sp{to{transform:rotate(360deg)}}
@@ -169,7 +169,7 @@
     var tb = $("#testBtn"); if (!tb) return;
     tb.addEventListener("click", function () {
       var to = ($("#testTo").value || "").trim(); var m = $("#testMsg");
-      if (!to) { m.style.color = "#c0392b"; m.textContent = "Enter an email."; return; }
+      if (!to) { m.style.color = "#DB0007"; m.textContent = "Enter an email."; return; }
       tb.disabled = true; tb.textContent = "Sending…"; m.textContent = "";
       fetch("/api/send-order-email", {
         method: "POST", headers: { "Content-Type": "application/json" },
@@ -182,8 +182,8 @@
         .then(function (res) {
           tb.disabled = false; tb.textContent = "Send test";
           if (res.s === 200) { m.style.color = "#1e8a4c"; m.textContent = "✓ Sent! Check the inbox."; }
-          else { m.style.color = "#c0392b"; m.textContent = (res.d && res.d.error) || "Failed to send."; }
-        }).catch(function () { tb.disabled = false; tb.textContent = "Send test"; m.style.color = "#c0392b"; m.textContent = "Network error."; });
+          else { m.style.color = "#DB0007"; m.textContent = (res.d && res.d.error) || "Failed to send."; }
+        }).catch(function () { tb.disabled = false; tb.textContent = "Send test"; m.style.color = "#DB0007"; m.textContent = "Network error."; });
     });
   })();
 
