@@ -34,9 +34,21 @@
       els.forEach(function (el, i) { setTimeout(function () { el.classList.add('in'); }, Math.min(i * 35, 420)); });
     });
   }
-  function renderGrid(filter) {
-    var list = TM.PRODUCTS.filter(function (p) { return filter === 'all' || p.category === filter; });
-    $('#productGrid').innerHTML = list.map(cardHTML).join('');
+  var curFilter = 'all', curQuery = '';
+  function renderGrid(filter, q) {
+    curFilter = filter || 'all';
+    curQuery = (q === undefined || q === null) ? curQuery : String(q).toLowerCase().trim();
+    var list = TM.PRODUCTS.filter(function (p) {
+      var okCat = curFilter === 'all' || p.category === curFilter;
+      var okQ = !curQuery || p.name.toLowerCase().includes(curQuery);
+      return okCat && okQ;
+    });
+    var grid = $('#productGrid');
+    if (!list.length) {
+      grid.innerHTML = '<p class="shop-empty" style="grid-column:1/-1;text-align:center;padding:40px 16px;color:var(--ink-soft,#6b5b51);font-weight:600">No makhana matched &mdash; try another search.</p>';
+    } else {
+      grid.innerHTML = list.map(cardHTML).join('');
+    }
     var fc = $('#filterCount'); if (fc) fc.textContent = 'Showing ' + list.length + ' product' + (list.length === 1 ? '' : 's');
     reveal();
   }
@@ -106,13 +118,27 @@
     window.Checkout.open({ items: TM.getCart(), getProduct: TM.getProduct, rupee: TM.rupee, freeShip: FREE, onPlaced: function () { TM.setCart([]); renderCart(); updateSummary(); bump(); toast('Order placed - thank you!'); } });
   });
 
+  function setActiveFilter(filter) {
+    $$('.filter__pill').forEach(function (p) { var on = p.dataset.filter === filter; p.classList.toggle('is-active', on); p.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    $$('.shop-cat').forEach(function (c) { c.classList.toggle('is-active', c.dataset.filter === filter); });
+  }
   $$('.filter__pill').forEach(function (pill) {
     pill.addEventListener('click', function () {
-      $$('.filter__pill').forEach(function (p) { p.classList.remove('is-active'); p.setAttribute('aria-pressed', 'false'); });
-      pill.classList.add('is-active'); pill.setAttribute('aria-pressed', 'true');
+      setActiveFilter(pill.dataset.filter);
       renderGrid(pill.dataset.filter);
     });
   });
+  $$('.shop-cat').forEach(function (cat) {
+    cat.addEventListener('click', function () {
+      setActiveFilter(cat.dataset.filter);
+      renderGrid(cat.dataset.filter);
+    });
+  });
+  var searchEl = $('#shopSearch');
+  if (searchEl) {
+    searchEl.addEventListener('input', function () { renderGrid(curFilter, searchEl.value); });
+    searchEl.addEventListener('search', function () { renderGrid(curFilter, searchEl.value); });
+  }
 
   renderGrid('all');
   renderCart();
