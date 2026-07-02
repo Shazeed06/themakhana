@@ -176,7 +176,7 @@ window.TM = (function () {
       { k: "Diet", v: "100% Vegetarian" },
       { k: "Storage", v: "Store in a cool, dry place; reseal after opening" },
       { k: "Allergen info", v: p.allergen || "May contain traces of nuts." },
-      { k: "Marketed by", v: "The Makhana Foods, India · FSSAI Lic. 10024051001234" }
+      { k: "Marketed by", v: "The Makhana Foods, India · FSSAI Lic. 23326005001818" }
     ];
   }
 
