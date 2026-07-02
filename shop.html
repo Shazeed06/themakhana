@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=18" />
+<link rel="stylesheet" href="styles.css?v=19" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -71,32 +71,11 @@
 .shop-wrap{overflow-x:hidden}
 .nav a[aria-current="page"]{color:var(--ink)}
 .nav a[aria-current="page"]::after{width:100%}
-.shop-hero{padding-top:clamp(20px,3vw,34px)}
-.shop-hero__banner{position:relative;isolation:isolate;min-height:clamp(380px,52vw,560px);display:flex;align-items:flex-end;border-radius:clamp(18px,2.4vw,24px);overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 80px -44px rgba(13,13,13,.55)}
-.shop-hero__img{position:absolute;inset:0;z-index:-2;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 55%}
-.shop-hero__banner::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(13,13,13,.82) 0%,rgba(13,13,13,.62) 38%,rgba(13,13,13,.22) 70%,rgba(13,13,13,.05) 100%)}
-.shop-hero__content{padding:clamp(28px,4.4vw,64px);max-width:640px}
-.shop-hero .kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:7px 15px;border-radius:var(--r-pill);background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:12px;backdrop-filter:blur(4px)}
-.shop-hero h1{font-size:clamp(40px,6vw,76px);line-height:1.02;letter-spacing:-.03em;font-weight:800;color:#fff;text-shadow:0 2px 18px rgba(13,13,13,.35)}
-.shop-hero h1 em{font-style:italic;font-weight:600;color:var(--primary)}
-.shop-hero__sub{max-width:520px;margin:18px 0 0;font-size:clamp(16px,1.9vw,20px);line-height:1.65;color:rgba(255,255,255,.9)}
-.shop-hero__cta{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(24px,3vw,34px);padding:15px 30px;border-radius:var(--r-pill);background:var(--primary);color:#fff;font-weight:700;font-size:16px;letter-spacing:.01em;text-decoration:none;box-shadow:0 14px 32px -12px rgba(13,13,13,.5);transition:transform .2s ease,background .2s ease,box-shadow .2s ease}
-.shop-hero__cta:hover{background:var(--primary-deep);transform:translateY(-2px);box-shadow:0 20px 40px -14px rgba(13,13,13,.55)}
-.shop-hero__cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.shop-hero__cta svg{transition:transform .2s ease}
-.shop-hero__cta:hover svg{transform:translateY(3px)}
-@media (max-width:720px){
-  .shop-hero__banner{min-height:0;align-items:stretch}
-  .shop-hero__content{padding:clamp(26px,7vw,40px) 22px}
-  .shop-hero__banner::after{background:linear-gradient(160deg,rgba(13,13,13,.78) 0%,rgba(13,13,13,.6) 55%,rgba(13,13,13,.4) 100%)}
-  .shop-hero__cta{width:100%;justify-content:center}
-}
-@media (prefers-reduced-motion:reduce){
-  .shop-hero__cta,.shop-hero__cta svg{transition:none}
-  .shop-hero__cta:hover{transform:none}
-  .shop-hero__cta:hover svg{transform:none}
-}
-.shop-products{padding-block:clamp(36px,5vw,64px)}
+.shop-title-bar{text-align:center;margin-bottom:clamp(20px,3vw,30px)}
+.shop-title-bar h1{font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.05;text-transform:uppercase}
+.shop-title-bar h1 .accent{color:var(--primary)}
+.shop-title-bar p{margin-top:10px;color:var(--ink-soft);font-size:clamp(14.5px,1.7vw,17px);font-weight:500}
+.shop-products{padding-block:clamp(28px,4vw,52px)}
 .shop-products .filter{justify-content:center;margin-bottom:clamp(22px,3vw,34px)}
 .shop-wrap svg,.shop-wrap img{max-width:100%}
 </style>
@@ -142,30 +121,13 @@
 
 <main id="main" class="shop-wrap">
 
-  <!-- ===== Hero ===== -->
-  <section class="shop-hero" aria-labelledby="shop-title">
-    <div class="container">
-      <div class="shop-hero__banner">
-        <img class="shop-hero__img" src="images/about-hero.jpg" alt="A bowl of roasted makhana surrounded by olive oil, lemon, herbs and spices" width="1200" height="560" loading="eager" fetchpriority="high" />
-        <div class="shop-hero__content">
-          <p class="kicker">The full range</p>
-          <h1 id="shop-title">Shop every <em>foxnut.</em></h1>
-          <p class="shop-hero__sub">Bold roasted flavours, premium raw phool makhana and our best-value gift combo &mdash; roasted in cold-pressed oil, never fried. From &#8377;169.</p>
-          <a class="shop-hero__cta" href="#products">
-            Browse all flavours
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 5v14M6 13l6 6 6-6" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== Products ===== -->
-  <section class="shop-products" id="products" aria-labelledby="shop-grid-title">
+  <section class="shop-products" id="products" aria-labelledby="shop-title">
     <div class="container">
-      <h2 id="shop-grid-title" class="sr-only">All products</h2>
+      <div class="shop-title-bar">
+        <h1 id="shop-title">Shop All <span class="accent">Foxnuts</span></h1>
+        <p>Bold roasted flavours, premium raw phool makhana and gift combos &mdash; from &#8377;169.</p>
+      </div>
       <div class="filter" role="group" aria-label="Filter products by category">
         <button class="filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
         <button class="filter__pill" data-filter="roasted" aria-pressed="false">Roasted</button>
