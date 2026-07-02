@@ -938,3 +938,30 @@ html,body{max-width:100%;overflow-x:clip}
 @media (prefers-reduced-motion:reduce){
   .qstep__desc,.qstep::before,.qstep__btn span,.qstep__btn svg{transition:none}
 }
+
+/* ===== Products band (yellow panel + horizontal rail, hyperpure-style) ===== */
+.prodband .container{max-width:1280px}
+.prodband__panel{background:linear-gradient(150deg,#FFC93C 0%,#FFBC0D 60%,#F5AE00 100%);border-radius:30px;padding:clamp(26px,3.6vw,54px);display:grid;grid-template-columns:minmax(260px,.85fr) 2fr;gap:clamp(22px,3.4vw,54px);align-items:center;overflow:hidden}
+.prodband__copy h2{font-size:clamp(28px,3.6vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.14;color:#1A1A1A;text-wrap:balance}
+.prodband__copy h2 span{color:var(--primary)}
+.prodband__copy p{margin-top:14px;font-size:clamp(14.5px,1.6vw,17.5px);line-height:1.7;color:rgba(26,26,26,.78);font-weight:500;max-width:34ch}
+.prodband__link{display:inline-block;margin-top:18px;font-weight:800;font-size:15px;color:#1A1A1A;text-decoration:underline;text-underline-offset:4px;transition:color .2s ease}
+.prodband__link:hover{color:var(--primary)}
+.prodband__railwrap{position:relative;min-width:0}
+.prodband .grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:8px 4px 16px;scrollbar-width:none;-ms-overflow-style:none}
+.prodband .grid::-webkit-scrollbar{display:none}
+.prodband .card{flex:0 0 clamp(228px,23vw,286px);scroll-snap-align:start}
+.prodband .card.reveal{opacity:1;transform:none}
+.prodband__arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:0;background:#fff;color:#1A1A1A;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(20,15,5,.22);transition:transform .2s ease,box-shadow .2s ease}
+.prodband__arrow:hover{transform:translateY(-50%) scale(1.07);box-shadow:0 10px 26px rgba(20,15,5,.28)}
+.prodband__arrow:focus-visible{outline:3px solid #1A1A1A;outline-offset:2px}
+.prodband__arrow--l{left:-14px}
+.prodband__arrow--r{right:-14px}
+@media (max-width:860px){
+  .prodband__panel{grid-template-columns:1fr;gap:20px;border-radius:22px}
+  .prodband__copy{text-align:center}
+  .prodband__copy p{margin-inline:auto}
+  .prodband__arrow{display:none}
+  .prodband .card{flex-basis:min(72vw,270px)}
+}
+@media (prefers-reduced-motion:reduce){.prodband__arrow{transition:none}}

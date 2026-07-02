@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=25" />
+<link rel="stylesheet" href="styles.css?v=26" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -383,18 +383,39 @@
   </div>
 </section>
 
-<!-- ===== Products ===== -->
-<section class="products section" id="products" aria-labelledby="products-title">
+<!-- ===== Products (yellow band + horizontal rail, hyperpure-style) ===== -->
+<section class="prodband section" id="products" aria-labelledby="products-title">
   <div class="container">
-    <header class="sec-head sec-head--center reveal">
-      <p class="kicker">Shop the harvest</p>
-      <h2 id="products-title">Our Latest Products</h2>
-    </header>
-    <p class="filter__count" id="filterCount" hidden></p>
-    <div class="grid" id="productGrid"></div>
-    <div class="sec-cta reveal"><a href="/products/combo" class="btn btn--primary">Shop more</a></div>
+    <div class="prodband__panel">
+      <div class="prodband__copy reveal">
+        <h2 id="products-title">Crunch that goes <span>beyond</span> snacking</h2>
+        <p>For The Makhana &mdash; every pouch is slow-roasted in small batches, never fried. Bold flavour, honest label, every single day.</p>
+        <a class="prodband__link" href="/shop">Shop the full range &rarr;</a>
+      </div>
+      <div class="prodband__railwrap">
+        <button class="prodband__arrow prodband__arrow--l" type="button" aria-label="Scroll products left"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <p class="filter__count" id="filterCount" hidden></p>
+        <div class="grid" id="productGrid"></div>
+        <button class="prodband__arrow prodband__arrow--r" type="button" aria-label="Scroll products right"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var rail = document.getElementById("productGrid");
+  if (!rail) return;
+  function step() {
+    var card = rail.querySelector(".card");
+    return card ? (card.getBoundingClientRect().width + 16) * 2 : 560;
+  }
+  var l = document.querySelector(".prodband__arrow--l");
+  var r = document.querySelector(".prodband__arrow--r");
+  if (l) l.addEventListener("click", function () { rail.scrollBy({ left: -step(), behavior: "smooth" }); });
+  if (r) r.addEventListener("click", function () { rail.scrollBy({ left: step(), behavior: "smooth" }); });
+})();
+</script>
 
 <!-- ===== Explore by category ===== -->
 <section class="categories section" id="categories" aria-labelledby="cat-title">
