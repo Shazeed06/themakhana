@@ -55,6 +55,10 @@
   .badge--online{background:#FFF8E7;color:var(--green-deep)}
   .badge--cod{background:#FFBC0D;color:#1A1A1A}
   .badge--status{background:#eef1f5;color:#4a5666}
+  .badge--complete{background:#e8f6ee;color:#1e8a4c}
+  .badge--partial{background:#FFF8E7;color:#9a6a13}
+  .tab{background:#fff;color:var(--soft);border:1.5px solid var(--line)}
+  .tab.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
   @media(max-width:620px){.grid2{grid-template-columns:1fr}}
   .blk h4{margin:0 0 4px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--soft)}
@@ -96,11 +100,14 @@
     <div class="top">
       <h1><img class="top__logo" src="/images/logo.png?v=4" alt="" /> Orders</h1>
       <div class="top__actions">
+        <button class="btn tab is-active" id="tabOrders" type="button">Orders</button>
+        <button class="btn tab" id="tabLeads" type="button">Leads</button>
         <button class="btn btn--ghost" id="refreshBtn" type="button">↻ Refresh</button>
         <button class="btn btn--ghost" id="logoutBtn" type="button">Log out</button>
       </div>
     </div>
 
+    <div id="ordersTab">
     <div class="stats" id="stats"></div>
 
     <div class="testmail">
@@ -120,6 +127,20 @@
       <div class="orders hidden" id="orders"></div>
       <div class="center hidden" id="emptyState">No orders yet.</div>
       <div class="center hidden" id="errState"></div>
+    </div>
+    </div><!-- /ordersTab -->
+
+    <div id="leadsTab" class="hidden">
+      <div class="stats" id="leadStats"></div>
+      <p class="muted" style="margin:-6px 0 16px">Leads captured from the checkout, contact and newsletter forms. <b>Partial</b> = the visitor typed details but did not submit; <b>Complete</b> = they submitted.</p>
+      <div class="toolbar">
+        <input class="search" id="leadSearch" type="text" placeholder="Search leads by name, phone or email…" />
+        <span class="muted" id="leadCount"></span>
+      </div>
+      <div class="center" id="leadLoading"><div class="spin"></div>Loading leads…</div>
+      <div class="orders hidden" id="leadsList"></div>
+      <div class="center hidden" id="leadEmpty">No leads yet.</div>
+      <div class="center hidden" id="leadErr"></div>
     </div>
   </div>
 
@@ -161,9 +182,25 @@
     $("#loginView").classList.remove("hidden");
   });
   $("#refreshBtn").addEventListener("click", function () {
-    if (pass) { showLoading(); load(pass); }
+    if (!pass) return;
+    if (!$("#leadsTab").classList.contains("hidden")) { leadsLoaded = false; loadLeads(pass); }
+    else { showLoading(); load(pass); }
   });
   $("#search").addEventListener("input", render);
+  $("#leadSearch").addEventListener("input", renderLeads);
+
+  /* ---- tabs ---- */
+  var leadsLoaded = false;
+  function showTab(which) {
+    var onLeads = which === "leads";
+    $("#ordersTab").classList.toggle("hidden", onLeads);
+    $("#leadsTab").classList.toggle("hidden", !onLeads);
+    $("#tabOrders").classList.toggle("is-active", !onLeads);
+    $("#tabLeads").classList.toggle("is-active", onLeads);
+    if (onLeads && !leadsLoaded && pass) loadLeads(pass);
+  }
+  $("#tabOrders").addEventListener("click", function () { showTab("orders"); });
+  $("#tabLeads").addEventListener("click", function () { showTab("leads"); });
 
   (function () {
     var tb = $("#testBtn"); if (!tb) return;
@@ -305,6 +342,58 @@
           "</div>" +
         "</div>" +
       "</div>";
+  }
+
+  /* ---- leads ---- */
+  var allLeads = [];
+  function loadLeads(p) {
+    $("#leadLoading").classList.remove("hidden");
+    $("#leadsList").classList.add("hidden");
+    $("#leadEmpty").classList.add("hidden");
+    $("#leadErr").classList.add("hidden");
+    return fetch("/api/admin-leads", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adminKey: p })
+    }).then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); })
+      .then(function (res) {
+        $("#leadLoading").classList.add("hidden");
+        if (res.status === 200) { allLeads = res.d.leads || []; leadsLoaded = true; renderLeads(); }
+        else { var e = $("#leadErr"); e.classList.remove("hidden"); e.textContent = (res.d && res.d.error) || "Could not load leads."; }
+      }).catch(function () { $("#leadLoading").classList.add("hidden"); var e = $("#leadErr"); e.classList.remove("hidden"); e.textContent = "Network error."; });
+  }
+  function renderLeads() {
+    var complete = 0, partial = 0;
+    allLeads.forEach(function (l) { if (l.status === "complete") complete++; else partial++; });
+    $("#leadStats").innerHTML = [
+      { b: allLeads.length, s: "Total leads" },
+      { b: complete, s: "Completed forms" },
+      { b: partial, s: "Partial · not submitted" }
+    ].map(function (s) { return '<div class="stat"><b>' + esc(s.b) + "</b><span>" + esc(s.s) + "</span></div>"; }).join("");
+    var q = ($("#leadSearch").value || "").trim().toLowerCase();
+    var list = allLeads.filter(function (l) {
+      if (!q) return true;
+      return [l.name, l.phone, l.email].some(function (v) { return String(v || "").toLowerCase().indexOf(q) !== -1; });
+    });
+    $("#leadCount").textContent = list.length + " of " + allLeads.length + " lead" + (allLeads.length === 1 ? "" : "s");
+    if (!allLeads.length) { $("#leadsList").classList.add("hidden"); $("#leadEmpty").classList.remove("hidden"); return; }
+    $("#leadEmpty").classList.add("hidden");
+    var wrap = $("#leadsList"); wrap.classList.remove("hidden");
+    wrap.innerHTML = list.map(leadCard).join("");
+  }
+  function leadCard(l) {
+    var done = l.status === "complete";
+    var badge = '<span class="badge ' + (done ? "badge--complete" : "badge--partial") + '">' + (done ? "Complete" : "Partial") + "</span>";
+    var src = l.source ? '<span class="badge badge--status">' + esc(l.source) + "</span>" : "";
+    return '<div class="order"><div class="order__head">' +
+        '<div><span class="order__no">' + esc(l.name || "(no name yet)") + "</span>" +
+          '<div class="order__date">' + esc(fmtDate(l.updated_at || l.created_at)) + (l.page ? " · " + esc(l.page) : "") + "</div></div>" +
+        "<div>" + badge + " " + src + "</div>" +
+      "</div>" +
+      '<div class="grid2">' +
+        '<div class="blk"><h4>Phone</h4><p>' + (l.phone ? '<a href="tel:' + esc(l.phone) + '">' + esc(l.phone) + "</a>" : "—") + "</p></div>" +
+        '<div class="blk"><h4>Email</h4><p>' + (l.email ? '<a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a>" : "—") + "</p></div>" +
+      "</div>" +
+    "</div>";
   }
 })();
 </script>

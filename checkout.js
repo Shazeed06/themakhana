@@ -71,6 +71,7 @@
             '<button class="btn btn--primary btn--block" type="submit" id="coPlace">Pay</button>' +
             '<p class="co-pay-err" id="coPayErr" hidden style="color:#DB0007;font-size:13px;font-weight:600;line-height:1.5;margin:10px 0 0;text-align:center"></p>' +
             '<p class="co-secure">' + CHECK + ' Secure payment via Razorpay · 7-day returns on unopened packs</p>' +
+            '<p class="co-consent" style="font-size:11.5px;color:#8a8478;text-align:center;margin:8px 0 0;line-height:1.5">By continuing you agree to our <a href="/privacy" style="color:inherit;text-decoration:underline">Privacy Policy</a>.</p>' +
           '</aside>' +
         '</form>' +
         '<div class="checkout__done" id="coDone" hidden></div>' +
