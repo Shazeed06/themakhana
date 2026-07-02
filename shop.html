@@ -78,6 +78,9 @@
 .shop-products{padding-block:clamp(28px,4vw,52px)}
 .shop-products .filter{justify-content:center;margin-bottom:clamp(22px,3vw,34px)}
 .shop-wrap svg,.shop-wrap img{max-width:100%}
+/* Static no-JS fallback links in #productGrid (crawlable; shop.js replaces them on load) */
+.grid__static{display:block;padding:16px 20px;background:#fff;border:1px solid rgba(43,26,18,.1);border-radius:14px;color:var(--secondary,#2b1a12);font-weight:600;font-size:15.5px;line-height:1.4;text-decoration:none}
+.grid__static:hover,.grid__static:focus{color:var(--primary,#DB0007);border-color:var(--primary,#DB0007)}
 </style>
 </head>
 
@@ -135,7 +138,17 @@
         <button class="filter__pill" data-filter="combo" aria-pressed="false">Combos</button>
       </div>
       <p class="filter__count" id="filterCount" hidden></p>
-      <div class="grid" id="productGrid"></div>
+      <div class="grid" id="productGrid">
+        <!-- Static fallback for crawlers / no-JS: shop.js renderGrid() replaces this on load -->
+        <a class="grid__static" href="/products/peri">Peri Peri Punch Makhana &mdash; &#8377;199</a>
+        <a class="grid__static" href="/products/pudina">Chatpata Pudina Makhana &mdash; &#8377;199</a>
+        <a class="grid__static" href="/products/cream">Cream &amp; Onion Makhana &mdash; &#8377;199</a>
+        <a class="grid__static" href="/products/salt">Salt &amp; Pepper Makhana &mdash; &#8377;179</a>
+        <a class="grid__static" href="/products/pink">Himalayan Pink Salt Makhana &mdash; &#8377;179</a>
+        <a class="grid__static" href="/products/classic">Classic Lightly Salted Makhana &mdash; &#8377;169</a>
+        <a class="grid__static" href="/products/raw">Raw Phool Makhana &mdash; &#8377;249</a>
+        <a class="grid__static" href="/products/combo">Variety Combo (5 packs) &mdash; &#8377;799</a>
+      </div>
     </div>
   </section>
 
