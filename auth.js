@@ -88,7 +88,7 @@ window.TMAuth = (function () {
       ".tma label{display:block;font-size:12.5px;font-weight:700;color:#3a3a3a;margin:12px 0 5px}" +
       ".tma input{width:100%;padding:11px 13px;border:1.5px solid #E3E3E3;border-radius:11px;font-size:15px;font-family:inherit;box-sizing:border-box}" +
       ".tma input:focus{outline:none;border-color:#DB0007}" +
-      ".tma .row{display:flex;gap:10px}.tma .row>div{flex:1}" +
+      ".tma .row{display:flex;flex-wrap:wrap;gap:10px}.tma .row>div{flex:1 1 120px}" +
       ".tma__btn{width:100%;margin-top:18px;padding:13px;border:none;border-radius:50px;background:#DB0007;color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit}" +
       ".tma__btn:hover{background:#AF0006}.tma__btn:disabled{opacity:.6;cursor:default}" +
       ".tma__err{color:#DB0007;font-size:13px;font-weight:600;margin-top:12px;min-height:1px}" +

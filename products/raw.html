@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css?v=27" />
+<link rel="stylesheet" href="/styles.css?v=28" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -97,7 +97,7 @@
 .variant__l{font-weight:700;font-size:14px}
 .variant__s{font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .variant__tag{position:absolute;top:-9px;right:8px;background:var(--secondary);color:#DB0007;
-  font-size:9.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:50px}
+  font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:50px}
 
 .buy-row{display:flex;gap:12px;align-items:stretch;margin-bottom:14px;flex-wrap:wrap}
 .qstep{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:50px;overflow:hidden}
@@ -296,9 +296,24 @@
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 8h12l-1 11a2 2 0 0 1-2 1.8H9A2 2 0 0 1 7 19L6 8z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>
         <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
       </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </button>
+  <nav class="mobile-nav__links" aria-label="Mobile">
+    <a href="/shop" aria-current="page">Shop</a>
+    <a href="/blog">Blog</a>
+    <a href="/about">Our Story</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</div>
 
 <main id="main">
   <div class="container">
@@ -382,8 +397,9 @@
 <script src="/catalog.js?v=8"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/supabase-config.js?v=2"></script>
-<script src="/auth.js?v=5"></script>
+<script src="/auth.js?v=6"></script>
 <script src="/checkout.js?v=13"></script>
 <script src="/product.js?v=8"></script>
+<script src="/nav.js?v=1" defer></script>
 </body>
 </html>

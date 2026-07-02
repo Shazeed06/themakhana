@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=27" />
+<link rel="stylesheet" href="styles.css?v=28" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -180,6 +180,13 @@
 .post-key{background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:14px;padding:18px 22px;margin:26px 0}
 .post-key h2{margin:0 0 8px;font-size:18px}
 .post-key ul{margin:0 0 0 20px}
+.post-table-wrap{overflow-x:auto;margin:24px 0;border:1px solid var(--line);border-radius:14px}
+.post-table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.post-table caption{caption-side:top;text-align:left;font-size:13px;color:var(--ink-soft);padding:10px 14px}
+.post-table th,.post-table td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.post-table thead th{background:var(--surface-2);color:var(--secondary);font-weight:700}
+.post-table tbody tr:last-child td{border-bottom:0}
+.post-table td:first-child{font-weight:600;color:var(--secondary)}
 .post-faq{margin-top:42px}
 .post-faq h2{font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--secondary);margin-bottom:10px}
 .faq-q{font-weight:700;color:var(--secondary);margin:18px 0 6px;font-size:17px}
@@ -233,9 +240,24 @@
         </svg>
         <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
       </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </button>
+  <nav class="mobile-nav__links" aria-label="Mobile">
+    <a href="/shop">Shop</a>
+    <a href="/blog" aria-current="page">Blog</a>
+    <a href="/about">Our Story</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</div>
 
 <main id="main" class="post-wrap">
   <article class="post">
@@ -263,7 +285,8 @@
       <h2>What is the full nutritional value of makhana per 100g?</h2>
       <p>Makhana (foxnuts or phool makhana) is the popped, dried seed of the lotus plant. Exact figures vary a little by batch, variety and how the seeds are roasted, but the approximate per-100g profile for raw makhana looks like this:</p>
 
-      <table>
+      <div class="post-table-wrap">
+      <table class="post-table">
         <thead>
           <tr><th scope="col">Nutrient</th><th scope="col">Approx. per 100g</th><th scope="col">Approx. per 30g serving</th></tr>
         </thead>
@@ -277,6 +300,7 @@
           <tr><td>Calcium, magnesium, potassium, phosphorus</td><td>good source</td><td>contributes usefully</td></tr>
         </tbody>
       </table>
+      </div>
 
       <p>These numbers are typical averages for plain foxnuts. Added salt, masala or seasoning will change the sodium figure, so always check the pack if you are watching your salt intake.</p>
 
@@ -417,5 +441,6 @@
   });
 })();
 </script>
+<script src="/nav.js?v=1" defer></script>
 </body>
 </html>

@@ -555,38 +555,7 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* hamburger */
-  const mobileNav = $("#mobileNav"), hamburger = $("#hamburger");
-  let menuLastFocus = null;
-  function onMenuKey(e) {
-    if (e.key === "Escape") { closeMenu(); return; }
-    if (e.key !== "Tab") return;
-    const f = $$('button, a[href]', mobileNav).filter((el) => !el.disabled && el.offsetParent !== null);
-    if (!f.length) return;
-    const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  }
-  function openMenu() {
-    menuLastFocus = document.activeElement;
-    mobileNav.classList.add("open");
-    mobileNav.setAttribute("aria-hidden", "false");
-    hamburger.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-    $("#mobileNavClose").focus();
-    document.addEventListener("keydown", onMenuKey);
-  }
-  function closeMenu() {
-    mobileNav.classList.remove("open");
-    mobileNav.setAttribute("aria-hidden", "true");
-    hamburger.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-    document.removeEventListener("keydown", onMenuKey);
-    if (menuLastFocus) menuLastFocus.focus(); else hamburger.focus();
-  }
-  hamburger.addEventListener("click", openMenu);
-  $("#mobileNavClose").addEventListener("click", closeMenu);
-  $$(".mobile-nav__links a").forEach((a) => a.addEventListener("click", closeMenu));
+  /* hamburger: handled by nav.js (shared mobile-menu controller) */
 
   /* hero pouch */
   /* ---------- Hero slider ---------- */

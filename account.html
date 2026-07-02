@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=27" />
+<link rel="stylesheet" href="styles.css?v=28" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -111,9 +111,24 @@
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 8h12l-1 11a2 2 0 0 1-2 1.8H9A2 2 0 0 1 7 19L6 8z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>
         <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
       </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  </button>
+  <nav class="mobile-nav__links" aria-label="Mobile">
+    <a href="/shop">Shop</a>
+    <a href="/blog">Blog</a>
+    <a href="/about">Our Story</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</div>
 
 <main id="main" class="acct-wrap">
   <div class="container">
@@ -148,7 +163,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/supabase-config.js?v=2"></script>
-<script src="auth.js?v=5"></script>
+<script src="auth.js?v=6"></script>
 <script>
 (function () {
   var root = document.getElementById("acctRoot");
@@ -211,5 +226,6 @@
   setTimeout(render, 400);
 })();
 </script>
+<script src="/nav.js?v=1" defer></script>
 </body>
 </html>
