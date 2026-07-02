@@ -346,6 +346,28 @@
   list.addEventListener("mouseleave", restart);
   open(idx);
   restart();
+
+  // Never-stop watchdog: browsers pause offscreen/battery-saver videos — resume them.
+  function kick() {
+    if (document.hidden) return;
+    var brand = document.getElementById("brandAnim");
+    if (brand && brand.paused) { var p = brand.play(); if (p && p.catch) p.catch(function () {}); }
+    media.forEach(function (m) {
+      if (m.tagName === "VIDEO" && m.classList.contains("is-active") && m.paused) {
+        var q = m.play(); if (q && q.catch) q.catch(function () {});
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    var brand = document.getElementById("brandAnim");
+    if (brand) brand.addEventListener("pause", function () { setTimeout(kick, 250); });
+    kick();
+  });
+  document.addEventListener("visibilitychange", kick);
+  window.addEventListener("focus", kick);
+  window.addEventListener("pageshow", kick);
+  setInterval(kick, 2500);
+  kick();
 })();
 </script>
 
@@ -419,7 +441,7 @@
     </header>
     <div class="feats__split">
       <div class="feats__media reveal">
-        <video autoplay muted loop playsinline preload="metadata" poster="images/makhana-bowl.jpg" aria-label="The Makhana brand animation — a pencil sketching the logo beside real makhana puffs" width="1280" height="720" style="display:block;width:100%;height:auto;border-radius:inherit">
+        <video id="brandAnim" autoplay muted loop playsinline preload="metadata" poster="images/makhana-bowl.jpg" aria-label="The Makhana brand animation — a pencil sketching the logo beside real makhana puffs" width="1280" height="720" style="display:block;width:100%;height:auto;border-radius:inherit">
           <source src="videos/brand-anim.mp4" type="video/mp4">
         </video>
       </div>
