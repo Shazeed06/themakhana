@@ -16,7 +16,12 @@
   if (!p) p = TM.PRODUCTS[0];
 
   const shortName = p.name.split(" (")[0];
-  document.title = "The Makhana - " + shortName;
+  // SEO display name for the H1: always include "Makhana" + pack size.
+  // p.name itself is NOT changed - cart and order emails still use it.
+  const h1Name = (/makhana/i.test(p.name) ? shortName : shortName + " Makhana") + " (" + p.weight + ")";
+  // Keep hand-tuned static <title>s (pattern "... | The Makhana"); only set a
+  // fallback title (product.html?id=... route) that follows the same pattern.
+  if (document.title.indexOf("| The Makhana") === -1) document.title = h1Name + " | The Makhana";
   const metaDesc = shortName + " - " + p.tagline + " Premium roasted & raw makhana from Madhubani, Bihar.";
   const md = document.querySelector('meta[name="description"]');
   if (md) md.setAttribute("content", metaDesc);
@@ -55,7 +60,7 @@
 
     // Open Graph
     prop("og:type", "product");
-    prop("og:title", shortName + " - The Makhana");
+    prop("og:title", document.title);
     prop("og:description", metaDesc);
     prop("og:url", canonical);
     prop("og:site_name", "The Makhana");
@@ -65,7 +70,7 @@
 
     // Twitter
     meta("twitter:card", "summary_large_image");
-    meta("twitter:title", shortName + " - The Makhana");
+    meta("twitter:title", document.title);
     meta("twitter:description", metaDesc);
     meta("twitter:image", ogImage);
 
@@ -168,7 +173,7 @@
 
   $("#pdpInfo").innerHTML =
     '<p class="pdp__cat">' + (p.category === "combo" ? "VARIETY COMBO" : p.category.toUpperCase() + " MAKHANA") + '</p>' +
-    '<h1 class="pdp__title">' + shortName + '</h1>' +
+    '<h1 class="pdp__title">' + h1Name + '</h1>' +
     '<div class="pdp__rate"><span class="stars" aria-hidden="true">' + stars() + '</span>' +
       '<span>' + p.rating.toFixed(1) + '</span><span>&middot;</span><a href="#faqSec">' + p.reviews + ' reviews</a>' +
       '<span>&middot;</span><span>' + p.taste + '</span></div>' +
