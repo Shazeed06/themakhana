@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=22" />
+<link rel="stylesheet" href="styles.css?v=23" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -287,9 +287,16 @@
         </div>
       </div>
       <div class="qsteps__media">
-        <video class="qsteps__video" autoplay muted loop playsinline preload="metadata" poster="images/makhana-bowl.jpg" aria-label="Warm close-up of small-batch roasted snacks">
-          <source src="videos/quality.mp4" type="video/mp4">
-        </video>
+        <div class="qsteps__stage">
+          <video class="qsteps__mel" data-qmedia="0" muted loop playsinline preload="metadata" aria-label="Calm pond water with floating leaves — where foxnuts are harvested">
+            <source src="videos/pond.mp4" type="video/mp4">
+          </video>
+          <video class="qsteps__mel is-active" data-qmedia="1" muted loop playsinline preload="metadata" aria-label="Warm close-up of small-batch roasted snacks">
+            <source src="videos/quality.mp4" type="video/mp4">
+          </video>
+          <img class="qsteps__mel" data-qmedia="2" src="images/about-hero.jpg" alt="A clean flat-lay of roasted makhana in a bowl with fresh lemon, chillies, herbs and spices" loading="lazy" decoding="async" width="1600" height="750">
+          <img class="qsteps__mel" data-qmedia="3" src="images/hero-box.jpg" alt="The Makhana variety gift box packed with sealed pouches of all flavours" loading="lazy" decoding="async" width="1300" height="867">
+        </div>
         <div class="qsteps__note" aria-hidden="true">
           <ol>
             <li><b>01</b> Hand-harvested foxnuts</li>
@@ -309,12 +316,21 @@
   if (!list) return;
   var steps = Array.prototype.slice.call(list.querySelectorAll("[data-step]"));
   var timer = null, idx = 1;
+  var media = Array.prototype.slice.call(document.querySelectorAll(".qsteps__mel"));
   function open(i) {
     idx = (i + steps.length) % steps.length;
     steps.forEach(function (s, j) {
       var on = j === idx;
       s.classList.toggle("is-open", on);
       s.querySelector(".qstep__btn").setAttribute("aria-expanded", on ? "true" : "false");
+    });
+    media.forEach(function (m) {
+      var on = +m.getAttribute("data-qmedia") === idx;
+      m.classList.toggle("is-active", on);
+      if (m.tagName === "VIDEO") {
+        if (on) { var p = m.play(); if (p && p.catch) p.catch(function () {}); }
+        else m.pause();
+      }
     });
   }
   steps.forEach(function (s, j) {
@@ -324,6 +340,7 @@
   function restart() { if (timer) clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(tick, 4500); }
   list.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); timer = null; });
   list.addEventListener("mouseleave", restart);
+  open(idx);
   restart();
 })();
 </script>
