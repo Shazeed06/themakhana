@@ -13,6 +13,7 @@ node_modules/
 
 # stray media / saved pages
 *.mp4
+!videos/*.mp4
 WhatsApp*
 *_files/
 product/
