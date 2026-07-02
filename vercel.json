@@ -2,39 +2,151 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/blog-how-to-roast-makhana", "destination": "/blog/blog-how-to-roast-makhana.html" },
-    { "source": "/blog-makhana-benefits", "destination": "/blog/blog-makhana-benefits.html" },
-    { "source": "/blog-makhana-diabetes", "destination": "/blog/blog-makhana-diabetes.html" },
-    { "source": "/blog-makhana-fasting", "destination": "/blog/blog-makhana-fasting.html" },
-    { "source": "/blog-makhana-for-kids", "destination": "/blog/blog-makhana-for-kids.html" },
-    { "source": "/blog-makhana-kheer-recipe", "destination": "/blog/blog-makhana-kheer-recipe.html" },
-    { "source": "/blog-makhana-nutrition", "destination": "/blog/blog-makhana-nutrition.html" },
-    { "source": "/blog-makhana-per-day", "destination": "/blog/blog-makhana-per-day.html" },
-    { "source": "/blog-makhana-pregnancy", "destination": "/blog/blog-makhana-pregnancy.html" },
-    { "source": "/blog-makhana-recipes", "destination": "/blog/blog-makhana-recipes.html" },
-    { "source": "/blog-makhana-side-effects", "destination": "/blog/blog-makhana-side-effects.html" },
-    { "source": "/blog-makhana-skin-hair", "destination": "/blog/blog-makhana-skin-hair.html" },
-    { "source": "/blog-makhana-vs-almonds", "destination": "/blog/blog-makhana-vs-almonds.html" },
-    { "source": "/blog-makhana-vs-popcorn", "destination": "/blog/blog-makhana-vs-popcorn.html" },
-    { "source": "/blog-makhana-weight-loss", "destination": "/blog/blog-makhana-weight-loss.html" },
-    { "source": "/blog-what-is-makhana", "destination": "/blog/blog-what-is-makhana.html" }
+    {
+      "source": "/blog-how-to-roast-makhana",
+      "destination": "/blog/blog-how-to-roast-makhana"
+    },
+    {
+      "source": "/blog-makhana-benefits",
+      "destination": "/blog/blog-makhana-benefits"
+    },
+    {
+      "source": "/blog-makhana-diabetes",
+      "destination": "/blog/blog-makhana-diabetes"
+    },
+    {
+      "source": "/blog-makhana-fasting",
+      "destination": "/blog/blog-makhana-fasting"
+    },
+    {
+      "source": "/blog-makhana-for-kids",
+      "destination": "/blog/blog-makhana-for-kids"
+    },
+    {
+      "source": "/blog-makhana-kheer-recipe",
+      "destination": "/blog/blog-makhana-kheer-recipe"
+    },
+    {
+      "source": "/blog-makhana-nutrition",
+      "destination": "/blog/blog-makhana-nutrition"
+    },
+    {
+      "source": "/blog-makhana-per-day",
+      "destination": "/blog/blog-makhana-per-day"
+    },
+    {
+      "source": "/blog-makhana-pregnancy",
+      "destination": "/blog/blog-makhana-pregnancy"
+    },
+    {
+      "source": "/blog-makhana-recipes",
+      "destination": "/blog/blog-makhana-recipes"
+    },
+    {
+      "source": "/blog-makhana-side-effects",
+      "destination": "/blog/blog-makhana-side-effects"
+    },
+    {
+      "source": "/blog-makhana-skin-hair",
+      "destination": "/blog/blog-makhana-skin-hair"
+    },
+    {
+      "source": "/blog-makhana-vs-almonds",
+      "destination": "/blog/blog-makhana-vs-almonds"
+    },
+    {
+      "source": "/blog-makhana-vs-popcorn",
+      "destination": "/blog/blog-makhana-vs-popcorn"
+    },
+    {
+      "source": "/blog-makhana-weight-loss",
+      "destination": "/blog/blog-makhana-weight-loss"
+    },
+    {
+      "source": "/blog-what-is-makhana",
+      "destination": "/blog/blog-what-is-makhana"
+    }
   ],
   "redirects": [
-    { "source": "/blog/blog-how-to-roast-makhana", "destination": "/blog-how-to-roast-makhana", "permanent": true },
-    { "source": "/blog/blog-makhana-benefits", "destination": "/blog-makhana-benefits", "permanent": true },
-    { "source": "/blog/blog-makhana-diabetes", "destination": "/blog-makhana-diabetes", "permanent": true },
-    { "source": "/blog/blog-makhana-fasting", "destination": "/blog-makhana-fasting", "permanent": true },
-    { "source": "/blog/blog-makhana-for-kids", "destination": "/blog-makhana-for-kids", "permanent": true },
-    { "source": "/blog/blog-makhana-kheer-recipe", "destination": "/blog-makhana-kheer-recipe", "permanent": true },
-    { "source": "/blog/blog-makhana-nutrition", "destination": "/blog-makhana-nutrition", "permanent": true },
-    { "source": "/blog/blog-makhana-per-day", "destination": "/blog-makhana-per-day", "permanent": true },
-    { "source": "/blog/blog-makhana-pregnancy", "destination": "/blog-makhana-pregnancy", "permanent": true },
-    { "source": "/blog/blog-makhana-recipes", "destination": "/blog-makhana-recipes", "permanent": true },
-    { "source": "/blog/blog-makhana-side-effects", "destination": "/blog-makhana-side-effects", "permanent": true },
-    { "source": "/blog/blog-makhana-skin-hair", "destination": "/blog-makhana-skin-hair", "permanent": true },
-    { "source": "/blog/blog-makhana-vs-almonds", "destination": "/blog-makhana-vs-almonds", "permanent": true },
-    { "source": "/blog/blog-makhana-vs-popcorn", "destination": "/blog-makhana-vs-popcorn", "permanent": true },
-    { "source": "/blog/blog-makhana-weight-loss", "destination": "/blog-makhana-weight-loss", "permanent": true },
-    { "source": "/blog/blog-what-is-makhana", "destination": "/blog-what-is-makhana", "permanent": true }
+    {
+      "source": "/blog/blog-how-to-roast-makhana",
+      "destination": "/blog-how-to-roast-makhana",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-benefits",
+      "destination": "/blog-makhana-benefits",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-diabetes",
+      "destination": "/blog-makhana-diabetes",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-fasting",
+      "destination": "/blog-makhana-fasting",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-for-kids",
+      "destination": "/blog-makhana-for-kids",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-kheer-recipe",
+      "destination": "/blog-makhana-kheer-recipe",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-nutrition",
+      "destination": "/blog-makhana-nutrition",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-per-day",
+      "destination": "/blog-makhana-per-day",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-pregnancy",
+      "destination": "/blog-makhana-pregnancy",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-recipes",
+      "destination": "/blog-makhana-recipes",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-side-effects",
+      "destination": "/blog-makhana-side-effects",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-skin-hair",
+      "destination": "/blog-makhana-skin-hair",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-vs-almonds",
+      "destination": "/blog-makhana-vs-almonds",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-vs-popcorn",
+      "destination": "/blog-makhana-vs-popcorn",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-weight-loss",
+      "destination": "/blog-makhana-weight-loss",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-what-is-makhana",
+      "destination": "/blog-what-is-makhana",
+      "permanent": true
+    }
   ]
 }
