@@ -15,12 +15,12 @@
     var badge = isCombo ? '' : '<span class="disc-badge">-' + TM.pct(p) + '%</span>';
     var nm = p.name.split(' (')[0];
     var media = (p.images && p.images[0])
-      ? '<img class="card__img" src="' + p.images[0] + '" alt="" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
+      ? '<img class="card__img" src="' + p.images[0] + '" alt="' + TM.escapeXML(nm) + ' makhana pack" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
       : '<div class="card__pouch">' + TM.pouchSVG(p) + '</div>';
     return '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
       ribbon + badge +
-      '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + nm + '">' + media + '</a>' +
-      '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + nm + ' to cart">' + TM.ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
+      '<a class="card__media" href="/products/' + p.id + '" aria-label="View ' + TM.escapeXML(nm) + '">' + media + '</a>' +
+      '<button class="add-btn" data-add="' + p.id + '" aria-label="Add ' + TM.escapeXML(nm) + ' to cart">' + TM.ICON.bag + '<span class="add-btn__label">Add to cart</span></button>' +
       '<h3 class="card__name"><a href="/products/' + p.id + '">' + nm + '</a></h3>' +
       '<div class="card__price"><span class="card__now">' + TM.rupee(p.price) + '</span><span class="card__mrp">' + TM.rupee(p.mrp) + '</span></div>' +
       '</article>';
@@ -68,11 +68,14 @@
     $('#cartSaved').textContent = TM.rupee(mrp - sub);
     $('#cartTotal').textContent = TM.rupee(sub);
     $('#cartSaveRow').style.display = (mrp - sub) > 0 ? 'flex' : 'none';
+    // Every line item is a free-shipping product → treat as FREE regardless of subtotal.
+    var allFree = c.length > 0 && c.every(function (l) { var p = TM.getProduct(l.id); return p && p.freeShipping === true; });
     var nFill = $('#shipNudgeFill'), nText = $('#shipNudgeText');
     if (nFill && nText) {
-      var rem = FREE - sub, pct = Math.max(0, Math.min(100, Math.round(sub / FREE * 100)));
+      var rem = FREE - sub, pct = allFree ? 100 : Math.max(0, Math.min(100, Math.round(sub / FREE * 100)));
       nFill.style.width = pct + '%';
-      if (sub > 0 && rem > 0) nText.innerHTML = '<span>You are ' + TM.rupee(rem) + ' away from free shipping</span>';
+      if (allFree) nText.innerHTML = '<span>You have unlocked free shipping!</span>';
+      else if (sub > 0 && rem > 0) nText.innerHTML = '<span>You are ' + TM.rupee(rem) + ' away from free shipping</span>';
       else if (sub > 0) nText.innerHTML = '<span>You have unlocked free shipping!</span>';
       else nText.innerHTML = '<span>Free shipping over ' + TM.rupee(FREE) + '</span>';
     }
@@ -90,13 +93,13 @@
         '<div class="cart-item__art">' + TM.pouchSVG(p, { decorative: true }) + '</div>' +
         '<div><div class="cart-item__name">' + p.name.split(' (')[0] + '</div><div class="cart-item__price tnum">' + TM.rupee(p.price) + ' each</div>' +
         '<div class="cart-item__controls"><div class="qty"><button data-qty="-1" data-id="' + p.id + '" aria-label="Decrease quantity">' + TM.ICON.minus + '</button><span class="qty__val">' + l.qty + '</span><button data-qty="1" data-id="' + p.id + '" aria-label="Increase quantity">' + TM.ICON.plus + '</button></div></div></div>' +
-        '<div class="cart-item__line"><div class="cart-item__total tnum">' + TM.rupee(p.price * l.qty) + '</div><button class="cart-item__remove" data-remove="' + p.id + '" aria-label="Remove ' + p.name + '">' + TM.ICON.trash + 'Remove</button></div>' +
+        '<div class="cart-item__line"><div class="cart-item__total tnum">' + TM.rupee(p.price * l.qty) + '</div><button class="cart-item__remove" data-remove="' + p.id + '" aria-label="Remove ' + TM.escapeXML(p.name) + '">' + TM.ICON.trash + 'Remove</button></div>' +
         '</div>';
     }).join('');
   }
 
   function add(id) { TM.addToCart(id); renderCart(); updateSummary(); bump(); }
-  function changeQty(id, d) { var c = TM.getCart(), l = c.find(function (i) { return i.id === id; }); if (!l) return; l.qty += d; if (l.qty <= 0) c = c.filter(function (i) { return i.id !== id; }); TM.setCart(c); renderCart(); updateSummary(); }
+  function changeQty(id, d) { var c = TM.getCart(), l = c.find(function (i) { return i.id === id; }); if (!l) return; l.qty = Math.min(99, l.qty + d); if (l.qty <= 0) c = c.filter(function (i) { return i.id !== id; }); TM.setCart(c); renderCart(); updateSummary(); }
   function removeItem(id) { TM.setCart(TM.getCart().filter(function (i) { return i.id !== id; })); renderCart(); updateSummary(); }
 
   var drawer = $('#cartDrawer'), scrim = $('#cartScrim');

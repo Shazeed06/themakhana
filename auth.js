@@ -235,6 +235,14 @@ window.TMAuth = (function () {
     document.body.style.overflow = "hidden";
   }
   function closeModal() {
+    // Clear any pending checkout gate: if a requireLogin() promise is still
+    // waiting, resolve it with null so a later login doesn't pop a stale
+    // checkout. (proceedAfterAuth nulls afterLogin BEFORE calling closeModal,
+    // so the successful-login path is not affected.)
+    if (afterLogin) {
+      var cb = afterLogin; afterLogin = null;
+      try { cb(null); } catch (e) {}
+    }
     if (!modal) return;
     modal.classList.remove("open");
     document.body.style.overflow = "";

@@ -43,21 +43,6 @@
   };
   const stars = (n) => Array.from({ length: 5 }, () => ICON.star).join("");
 
-  /* ---------- Flavour cue icons (inside pouch label) ---------- */
-  function cueIcon(type) {
-    const c = {
-      chilli:  '<path d="M0 -8c3 1 4 4 3 8-1 5-5 8-8 8" /><path d="M0 -8c-1 -2 0 -4 2 -5" />',
-      mint:    '<path d="M-6 6c0 -8 6 -12 12 -12 0 8 -6 12 -12 12z"/><path d="M-6 6L4 -4"/>',
-      onion:   '<circle r="7"/><path d="M0 -7v14M-7 0h14"/>',
-      pepper:  '<circle cx="-4" cy="-3" r="1.4"/><circle cx="3" cy="-4" r="1.4"/><circle cx="0" cy="2" r="1.4"/><circle cx="5" cy="3" r="1.4"/><circle cx="-4" cy="4" r="1.4"/>',
-      mountain:'<path d="M-8 6L-2 -6 2 0 5 -5 8 6z"/>',
-      seed:    '<ellipse rx="4.5" ry="7"/>',
-      lotus:   '<path d="M0 -6c2 3 3 6 3 8a3 3 0 0 1-6 0c0-2 1-5 3-8z"/><path d="M-7 4c2.5 0 4.5 1 6 3M7 4c-2.5 0-4.5 1-6 3"/>',
-      combo:   '<path d="M-7 -3l3 8M0 -5v9M7 -3l-3 8" stroke-width="1.6"/>'
-    };
-    return c[type] || c.seed;
-  }
-
   /* ---------- THE POUCH (reusable parameterised SVG) ---------- */
   const _pouchCache = {};
   // Renders a paper-canister (tin) illustration for a product, parameterised by accent colour.
@@ -130,15 +115,6 @@
     return svg;
   }
 
-  function serrate(x, y, w, acc) {
-    const teeth = 19, tw = w / teeth;
-    let d = "M" + x + " " + y;
-    for (let i = 0; i < teeth; i++) {
-      d += " l" + (tw / 2) + " 5 l" + (tw / 2) + " -5";
-    }
-    return '<path d="' + d + ' v8 h-' + w + ' Z" fill="' + shade(acc, -20) + '"/>';
-  }
-
   function shade(hex, amt) {
     const n = parseInt(hex.slice(1), 16);
     let r = (n >> 16) + amt, g = ((n >> 8) & 255) + amt, b = (n & 255) + amt;
@@ -159,7 +135,7 @@
     const badge = isCombo ? "" : '<span class="disc-badge">-' + pct(p) + "%</span>";
     const nm = p.name.split(" (")[0];
     const media = (p.images && p.images[0])
-      ? '<img class="card__img" src="' + p.images[0] + '" alt="" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
+      ? '<img class="card__img" src="' + p.images[0] + '" alt="' + escapeXML(nm) + ' makhana pack" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
       : '<div class="card__pouch">' + pouchSVG(p) + '</div>';
     return '' +
       '<article class="card reveal" style="--acc:' + p.acc + '" data-cat="' + p.category + '">' +
@@ -251,13 +227,13 @@
 
   function addToCart(id) {
     const line = cart.find((i) => i.id === id);
-    if (line) line.qty += 1; else cart.push({ id: id, qty: 1 });
+    if (line) line.qty = Math.min(99, line.qty + 1); else cart.push({ id: id, qty: 1 });
     saveCart(); updateCartUI(); bumpCount();
   }
   function changeQty(id, delta) {
     const line = cart.find((i) => i.id === id);
     if (!line) return;
-    line.qty += delta;
+    line.qty = Math.min(99, line.qty + delta);
     if (line.qty <= 0) {
       cart = cart.filter((i) => i.id !== id);
       saveCart(); updateCartUI();      // structural change → full rebuild
@@ -282,7 +258,6 @@
 
   const cartCountEl = $("#cartCount");
   const cartBtnEl = $("#cartBtn");
-  const buyBar = $("#buyBar");
   function bumpCount() {
     cartCountEl.classList.remove("pop");
     void cartCountEl.offsetWidth;
@@ -296,7 +271,6 @@
     const count = cartCount();
     cartCountEl.textContent = count;
     if (cartBtnEl) cartBtnEl.setAttribute("aria-label", "Open cart, " + count + " item" + (count === 1 ? "" : "s"));
-    if (buyBar) buyBar.classList.toggle("has-items", count > 0);
 
     const subtotal = cart.reduce((s, l) => { const p = getProduct(l.id); return p ? s + p.price * l.qty : s; }, 0);
     const mrpTotal = cart.reduce((s, l) => { const p = getProduct(l.id); return p ? s + p.mrp * l.qty : s; }, 0);
@@ -376,7 +350,7 @@
 
   // Page regions that must be made inert/hidden while a modal surface is open,
   // so screen-reader + Tab focus is actually contained behind the overlay.
-  const bgRegions = [$("#header"), $("#main"), $(".footer"), $("#announce"), buyBar];
+  const bgRegions = [$("#header"), $("#main"), $(".footer"), $("#announce")];
   function setBackgroundInert(on) {
     bgRegions.forEach((el) => {
       if (!el) return;
@@ -511,16 +485,8 @@
       getProduct: getProduct,
       rupee: rupee,
       freeShip: FREE_SHIP_THRESHOLD,
+      flatShip: 49,
       onPlaced: () => { cart = []; saveCart(); updateCartUI(); bumpCount(); toast("Order placed - thank you!"); }
-    });
-  });
-
-  /* filter */
-  $$(".filter__pill").forEach((pill) => {
-    pill.addEventListener("click", () => {
-      $$(".filter__pill").forEach((p) => { p.classList.remove("is-active"); p.setAttribute("aria-pressed", "false"); });
-      pill.classList.add("is-active"); pill.setAttribute("aria-pressed", "true");
-      renderProducts(pill.dataset.filter);
     });
   });
 
@@ -543,57 +509,15 @@
   });
   try { if (sessionStorage.getItem("makhana_announce")) $("#announce").classList.add("is-hidden"); } catch (e) {}
 
-  /* header scroll + sticky mobile buy bar */
+  /* header scroll */
   const header = $("#header");
   const onScroll = () => {
-    const y = window.scrollY;
-    header.classList.toggle("scrolled", y > 40);
-    if (buyBar) {
-      // Reveal once past the hero; CSS (display:flex only <=900px) keeps it mobile-only.
-      const show = y > window.innerHeight * 0.7;
-      buyBar.classList.toggle("show", show);
-      document.body.classList.toggle("has-buybar", show);
-    }
+    header.classList.toggle("scrolled", window.scrollY > 40);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   /* hamburger: handled by nav.js (shared mobile-menu controller) */
-
-  /* hero pouch */
-  /* ---------- Hero slider ---------- */
-  (function heroSlider() {
-    const el = $("#heroPouch");
-    if (!el) return;
-    const imgs = ["images/hero-trio.jpg", "images/hero-box.jpg"];
-    const alts = ["Three roasted makhana pouches - peri peri, himalayan salt, pudina", "The Makhana seven-flavour foxnut gift box"];
-    const captions = ["The lineup · 3 signature roasts", "The gift box · 7 flavours"];
-    el.innerHTML =
-      '<div class="hero__slider"><div class="hero__track">' +
-      imgs.map((s, i) => '<img class="hero__slide' + (i === 0 ? " is-active" : "") + '" src="' + s + '" alt="' + alts[i] + '" loading="' + (i === 0 ? "eager" : "lazy") + '" />').join("") +
-      '<span class="hero__caption" aria-hidden="true">' + captions[0] + '</span><span class="hero__progress run" aria-hidden="true"></span>' +
-      '</div><div class="hero__dots">' +
-      imgs.map((s, i) => '<button class="hero__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Show slide ' + (i + 1) + '"></button>').join("") +
-      "</div></div>";
-    const slides = el.querySelectorAll(".hero__slide");
-    const dots = el.querySelectorAll(".hero__dot");
-    const caption = el.querySelector(".hero__caption");
-    const bar = el.querySelector(".hero__progress");
-    let idx = 0, timer = null;
-    function go(n) {
-      idx = (n + slides.length) % slides.length;
-      slides.forEach((sl, i) => sl.classList.toggle("is-active", i === idx));
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
-      if (caption) caption.textContent = captions[idx];
-      if (bar && !reduceMotion) { bar.classList.remove("run"); void bar.offsetWidth; bar.classList.add("run"); }
-    }
-    function start() { timer = setInterval(() => go(idx + 1), 4000); }
-    function stop() { clearInterval(timer); }
-    el.addEventListener("click", (e) => { const d = e.target.closest(".hero__dot"); if (d) { stop(); go(+d.dataset.i); start(); return; } if (e.target.closest(".hero__arrow--prev")) { stop(); go(idx - 1); start(); } else if (e.target.closest(".hero__arrow--next")) { stop(); go(idx + 1); start(); } });
-    el.addEventListener("mouseenter", stop);
-    el.addEventListener("mouseleave", start);
-    start();
-  })();
 
   (function pheroBSlider() {
     const root = $(".pheroB");

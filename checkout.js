@@ -12,6 +12,11 @@
   "use strict";
 
   var modal = null, opts = null, total = 0;
+  // Payment-flow guards (reset on every payOnline start):
+  // - closedSinceSubmit: user closed the checkout while create-order was in flight → don't open Razorpay.
+  // - paymentCaptured: handler fired → a later modal dismiss must be a no-op.
+  // - payFailed: payment.failed message must not be overwritten by a later dismiss.
+  var closedSinceSubmit = false, paymentCaptured = false, payFailed = false;
   var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>';
 
   function esc(s) { return String(s).replace(/[<>&"]/g, function (c) { return ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]; }); }
@@ -102,7 +107,8 @@
     var allFree = items.length > 0 && items.every(function (l) {
       var p = gp(l.id); return p && p.freeShipping === true;
     });
-    var ship = (sub === 0 || sub >= freeShip || allFree) ? 0 : 49;
+    var flatShip = (typeof opts.flatShip === "number") ? opts.flatShip : 49;
+    var ship = (sub === 0 || sub >= freeShip || allFree) ? 0 : flatShip;
     document.getElementById("coSub").textContent = money(sub);
     document.getElementById("coShip").textContent = ship === 0 ? "FREE" : money(ship);
     total = sub + ship;
@@ -202,6 +208,9 @@
 
   function payOnline(data) {
     clearPayErr();
+    closedSinceSubmit = false;
+    paymentCaptured = false;
+    payFailed = false;
     busy(true, "Starting payment…");
     fetch("/api/create-order", {
       method: "POST",
@@ -218,16 +227,19 @@
         });
       })
       .then(function (res) {
+        if (closedSinceSubmit) { busy(false); return; } // user closed checkout while we were creating the order
         if (!res.ok || !res.j || !res.j.orderId) {
           throw new Error((res.j && res.j.error) || "Online payment isn't available right now — please try again in a moment.");
         }
         var o = res.j;
         loadRazorpay(function (loaded) {
+          if (closedSinceSubmit) { busy(false); return; }
           if (!loaded) { busy(false); showPayErr("Could not load the payment window. Check your connection and try again."); return; }
+          // NOTE: do not pass `amount` here — order_id is authoritative (the server
+          // created the order with the correct paise amount; our local total is rupees).
           var rzp = new window.Razorpay({
             key: o.keyId,
             order_id: o.orderId,
-            amount: o.amount,
             currency: o.currency || "INR",
             name: "The Makhana",
             description: "Order payment",
@@ -235,10 +247,14 @@
             prefill: { name: data.name, contact: data.phone, email: data.email || "" },
             notes: { address: data.address },
             theme: { color: "#DB0007" },
-            handler: function (resp) { verifyAndFinish(resp, data); },
-            modal: { ondismiss: function () { busy(false); showPayErr("Payment cancelled. You can try again."); } }
+            handler: function (resp) { paymentCaptured = true; verifyAndFinish(resp, data); },
+            modal: { ondismiss: function () {
+              if (paymentCaptured) return; // payment went through — don't disturb the confirm flow
+              busy(false);
+              if (!payFailed) showPayErr("Payment cancelled. You can try again."); // keep the failure message visible
+            } }
           });
-          rzp.on("payment.failed", function () { busy(false); showPayErr("Payment failed. Please try again."); });
+          rzp.on("payment.failed", function () { payFailed = true; busy(false); showPayErr("Payment failed. Please try again."); });
           busy(true, "Opening payment…");
           rzp.open();
         });
@@ -341,6 +357,7 @@
 
   function close() {
     if (!modal) return;
+    closedSinceSubmit = true; // any in-flight create-order must not open Razorpay
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";

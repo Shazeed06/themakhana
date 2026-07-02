@@ -29,9 +29,16 @@ module.exports = async (req, res) => {
     }
 
     var customer = body.customer || {};
-    var cartCompact = priced.items.map(function (i) { return i.id + ":" + i.qty; }).join(";");
+    // compact cart string, capped at 250 chars at an ITEM boundary (never cut mid-item)
+    var cartCompact = "";
+    for (var ci = 0; ci < priced.items.length; ci++) {
+      var piece = priced.items[ci].id + ":" + priced.items[ci].qty;
+      var withPiece = cartCompact ? cartCompact + ";" + piece : piece;
+      if (withPiece.length > 250) break;
+      cartCompact = withPiece;
+    }
     var notes = {
-      cart: cartCompact.slice(0, 250),
+      cart: cartCompact,
       sub: String(priced.subtotal),
       ship: String(priced.shipping),
       tot: String(priced.total),

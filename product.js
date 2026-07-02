@@ -15,6 +15,14 @@
   let p = TM.getProduct(_pid);
   if (!p) p = TM.PRODUCTS[0];
 
+  /* Defensive defaults — any product missing a DETAILS entry must still render
+     (no crash on p.long.map / tagline / taste / ingredients / allergen). */
+  if (!Array.isArray(p.long) || !p.long.length) p.long = [p.note || ""];
+  if (!p.tagline) p.tagline = p.note || "";
+  if (!p.taste) p.taste = p.note || "";
+  if (!p.ingredients) p.ingredients = "See pack label for ingredient details.";
+  if (!p.allergen) p.allergen = "May contain traces of nuts.";
+
   const shortName = p.name.split(" (")[0];
   // SEO display name for the H1: always include "Makhana" + pack size.
   // p.name itself is NOT changed - cart and order emails still use it.
@@ -207,8 +215,10 @@
     '</div>';
 
   /* selection state */
+  const MAX_UNITS = 99; // a cart line never exceeds 99 units
   let sel = 0, qty = 1;
   function packQty() { return variants[sel].qty; }
+  function maxSteps() { return Math.max(1, Math.floor(MAX_UNITS / packQty())); }
   function units() { return packQty() * qty; }
   function refreshPrice() {
     const u = units();
@@ -217,9 +227,9 @@
     $("#pSub").textContent = "· " + units() + " pack" + (units() === 1 ? "" : "s") + " (" + (parseInt(p.weight, 10) * units()) + (p.weight.replace(/[0-9]/g, "")) + ")";
     $$(".variant", $("#variants")).forEach((b, i) => b.classList.toggle("active", i === sel));
   }
-  $("#variants").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) { sel = +b.dataset.v; refreshPrice(); } });
+  $("#variants").addEventListener("click", (e) => { const b = e.target.closest("[data-v]"); if (b) { sel = +b.dataset.v; qty = Math.min(qty, maxSteps()); $("#qVal").textContent = qty; refreshPrice(); } });
   $("#qMinus").addEventListener("click", () => { qty = Math.max(1, qty - 1); $("#qVal").textContent = qty; refreshPrice(); });
-  $("#qPlus").addEventListener("click", () => { qty = Math.min(20, qty + 1); $("#qVal").textContent = qty; refreshPrice(); });
+  $("#qPlus").addEventListener("click", () => { qty = Math.min(Math.min(20, maxSteps()), qty + 1); $("#qVal").textContent = qty; refreshPrice(); });
   refreshPrice();
 
   $("#addBtn").addEventListener("click", () => { TM.addToCart(p.id, units()); updateCartUI(); bumpCount(); toast("Added to basket"); openCart(); });
@@ -300,7 +310,9 @@
     '<div class="rel-grid">' +
       related.map((r) =>
         '<a class="rel" href="/products/' + r.id + '" style="--acc:' + r.acc + '">' +
-          '<div class="rel__art">' + pouchSVG(r) + '</div>' +
+          '<div class="rel__art">' + ((r.images && r.images[0])
+            ? '<img class="card__img" src="' + r.images[0] + '" alt="' + escapeXML(r.name.split(" (")[0]) + ' makhana pack" loading="lazy" width="600" height="600" style="width:100%;height:100%;object-fit:contain;display:block">'
+            : pouchSVG(r)) + '</div>' +
           '<h3>' + r.name.split(" (")[0] + '</h3>' +
           '<div class="rel__p">' + rupee(r.price) + '<small>' + rupee(r.mrp) + '</small></div>' +
         '</a>'
@@ -322,10 +334,13 @@
     $("#cartSaved").textContent = rupee(mrp - sub);
     $("#cartTotal").textContent = rupee(sub);
     $("#cartSaveRow").style.display = (mrp - sub) > 0 ? "flex" : "none";
+    // Every line item is a free-shipping product → treat as FREE regardless of subtotal.
+    const allFree = cart.length > 0 && cart.every((l) => { const x = TM.getProduct(l.id); return x && x.freeShipping === true; });
     const nText = $("#shipNudgeText"), nFill = $("#shipNudgeFill");
-    const remaining = FREE - sub, fill = Math.max(0, Math.min(100, Math.round(sub / FREE * 100)));
+    const remaining = FREE - sub, fill = allFree ? 100 : Math.max(0, Math.min(100, Math.round(sub / FREE * 100)));
     nFill.style.width = fill + "%";
-    if (sub > 0 && remaining > 0) { $("#shipNudge").classList.remove("ship-nudge--done"); nText.innerHTML = ICON.truck + "<span>You're " + rupee(remaining) + " away from free shipping</span>"; }
+    if (allFree) { $("#shipNudge").classList.add("ship-nudge--done"); nText.innerHTML = ICON.check + "<span>You've unlocked free shipping!</span>"; }
+    else if (sub > 0 && remaining > 0) { $("#shipNudge").classList.remove("ship-nudge--done"); nText.innerHTML = ICON.truck + "<span>You're " + rupee(remaining) + " away from free shipping</span>"; }
     else if (sub > 0) { $("#shipNudge").classList.add("ship-nudge--done"); nText.innerHTML = ICON.check + "<span>You've unlocked free shipping!</span>"; }
     else nText.innerHTML = ICON.truck + "<span>Free shipping over " + rupee(FREE) + "</span>";
   }
@@ -357,7 +372,7 @@
 
   function setQty(id, delta) {
     const cart = TM.getCart(), line = cart.find((i) => i.id === id); if (!line) return;
-    line.qty += delta;
+    line.qty = Math.min(99, line.qty + delta);
     let next = line.qty <= 0 ? cart.filter((i) => i.id !== id) : cart;
     TM.setCart(next); updateCartUI();
   }

@@ -99,6 +99,16 @@ window.TM = (function () {
       ],
       ingredients:"5 packs of roasted makhana in assorted flavours (see individual flavours for seasoning details).",
       allergen:"Contains milk (Cream & Onion). May contain traces of nuts."
+    },
+    test: {
+      taste:"Test item",
+      tagline:"Re.1 live payment test",
+      long:[
+        "This is a Re.1 test product we use to verify that live payments work end-to-end on the store. It is not a real snack pack and nothing is shipped.",
+        "If you ordered it by accident, contact us with your payment reference and we'll refund it right away."
+      ],
+      ingredients:"None — this is a payment test item, not a food product.",
+      allergen:"Not applicable — no physical product is shipped."
     }
   };
   PRODUCTS.forEach((p) => Object.assign(p, DETAILS[p.id] || {}));
@@ -228,25 +238,6 @@ window.TM = (function () {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
   function escapeXML(s) { return String(s).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])); }
-  function cueIcon(type) {
-    const c = {
-      chilli:'<path d="M0 -8c3 1 4 4 3 8-1 5-5 8-8 8" /><path d="M0 -8c-1 -2 0 -4 2 -5" />',
-      mint:'<path d="M-6 6c0 -8 6 -12 12 -12 0 8 -6 12 -12 12z"/><path d="M-6 6L4 -4"/>',
-      onion:'<circle r="7"/><path d="M0 -7v14M-7 0h14"/>',
-      pepper:'<circle cx="-4" cy="-3" r="1.4"/><circle cx="3" cy="-4" r="1.4"/><circle cx="0" cy="2" r="1.4"/><circle cx="5" cy="3" r="1.4"/><circle cx="-4" cy="4" r="1.4"/>',
-      mountain:'<path d="M-8 6L-2 -6 2 0 5 -5 8 6z"/>',
-      seed:'<ellipse rx="4.5" ry="7"/>',
-      lotus:'<path d="M0 -6c2 3 3 6 3 8a3 3 0 0 1-6 0c0-2 1-5 3-8z"/><path d="M-7 4c2.5 0 4.5 1 6 3M7 4c-2.5 0-4.5 1-6 3"/>',
-      combo:'<path d="M-7 -3l3 8M0 -5v9M7 -3l-3 8" stroke-width="1.6"/>'
-    };
-    return c[type] || c.seed;
-  }
-  function serrate(x, y, w, acc) {
-    const teeth = 19, tw = w / teeth;
-    let d = "M" + x + " " + y;
-    for (let i = 0; i < teeth; i++) d += " l" + (tw / 2) + " 5 l" + (tw / 2) + " -5";
-    return '<path d="' + d + ' v8 h-' + w + ' Z" fill="' + shade(acc, -20) + '"/>';
-  }
   function puff(cx, cy, r, rot, acc, roasted) {
     const rx = r, ry = r * 0.86;
     const speck = roasted ? '<circle cx="' + (cx + r * .25) + '" cy="' + (cy - r * .15) + '" r="1.1" fill="' + acc + '" opacity=".5"/>' : '';
@@ -324,10 +315,11 @@ window.TM = (function () {
   function getCart() { try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch (e) { return []; } }
   function setCart(c) { try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) {} }
   function addToCart(id, qty) {
-    qty = qty || 1;
+    // clamp to a sane 1..99 per-line quantity
+    qty = Math.max(1, Math.min(99, Math.round(qty) || 1));
     const cart = getCart();
     const line = cart.find((i) => i.id === id);
-    if (line) line.qty += qty; else cart.push({ id: id, qty: qty });
+    if (line) line.qty = Math.min(99, line.qty + qty); else cart.push({ id: id, qty: qty });
     setCart(cart);
     return cart;
   }
