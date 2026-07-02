@@ -44,7 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=20" />
+<link rel="stylesheet" href="styles.css?v=21" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -237,6 +237,86 @@
     <button class="pheroB__dot" type="button" data-i="2" role="tab" aria-current="false" aria-label="Slide 3"></button>
   </div>
 </section>
+
+<!-- ===== Quality at every step (accordion + video) ===== -->
+<section class="qsteps" aria-labelledby="qsteps-title">
+  <div class="container">
+    <div class="qsteps__head">
+      <h2 id="qsteps-title" class="qsteps__title"><span class="spark spark--l" aria-hidden="true">&#10022;</span>Quality at every step<span class="spark spark--r" aria-hidden="true">&#10022;</span></h2>
+      <p class="qsteps__sub">Built on trust</p>
+    </div>
+    <div class="qsteps__grid">
+      <div class="qsteps__list" id="qstepsList">
+        <div class="qstep" data-step>
+          <button class="qstep__btn" type="button" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/><path d="M3 19c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/><path d="M12 3c2 2.2 3 4.2 3 6a3 3 0 0 1-6 0c0-1.8 1-3.8 3-6z"/></svg>
+            <span>Handpicked from Bihar&rsquo;s ponds</span>
+          </button>
+          <p class="qstep__desc">Foxnuts gathered by hand at first light from the lotus ponds of Madhubani &mdash; the heartland of the world&rsquo;s finest makhana.</p>
+        </div>
+        <div class="qstep is-open" data-step>
+          <button class="qstep__btn" type="button" aria-expanded="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2.5 5 5.5 5 8a5 5 0 0 1-10 0c0-2.5 2-5.5 5-8z"/><path d="M12 13a2 2 0 0 0 2 2"/></svg>
+            <span>Slow-roasted, never fried</span>
+          </button>
+          <p class="qstep__desc">Small batches, cold-pressed oil and patient roasting give the crunch its crispness &mdash; no deep fryers, no shortcuts, ever.</p>
+        </div>
+        <div class="qstep" data-step>
+          <button class="qstep__btn" type="button" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span>Clean-label quality checks</span>
+          </button>
+          <p class="qstep__desc">No palm oil, no maida, no MSG. Every batch is tasted and checked before it earns the seal.</p>
+        </div>
+        <div class="qstep" data-step>
+          <button class="qstep__btn" type="button" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3.5 8.5L12 13l8.5-4.5"/><path d="M12 13v8"/></svg>
+            <span>Sealed fresh, shipped fast</span>
+          </button>
+          <p class="qstep__desc">Airtight-packed in Delhi within hours of roasting and shipped pan-India &mdash; crunch preserved to your door.</p>
+        </div>
+      </div>
+      <div class="qsteps__media">
+        <video class="qsteps__video" autoplay muted loop playsinline preload="metadata" poster="images/makhana-bowl.jpg" aria-label="Warm close-up of small-batch roasted snacks">
+          <source src="videos/quality.mp4" type="video/mp4">
+        </video>
+        <div class="qsteps__note" aria-hidden="true">
+          <ol>
+            <li><b>01</b> Hand-harvested foxnuts</li>
+            <li><b>02</b> Small-batch roasting</li>
+            <li><b>03</b> Airtight freshness seal</li>
+          </ol>
+        </div>
+        <div class="qsteps__dotsdeco" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var list = document.getElementById("qstepsList");
+  if (!list) return;
+  var steps = Array.prototype.slice.call(list.querySelectorAll("[data-step]"));
+  var timer = null, idx = 1;
+  function open(i) {
+    idx = (i + steps.length) % steps.length;
+    steps.forEach(function (s, j) {
+      var on = j === idx;
+      s.classList.toggle("is-open", on);
+      s.querySelector(".qstep__btn").setAttribute("aria-expanded", on ? "true" : "false");
+    });
+  }
+  steps.forEach(function (s, j) {
+    s.querySelector(".qstep__btn").addEventListener("click", function () { open(j); restart(); });
+  });
+  function tick() { open(idx + 1); }
+  function restart() { if (timer) clearInterval(timer); if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(tick, 4500); }
+  list.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); timer = null; });
+  list.addEventListener("mouseleave", restart);
+  restart();
+})();
+</script>
 
 <!-- ===== Save big / Combo band ===== -->
 <section class="saveband" aria-labelledby="saveband-title">

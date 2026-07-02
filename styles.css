@@ -898,3 +898,47 @@ html,body{max-width:100%;overflow-x:clip}
   .pheroB__sub{font-size:14.5px}
   .pheroB__packs svg{width:clamp(56px,15vw,84px)}
 }
+
+/* ===== Quality at every step (hyperpure-style: accordion + video) ===== */
+.qsteps{padding-block:clamp(48px,7vw,92px);background:#fff}
+.qsteps__head{text-align:center;margin-bottom:clamp(30px,4.5vw,56px)}
+.qsteps__title{position:relative;display:inline-block;font-size:clamp(28px,4.2vw,46px);font-weight:800;letter-spacing:-.015em;color:var(--primary);line-height:1.1}
+.qsteps__title .spark{position:absolute;color:var(--primary);font-size:.42em;top:-2px}
+.qsteps__title .spark--l{left:-30px;bottom:6px;top:auto}
+.qsteps__title .spark--r{right:-30px}
+.qsteps__sub{margin-top:10px;font-size:clamp(16px,1.9vw,22px);font-weight:800;color:#1A1A1A;display:flex;align-items:center;justify-content:center;gap:14px}
+.qsteps__sub::before,.qsteps__sub::after{content:"";width:34px;height:2.5px;background:#1A1A1A;border-radius:2px}
+.qsteps__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,72px);align-items:center}
+.qsteps__list{position:relative;padding-left:22px}
+.qsteps__list::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2.5px;background:#ECECEC;border-radius:2px}
+.qstep{position:relative;border-bottom:1.5px solid #EEECEC;padding:18px 0}
+.qstep:last-child{border-bottom:0}
+.qstep::before{content:"";position:absolute;left:-22px;top:8px;bottom:8px;width:2.5px;background:transparent;border-radius:2px;transition:background .3s ease}
+.qstep.is-open::before{background:var(--primary)}
+.qstep__btn{display:flex;align-items:center;gap:13px;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font-family:inherit}
+.qstep__btn svg{width:24px;height:24px;flex:0 0 auto;fill:none;stroke:#9A9A9A;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s ease}
+.qstep__btn span{font-size:clamp(17px,2vw,22px);font-weight:700;color:#6E6E6E;letter-spacing:-.01em;transition:color .3s ease,font-size .3s ease}
+.qstep.is-open .qstep__btn svg{stroke:var(--primary)}
+.qstep.is-open .qstep__btn span{color:#0D0D0D;font-weight:800;font-size:clamp(19px,2.3vw,26px)}
+.qstep__desc{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .4s ease;opacity:0;margin:0;padding-left:37px;font-size:clamp(14.5px,1.6vw,17px);line-height:1.7;color:#5E5B54}
+.qstep.is-open .qstep__desc{max-height:120px;opacity:1;margin-top:8px}
+.qsteps__media{position:relative;justify-self:center}
+.qsteps__video{display:block;width:100%;max-width:560px;aspect-ratio:4/3;object-fit:cover;border-radius:14px;box-shadow:0 30px 60px -30px rgba(20,20,20,.35);background:#1c1c1c}
+.qsteps__note{position:absolute;left:-34px;bottom:-26px;width:min(272px,72%);background:#fff;border-radius:12px;padding:30px 18px 16px;box-shadow:0 18px 42px -16px rgba(20,20,20,.30);transform:rotate(-4deg)}
+.qsteps__note::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:19px;height:19px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff5a52,var(--primary) 60%,#8E0005);box-shadow:0 3px 6px rgba(0,0,0,.35)}
+.qsteps__note ol{list-style:none;margin:0;padding:12px 14px;background:#FDF1F1;border-radius:9px;display:flex;flex-direction:column}
+.qsteps__note li{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;font-size:13.5px;font-weight:600;color:#2A2A2A;line-height:1.4}
+.qsteps__note li+li{border-top:1px solid rgba(219,0,7,.12)}
+.qsteps__note li b{color:var(--primary);font-style:italic;font-weight:800;font-size:12.5px;flex:0 0 auto}
+.qsteps__dotsdeco{position:absolute;right:-42px;top:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px 18px}
+.qsteps__dotsdeco i{width:8px;height:8px;border-radius:50%;background:var(--primary);opacity:.55}
+@media (max-width:900px){
+  .qsteps__grid{grid-template-columns:1fr;gap:40px}
+  .qsteps__media{width:100%;max-width:560px}
+  .qsteps__note{left:8px;bottom:-22px}
+  .qsteps__dotsdeco{right:6px}
+  .qsteps__title .spark--l{left:-20px}.qsteps__title .spark--r{right:-20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .qstep__desc,.qstep::before,.qstep__btn span,.qstep__btn svg{transition:none}
+}
