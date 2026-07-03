@@ -949,7 +949,10 @@ html,body{max-width:100%;overflow-x:clip}
   @keyframes pheroB-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 }
 @media (max-width:768px){
-  .pheroB__viewport{height:477px;border-radius:0 0 12px 12px}
+  .pheroB__viewport{height:477px;border-radius:0 0 12px 12px;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+  .pheroB__viewport::-webkit-scrollbar{display:none}
+  .pheroB__slide{flex:0 0 100%;width:100%;min-width:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;height:100%;opacity:1 !important;visibility:visible !important;transition:none}
+  .pheroB__slide .pheroB__content>*{animation:none !important;opacity:1 !important}
   .pheroB__inner{padding:clamp(52px,9vh,80px) 18px 0}
   .pheroB__title{font-size:clamp(24px,6.4vw,32px)}
   .pheroB__sub{font-size:14.5px}

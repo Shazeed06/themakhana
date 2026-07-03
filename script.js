@@ -522,35 +522,123 @@
   (function pheroBSlider() {
     const root = $(".pheroB");
     if (!root) return;
+    const viewport = root.querySelector(".pheroB__viewport");
     const slides = Array.from(root.querySelectorAll(".pheroB__slide"));
     const dots = Array.from(root.querySelectorAll(".pheroB__dot"));
     if (slides.length < 2) return;
     let idx = 0, timer = null;
     const DELAY = 5500;
+    const mq = window.matchMedia("(max-width:768px)");
+    let isMobile = false;
     function loadSlide(i) {
       const img = slides[i] && slides[i].querySelector(".pheroB__bg[data-src]");
       if (img) { img.src = img.getAttribute("data-src"); img.removeAttribute("data-src"); }
     }
+    function loadAllSlides() { slides.forEach((_, i) => loadSlide(i)); }
+    function setDots(n) {
+      dots.forEach((d, i) => { const on = i === n; d.classList.toggle("is-active", on); d.setAttribute("aria-current", on ? "true" : "false"); });
+    }
+    /* ----- desktop (fade) mode ----- */
     function go(n) {
       idx = (n + slides.length) % slides.length;
       loadSlide(idx);
       slides.forEach((s, i) => { const on = i === idx; s.classList.toggle("is-active", on); s.setAttribute("aria-hidden", on ? "false" : "true"); });
-      dots.forEach((d, i) => { const on = i === idx; d.classList.toggle("is-active", on); d.setAttribute("aria-current", on ? "true" : "false"); });
+      setDots(idx);
       setTimeout(() => loadSlide((idx + 1) % slides.length), 600);
     }
     function start() { stop(); timer = setInterval(() => go(idx + 1), DELAY); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    dots.forEach((d) => d.addEventListener("click", () => { go(+d.dataset.i); start(); }));
+    /* ----- mobile (swipe) mode ----- */
+    let mobileTimer = null, resumeTimer = null, scrollRaf = null;
+    const scrollToSlide = (n, behavior) => {
+      if (viewport) viewport.scrollTo({ left: n * viewport.clientWidth, behavior: behavior || "smooth" });
+    };
+    const syncFromScroll = () => {
+      if (!viewport) return;
+      const w = viewport.clientWidth || 1;
+      const n = Math.max(0, Math.min(slides.length - 1, Math.round(viewport.scrollLeft / w)));
+      if (n !== idx) {
+        idx = n;
+        slides.forEach((s, i) => s.classList.toggle("is-active", i === idx));
+        setDots(idx);
+      }
+    };
+    const onViewportScroll = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => { scrollRaf = null; syncFromScroll(); });
+    };
+    const mobileStop = () => {
+      if (mobileTimer) { clearInterval(mobileTimer); mobileTimer = null; }
+      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
+    };
+    const mobileStart = () => { mobileStop(); mobileTimer = setInterval(() => scrollToSlide((idx + 1) % slides.length), DELAY); };
+    const onTouchStart = () => { mobileStop(); };
+    const onTouchEnd = () => {
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(mobileStart, 7000);
+    };
+    const onVisibility = () => {
+      if (!isMobile) return;
+      if (document.visibilityState === "hidden") mobileStop();
+      else mobileStart();
+    };
+    /* ----- mode switching ----- */
+    function enterMobile() {
+      isMobile = true;
+      stop();
+      loadAllSlides();
+      const cur = slides.findIndex((s) => s.classList.contains("is-active"));
+      idx = cur >= 0 ? cur : 0;
+      slides.forEach((s) => s.setAttribute("aria-hidden", "false"));
+      if (viewport) {
+        scrollToSlide(idx, "auto");
+        viewport.addEventListener("scroll", onViewportScroll, { passive: true });
+        viewport.addEventListener("touchstart", onTouchStart, { passive: true });
+        viewport.addEventListener("pointerdown", onTouchStart, { passive: true });
+        viewport.addEventListener("touchend", onTouchEnd, { passive: true });
+        viewport.addEventListener("pointerup", onTouchEnd, { passive: true });
+      }
+      document.addEventListener("visibilitychange", onVisibility);
+      mobileStart();
+    }
+    function enterDesktop() {
+      isMobile = false;
+      mobileStop();
+      if (scrollRaf) { cancelAnimationFrame(scrollRaf); scrollRaf = null; }
+      if (viewport) {
+        viewport.removeEventListener("scroll", onViewportScroll);
+        viewport.removeEventListener("touchstart", onTouchStart);
+        viewport.removeEventListener("pointerdown", onTouchStart);
+        viewport.removeEventListener("touchend", onTouchEnd);
+        viewport.removeEventListener("pointerup", onTouchEnd);
+        viewport.scrollLeft = 0;
+      }
+      document.removeEventListener("visibilitychange", onVisibility);
+      go(idx);
+      start();
+    }
+    /* ----- shared controls (mode-aware) ----- */
+    dots.forEach((d) => d.addEventListener("click", () => {
+      const n = +d.dataset.i;
+      if (isMobile) { idx = n; scrollToSlide(n); mobileStart(); }
+      else { go(n); start(); }
+    }));
     root.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") { go(idx - 1); start(); }
-      else if (e.key === "ArrowRight") { go(idx + 1); start(); }
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      const n = idx + (e.key === "ArrowLeft" ? -1 : 1);
+      if (isMobile) { idx = (n + slides.length) % slides.length; scrollToSlide(idx); mobileStart(); }
+      else { go(n); start(); }
     });
-    root.addEventListener("mouseenter", stop);
-    root.addEventListener("mouseleave", start);
-    root.addEventListener("focusin", stop);
-    root.addEventListener("focusout", start);
+    root.addEventListener("mouseenter", () => { if (!isMobile) stop(); });
+    root.addEventListener("mouseleave", () => { if (!isMobile) start(); });
+    root.addEventListener("focusin", () => { if (!isMobile) stop(); });
+    root.addEventListener("focusout", () => { if (!isMobile) start(); });
     go(0);
-    start();
+    if (mq.matches) enterMobile();
+    else start();
+    const onMqChange = (e) => { if (e.matches) enterMobile(); else enterDesktop(); };
+    if (mq.addEventListener) mq.addEventListener("change", onMqChange);
+    else if (mq.addListener) mq.addListener(onMqChange);
   })();
 
   /* ---------- Init ---------- */
