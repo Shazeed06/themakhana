@@ -24,7 +24,7 @@
 
 <!-- ===== SEO ===== -->
 <title>About The Makhana | Roasted Never Fried Foxnuts from Bihar</title>
-<meta name="description" content="Meet The Makhana: foxnuts handpicked in Bihar's lotus ponds, slow-roasted in cold-pressed oil in Delhi. No palm oil, no maida. Roasted, never fried." />
+<meta name="description" content="Meet The Makhana: started in 2026 by two childhood friends from Delhi — a chef and a software engineer. Foxnuts handpicked in Bihar, slow-roasted in cold-pressed oil. Never fried." />
 <meta name="keywords" content="The Makhana, makhana from Bihar, Madhubani makhana, handpicked foxnuts, phool makhana, roasted makhana brand, cold-pressed oil makhana, makhana brand story, healthy snacks, high protein snack, foxnuts India" />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://www.themakhana.in/about" />
@@ -65,7 +65,12 @@
       "name": "The Makhana",
       "url": "https://www.themakhana.in/",
       "logo": "https://www.themakhana.in/images/logo.png?v=4",
-      "description": "Premium D2C brand selling roasted and raw makhana (foxnuts / phool makhana), sourced from Bihar. Roasted in cold-pressed oil, never deep-fried.",
+      "description": "Premium D2C brand selling roasted and raw makhana (foxnuts / phool makhana), sourced from Bihar. Roasted in cold-pressed oil, never deep-fried. Founded in 2026 by two childhood friends from Delhi.",
+      "foundingDate": "2026",
+      "founder": [
+        { "@type": "Person", "name": "Shazeed", "jobTitle": "Co-founder" },
+        { "@type": "Person", "name": "Khush Goel", "jobTitle": "Co-founder" }
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "New Delhi",
@@ -149,6 +154,37 @@
 .ab-made__stats b em{font-style:normal;color:var(--primary)}
 .ab-made__stats span{font-size:13px;color:var(--ink-soft);margin-top:6px;display:block;font-weight:600}
 
+/* ---------- Founders story ---------- */
+.ab-founders{padding-block:clamp(56px,8.5vw,110px);background:
+  linear-gradient(rgba(255,255,255,.94),rgba(255,255,255,.94)),
+  repeating-linear-gradient(0deg,#eae6dd 0 2px,transparent 2px 60px),
+  repeating-linear-gradient(90deg,#eee9e0 0 2px,transparent 2px 110px),#f6f3ed}
+.ab-founders__head{text-align:center;max-width:680px;margin:0 auto clamp(36px,5vw,56px)}
+.ab-founders__label{display:inline-block;background:#0D0D0D;color:#FFBC0D;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:8px 16px;border-radius:4px;transform:rotate(-1.2deg);box-shadow:3px 3px 0 rgba(0,0,0,.18)}
+.ab-founders__head h2{margin-top:18px;font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.02em;color:var(--secondary);line-height:1.05;text-transform:uppercase}
+.ab-founders__head h2 em{font-style:normal;color:var(--primary)}
+.ab-founders__inner{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(28px,5vw,64px);align-items:center}
+.ab-founders__media{position:relative;padding-bottom:clamp(84px,10vw,120px)}
+.ab-founders__photo{margin:0}
+.ab-founders__photo img{display:block;width:100%;height:auto;border-radius:8px}
+.ab-founders__photo--wide{position:relative;transform:rotate(-1.2deg)}
+.ab-founders__photo--wide img{border:2.5px solid #0D0D0D;box-shadow:10px 10px 0 #FFBC0D}
+.ab-founders__photo--tall{position:absolute;right:clamp(6px,2vw,18px);bottom:0;width:min(40%,200px);background:#fff;border:2.5px solid #0D0D0D;border-radius:6px;padding:8px 8px 12px;box-shadow:7px 7px 0 rgba(13,13,13,.9);transform:rotate(2.4deg)}
+.ab-founders__photo--tall::before{content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-2deg);width:76px;height:20px;background:rgba(255,188,13,.92);border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 5px rgba(0,0,0,.12);z-index:1}
+.ab-founders__photo--tall img{border-radius:4px;aspect-ratio:3/4;object-fit:cover}
+.ab-founders__photo figcaption{font-size:12px;font-weight:700;color:var(--ink-soft);text-align:center;margin-top:8px;letter-spacing:.02em}
+.ab-founders__photo--wide figcaption{position:absolute;left:4px;right:46%;bottom:-34px;text-align:left}
+.ab-founders__copy p{font-size:clamp(15px,1.8vw,17px);line-height:1.8;color:var(--ink-soft);margin-bottom:14px}
+.ab-founders__quote{margin:22px 0;padding:18px 22px;background:#FFBC0D;border:2.5px solid #0D0D0D;border-radius:6px;box-shadow:6px 6px 0 rgba(13,13,13,.9);transform:rotate(-1deg);font-size:clamp(17px,2.2vw,21px);font-weight:800;line-height:1.35;color:#0D0D0D;text-transform:uppercase;letter-spacing:.01em}
+.founder-cards{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,26px);margin-top:clamp(38px,5vw,56px)}
+.founder-card{display:flex;gap:16px;align-items:flex-start;background:#fff;border:2.5px solid #0D0D0D;border-radius:6px;padding:20px 22px;box-shadow:6px 6px 0 rgba(13,13,13,.9)}
+.founder-card:nth-child(1){transform:rotate(-.6deg)}
+.founder-card:nth-child(2){transform:rotate(.6deg)}
+.founder-card__ic{flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#DB0007;color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px}
+.founder-card h3{font-size:17px;font-weight:800;color:#0D0D0D;text-transform:uppercase;letter-spacing:.01em}
+.founder-card__role{font-size:12.5px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.08em;margin:4px 0 6px}
+.founder-card p{font-size:14px;line-height:1.55;color:var(--ink-soft);font-weight:500}
+
 /* ---------- Stencil badge strip ---------- */
 .stencil-strip{background:#FFBC0D;border-block:3px solid #0D0D0D;padding:clamp(20px,3vw,30px) 0}
 .stencil-strip__row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,3vw,34px)}
@@ -169,6 +205,11 @@
 @media (max-width:760px){
   .ab-made__inner{grid-template-columns:1fr;gap:34px}
   .ab-made__media{order:-1}
+  .ab-founders__inner{grid-template-columns:1fr;gap:40px}
+  .ab-founders__media{order:-1;max-width:520px;margin-inline:auto;width:100%}
+  .ab-founders__photo--wide figcaption{position:static;text-align:left;margin-top:10px;max-width:54%}
+  .founder-cards{grid-template-columns:1fr}
+  .founder-card:nth-child(1),.founder-card:nth-child(2){transform:none}
 }
 @media (max-width:480px){ .poster-grid{grid-template-columns:1fr} .poster{max-width:340px;margin-inline:auto} }
 @media (prefers-reduced-motion:reduce){ .poster,.wall-cta .btn{transition:none} }
@@ -302,6 +343,57 @@
       <div class="ab-made__copy" style="margin-top:clamp(40px,6vw,64px)">
         <h2>What makes The Makhana one of the best makhana brands in India</h2>
         <p>The Makhana earns its place among the best makhana brands in India by keeping things simple: foxnuts handpicked and 100% Bihar-sourced, slow-roasted in cold-pressed or olive oil and never fried, with no palm oil, no maida and no MSG &mdash; all packed under an FSSAI-certified licence in Delhi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Founders story ===== -->
+  <section class="ab-founders" aria-labelledby="founders-title">
+    <div class="container">
+      <div class="ab-founders__head">
+        <span class="ab-founders__label">The Founders</span>
+        <h2 id="founders-title">Two friends. <em>One obsession.</em></h2>
+      </div>
+
+      <div class="ab-founders__inner">
+        <div class="ab-founders__media">
+          <figure class="ab-founders__photo ab-founders__photo--wide">
+            <img src="images/founders-2.jpg" alt="Shazeed and Khush — founders of The Makhana" loading="lazy" width="1400" height="787" />
+            <figcaption>Delhi, 2026 &mdash; still arguing over the last bite.</figcaption>
+          </figure>
+          <figure class="ab-founders__photo ab-founders__photo--tall">
+            <img src="images/founders-1.jpg" alt="Shazeed and Khush — founders of The Makhana" loading="lazy" width="720" height="1280" />
+            <figcaption>Same lane. Same standard.</figcaption>
+          </figure>
+        </div>
+
+        <div class="ab-founders__copy">
+          <p>Long before The Makhana had a logo, it had two boys in the same Delhi lane &mdash; same school mornings, same evening cricket until the streetlights gave up, same fights over the last bite of whatever snack was going around. Shazeed and Khush grew up sharing everything, including one opinion about food: if it isn't honest, it isn't worth eating.</p>
+          <p>Then life did what life does. Shazeed went into software &mdash; building websites, brands and everything that lives on a screen. Khush went into kitchens and became a chef &mdash; the kind who tastes a dish and can tell you exactly which ingredient was rushed. Different worlds, same standard: do it properly or don't do it at all.</p>
+          <blockquote class="ab-founders__quote">&ldquo;One of us builds brands. The other builds flavour.&rdquo;</blockquote>
+          <p>In 2026, over one of those chai conversations that starts as timepass and ends as a plan, they kept circling back to makhana &mdash; an honest Indian superfood, handpicked from Bihar's ponds for generations, still stuck in boring, oily, forgettable packets. It deserved better. They decided to be the ones to give it better.</p>
+          <p>So they split the job the way they'd split everything since childhood. Khush obsesses over the product &mdash; the sourcing, the roast, the flavour, the refusal to let palm oil or maida anywhere near a pouch. Shazeed obsesses over everything you see and click &mdash; the brand, the website, the experience of buying it. Neither lets the other cut a corner.</p>
+          <p>It's not a founding story from a pitch deck. It's two friends who finally made the snack they always wanted to share.</p>
+        </div>
+      </div>
+
+      <div class="founder-cards">
+        <article class="founder-card">
+          <span class="founder-card__ic" aria-hidden="true">S</span>
+          <div>
+            <h3>Shazeed</h3>
+            <p class="founder-card__role">Co-founder &middot; Software engineer</p>
+            <p>Brand, website &amp; everything online.</p>
+          </div>
+        </article>
+        <article class="founder-card">
+          <span class="founder-card__ic" aria-hidden="true">K</span>
+          <div>
+            <h3>Khush Goel</h3>
+            <p class="founder-card__role">Co-founder &middot; Chef</p>
+            <p>Flavour, quality &amp; everything you taste.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
