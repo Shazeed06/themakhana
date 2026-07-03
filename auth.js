@@ -7,8 +7,8 @@ window.TMAuth = (function () {
   "use strict";
 
   var sb = null, enabled = false, user = null, profile = null, modal = null, afterLogin = null;
-  // OTP flow state
-  var otpEmail = "", resendTimer = null;
+  // Magic-link flow state
+  var linkEmail = "", resendTimer = null;
 
   function configured() {
     return typeof window.SUPABASE_URL === "string" && window.SUPABASE_URL.indexOf("http") === 0 &&
@@ -108,7 +108,7 @@ window.TMAuth = (function () {
       ".tma__btn--ghost{background:#fff;color:#1c1c1c;border:1.5px solid #E3E3E3}" +
       ".tma__btn--ghost:hover{background:#F7F7F7}" +
       ".tma__actions .tma__btn{margin-top:0;text-decoration:none;display:block;text-align:center;box-sizing:border-box}" +
-      // OTP view helpers
+      // sent view helpers
       ".tma-otp-links{display:flex;gap:16px;justify-content:center;margin-top:16px}" +
       ".tma-link{border:none;background:none;color:#DB0007;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0}" +
       ".tma-link:disabled{opacity:.55;cursor:default}" +
@@ -137,36 +137,26 @@ window.TMAuth = (function () {
         '</div>' +
         // email step (email only) — the single entry point
         '<form id="tmaLogin">' +
-          '<h2>Log in or sign up</h2><p class="sub">Enter your email — we\'ll send you a 6-digit code. No password, no forms.</p>' +
+          '<h2>Log in or sign up</h2><p class="sub">Enter your email and we\'ll send you a magic sign-in link. No password, no code.</p>' +
           '<label for="tmaLEmail">Email</label><input id="tmaLEmail" type="email" autocomplete="email" required />' +
-          '<button class="tma__btn" type="submit">Send code</button>' +
+          '<button class="tma__btn" type="submit">Send sign-in link</button>' +
           '<div class="tma__err" id="tmaLErr"></div>' +
         '</form>' +
-        // shared OTP code view (hidden by default)
-        '<form id="tmaOtp" hidden>' +
-          '<h2>Enter your code</h2><p class="sub">We sent a 6-digit code to <strong id="tmaOtpTarget"></strong>. It expires in a few minutes.</p>' +
-          '<label for="tmaOtpCode">6-digit code</label><input id="tmaOtpCode" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" pattern="\\d{6}" required />' +
-          '<button class="tma__btn" type="submit">Verify &amp; continue</button>' +
-          '<div class="tma__err" id="tmaOtpErr"></div><div class="tma__ok" id="tmaOtpOk"></div>' +
-          '<div class="tma-otp-links"><button class="tma-link" id="tmaOtpResend" type="button">Resend code</button><button class="tma-link" id="tmaOtpBack" type="button">Change email</button></div>' +
-        '</form>' +
+        // check-your-email / link sent view (hidden by default)
+        '<div id="tmaSent" hidden>' +
+          '<h2>Check your email</h2>' +
+          '<p class="sub">We\'ve sent a sign-in link to <strong id="tmaSentTarget"></strong>.</p>' +
+          '<p class="sub">Click it to sign in — the link works once and expires in 1 hour. You can close this tab after clicking.</p>' +
+          '<div class="tma__ok" id="tmaSentOk"></div>' +
+          '<div class="tma-otp-links"><button class="tma-link" id="tmaSentResend" type="button">Resend link</button><button class="tma-link" id="tmaSentBack" type="button">Use a different email</button></div>' +
+        '</div>' +
       '</div>';
     document.body.appendChild(w);
     modal = w;
     w.addEventListener("click", function (e) { if (e.target.closest("[data-tma-close]")) closeModal(); });
     document.getElementById("tmaLogin").addEventListener("submit", onLoginStep1);
-    document.getElementById("tmaOtp").addEventListener("submit", onOtpVerify);
-    document.getElementById("tmaOtpResend").addEventListener("click", onOtpResend);
-    document.getElementById("tmaOtpBack").addEventListener("click", onOtpBack);
-    // MICRO-UX: strip non-digits, support paste, and auto-verify at 6 digits.
-    var codeInput = document.getElementById("tmaOtpCode");
-    if (codeInput) {
-      codeInput.addEventListener("input", function () {
-        var v = (codeInput.value || "").replace(/\D/g, "").slice(0, 6);
-        if (v !== codeInput.value) codeInput.value = v;
-        if (v.length === 6) onOtpVerify({ preventDefault: function () {}, target: document.getElementById("tmaOtp") });
-      });
-    }
+    document.getElementById("tmaSentResend").addEventListener("click", onSentResend);
+    document.getElementById("tmaSentBack").addEventListener("click", onSentBack);
     return w;
   }
 
@@ -179,10 +169,10 @@ window.TMAuth = (function () {
   // Show the single email step (the only entry point). Kept named showTab for
   // internal call-sites; it no longer references removed tabs/signup elements.
   function showTab() {
-    // leaving the success/OTP view -> restore the email step
+    // leaving the success/sent view -> restore the email step
     document.getElementById("tmaSuccess").hidden = true;
-    clearOtpView();
-    document.getElementById("tmaOtp").hidden = true;
+    clearSentView();
+    document.getElementById("tmaSent").hidden = true;
     document.getElementById("tmaGate").hidden = !afterLogin;
     document.getElementById("tmaLogin").hidden = false;
     var em = document.getElementById("tmaLEmail");
@@ -196,7 +186,7 @@ window.TMAuth = (function () {
     // hide the form chrome
     document.getElementById("tmaGate").hidden = true;
     document.getElementById("tmaLogin").hidden = true;
-    document.getElementById("tmaOtp").hidden = true;
+    document.getElementById("tmaSent").hidden = true;
 
     document.getElementById("tmaSuccessTitle").textContent = opts.title || "All set!";
     document.getElementById("tmaSuccessMsg").innerHTML = opts.message || "";
@@ -259,31 +249,31 @@ window.TMAuth = (function () {
     document.body.style.overflow = "";
     // reset back to the email step so the next open is clean
     document.getElementById("tmaSuccess").hidden = true;
-    clearOtpView();
-    document.getElementById("tmaOtp").hidden = true;
+    clearSentView();
+    document.getElementById("tmaSent").hidden = true;
   }
 
-  /* ---------- OTP view helpers ---------- */
-  function clearOtpView() {
-    var code = document.getElementById("tmaOtpCode");
-    if (code) code.value = "";
-    var err = document.getElementById("tmaOtpErr"); if (err) err.textContent = "";
-    var ok = document.getElementById("tmaOtpOk"); if (ok) ok.textContent = "";
+  /* ---------- sent (check-your-email) view helpers ---------- */
+  function clearSentView() {
+    var ok = document.getElementById("tmaSentOk"); if (ok) ok.textContent = "";
     if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
-    var rb = document.getElementById("tmaOtpResend");
-    if (rb) { rb.disabled = false; rb.textContent = "Resend code"; }
+    var rb = document.getElementById("tmaSentResend");
+    if (rb) { rb.disabled = false; rb.textContent = "Resend link"; }
   }
 
-  function showOtp() {
+  function showSent() {
     if (!modal) return;
     document.getElementById("tmaGate").hidden = true;
     document.getElementById("tmaLogin").hidden = true;
     document.getElementById("tmaSuccess").hidden = true;
-    clearOtpView();
-    document.getElementById("tmaOtpTarget").textContent = otpEmail;
-    document.getElementById("tmaOtp").hidden = false;
-    var code = document.getElementById("tmaOtpCode");
-    if (code) { try { code.focus(); } catch (e) {} }
+    clearSentView();
+    document.getElementById("tmaSentTarget").textContent = linkEmail;
+    document.getElementById("tmaSent").hidden = false;
+  }
+
+  // Where the magic link should return the user: back to the current page.
+  function redirectTo() {
+    return window.location.origin + window.location.pathname;
   }
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -294,75 +284,38 @@ window.TMAuth = (function () {
     err.textContent = "";
     var email = (document.getElementById("tmaLEmail").value || "").trim();
     if (!email || !EMAIL_RE.test(email)) { err.textContent = "Please enter a valid email address"; return; }
-    btn.disabled = true; btn.textContent = "Sending code…";
-    sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } }).then(function (r) {
-      btn.disabled = false; btn.textContent = "Send code";
-      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't send your code. Please try again."; return; }
-      otpEmail = email;
-      showOtp();
+    btn.disabled = true; btn.textContent = "Sending link…";
+    sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, emailRedirectTo: redirectTo() } }).then(function (r) {
+      btn.disabled = false; btn.textContent = "Send sign-in link";
+      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't send your link. Please try again."; return; }
+      linkEmail = email;
+      showSent();
     }).catch(function () {
-      btn.disabled = false; btn.textContent = "Send code";
-      err.textContent = "Sorry, we couldn't send your code. Please try again.";
+      btn.disabled = false; btn.textContent = "Send sign-in link";
+      err.textContent = "Sorry, we couldn't send your link. Please try again.";
     });
   }
 
-  function onOtpVerify(e) {
-    e.preventDefault();
-    var btn = e.target.querySelector(".tma__btn"), err = document.getElementById("tmaOtpErr");
-    // Guard: auto-verify (on 6th digit) and a manual click can both fire — while
-    // a verify is in flight the button is disabled, so bail to avoid a double call.
-    if (btn && btn.disabled) return;
-    err.textContent = "";
-    var code = (document.getElementById("tmaOtpCode").value || "").trim();
-    if (!/^\d{6}$/.test(code)) { err.textContent = "Enter the 6-digit code"; return; }
-    btn.disabled = true; btn.textContent = "Verifying…";
-    sb.auth.verifyOtp({ email: otpEmail, token: code, type: "email" }).then(function (r) {
-      if (r.error || !(r.data && r.data.session)) {
-        btn.disabled = false; btn.textContent = "Verify & continue";
-        err.textContent = "That code is incorrect or has expired. Please request a new one.";
-        return;
-      }
-      btn.disabled = false; btn.textContent = "Verify & continue";
-      user = r.data.session.user;
-      refreshProfile().then(function () {
-        updateHeader();
-        var fn = firstName();
-        var gated = !!afterLogin;
-        showSuccess({
-          title: fn ? "Welcome back!" : "You're in!",
-          message: "You're all set" + (fn ? ", " + esc(fn) : "") + " — track all your orders right here.",
-          gate: gated,
-          actions: gated ? [] : defaultSuccessActions()
-        });
-        proceedAfterAuth();
-      });
-    }).catch(function () {
-      btn.disabled = false; btn.textContent = "Verify & continue";
-      err.textContent = "That code is incorrect or has expired. Please request a new one.";
-    });
-  }
-
-  function onOtpResend() {
-    var rb = document.getElementById("tmaOtpResend"), ok = document.getElementById("tmaOtpOk"), err = document.getElementById("tmaOtpErr");
+  function onSentResend() {
+    var rb = document.getElementById("tmaSentResend"), ok = document.getElementById("tmaSentOk");
     if (!rb || rb.disabled) return;               // guard against spam
-    if (err) err.textContent = ""; if (ok) ok.textContent = "";
+    if (ok) ok.textContent = "";
     rb.disabled = true;
-    sb.auth.signInWithOtp({ email: otpEmail, options: { shouldCreateUser: true } }).then(function (r) {
+    sb.auth.signInWithOtp({ email: linkEmail, options: { shouldCreateUser: true, emailRedirectTo: redirectTo() } }).then(function (r) {
       if (r.error) {
-        if (err) err.textContent = r.error.message || "Sorry, we couldn't resend your code. Please try again.";
-        rb.disabled = false; rb.textContent = "Resend code";
+        if (ok) ok.textContent = "";
+        rb.disabled = false; rb.textContent = "Resend link";
         return;
       }
-      if (ok) ok.textContent = "New code sent";
+      if (ok) ok.textContent = "New link sent — check your inbox.";
       startResendCountdown(30);
     }).catch(function () {
-      if (err) err.textContent = "Sorry, we couldn't resend your code. Please try again.";
-      rb.disabled = false; rb.textContent = "Resend code";
+      rb.disabled = false; rb.textContent = "Resend link";
     });
   }
 
   function startResendCountdown(secs) {
-    var rb = document.getElementById("tmaOtpResend");
+    var rb = document.getElementById("tmaSentResend");
     if (!rb) return;
     if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
     var left = secs;
@@ -371,15 +324,14 @@ window.TMAuth = (function () {
       left -= 1;
       if (left <= 0) {
         clearInterval(resendTimer); resendTimer = null;
-        rb.disabled = false; rb.textContent = "Resend code";
+        rb.disabled = false; rb.textContent = "Resend link";
       } else {
         rb.textContent = "Resend in " + left + "s";
       }
     }, 1000);
   }
 
-  function onOtpBack() {
-    var code = document.getElementById("tmaOtpCode"); if (code) code.value = "";
+  function onSentBack() {
     showTab();               // back to the single email step
   }
 
