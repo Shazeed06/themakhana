@@ -7,6 +7,8 @@ window.TMAuth = (function () {
   "use strict";
 
   var sb = null, enabled = false, user = null, profile = null, modal = null, afterLogin = null;
+  // OTP flow state
+  var otpEmail = "", otpMode = "login", otpProfile = null, resendTimer = null;
 
   function configured() {
     return typeof window.SUPABASE_URL === "string" && window.SUPABASE_URL.indexOf("http") === 0 &&
@@ -106,6 +108,10 @@ window.TMAuth = (function () {
       ".tma__btn--ghost{background:#fff;color:#1c1c1c;border:1.5px solid #E3E3E3}" +
       ".tma__btn--ghost:hover{background:#F7F7F7}" +
       ".tma__actions .tma__btn{margin-top:0;text-decoration:none;display:block;text-align:center;box-sizing:border-box}" +
+      // OTP view helpers
+      ".tma-otp-links{display:flex;gap:16px;justify-content:center;margin-top:16px}" +
+      ".tma-link{border:none;background:none;color:#DB0007;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0}" +
+      ".tma-link:disabled{opacity:.55;cursor:default}" +
       "@keyframes tmaFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}" +
       "@keyframes tmaPop{0%{transform:scale(0)}60%{transform:scale(1.08)}100%{transform:scale(1)}}" +
       "@keyframes tmaDraw{to{stroke-dashoffset:0}}";
@@ -130,17 +136,16 @@ window.TMAuth = (function () {
           '<p class="tma__gate" id="tmaSuccessGate" hidden>Taking you to checkout…</p>' +
           '<div class="tma__actions" id="tmaSuccessActions"></div>' +
         '</div>' +
-        // login form
+        // login form (email only)
         '<form id="tmaLogin">' +
-          '<h2>Welcome back</h2><p class="sub">Log in to see your orders and check out faster.</p>' +
+          '<h2>Log in or sign up</h2><p class="sub">Enter your email and we\'ll send you a one-time code — no password needed.</p>' +
           '<label for="tmaLEmail">Email</label><input id="tmaLEmail" type="email" autocomplete="email" required />' +
-          '<label for="tmaLPass">Password</label><input id="tmaLPass" type="password" autocomplete="current-password" required />' +
-          '<button class="tma__btn" type="submit">Log in</button>' +
+          '<button class="tma__btn" type="submit">Send code</button>' +
           '<div class="tma__err" id="tmaLErr"></div>' +
         '</form>' +
-        // signup form
+        // signup form (profile, no password)
         '<form id="tmaSignup" hidden>' +
-          '<h2>Create your account</h2><p class="sub">So you can track orders and reorder in one tap.</p>' +
+          '<h2>Create your account</h2><p class="sub">We\'ll send a code to verify your email — no password to remember.</p>' +
           '<label for="tmaSName">Full name</label><input id="tmaSName" type="text" autocomplete="name" required />' +
           '<div class="row"><div><label for="tmaSEmail">Email</label><input id="tmaSEmail" type="email" autocomplete="email" required /></div>' +
           '<div><label for="tmaSPhone">Phone</label><input id="tmaSPhone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" required /></div></div>' +
@@ -148,17 +153,27 @@ window.TMAuth = (function () {
           '<div class="row"><div><label for="tmaSCity">City</label><input id="tmaSCity" type="text" autocomplete="address-level2" required /></div>' +
           '<div><label for="tmaSState">State</label><input id="tmaSState" type="text" autocomplete="address-level1" required /></div>' +
           '<div><label for="tmaSPin">Pincode</label><input id="tmaSPin" type="text" inputmode="numeric" maxlength="6" autocomplete="postal-code" required /></div></div>' +
-          '<label for="tmaSPass">Password (min 6 chars)</label><input id="tmaSPass" type="password" autocomplete="new-password" required />' +
-          '<button class="tma__btn" type="submit">Create account</button>' +
+          '<button class="tma__btn" type="submit">Send code</button>' +
           '<div class="tma__err" id="tmaSErr"></div><div class="tma__ok" id="tmaSOk"></div>' +
+        '</form>' +
+        // shared OTP code view (hidden by default)
+        '<form id="tmaOtp" hidden>' +
+          '<h2>Enter your code</h2><p class="sub">We sent a 6-digit code to <strong id="tmaOtpTarget"></strong>. It expires in a few minutes.</p>' +
+          '<label for="tmaOtpCode">6-digit code</label><input id="tmaOtpCode" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" pattern="\\d{6}" required />' +
+          '<button class="tma__btn" type="submit">Verify &amp; continue</button>' +
+          '<div class="tma__err" id="tmaOtpErr"></div><div class="tma__ok" id="tmaOtpOk"></div>' +
+          '<div class="tma-otp-links"><button class="tma-link" id="tmaOtpResend" type="button">Resend code</button><button class="tma-link" id="tmaOtpBack" type="button">Change email</button></div>' +
         '</form>' +
       '</div>';
     document.body.appendChild(w);
     modal = w;
     w.addEventListener("click", function (e) { if (e.target.closest("[data-tma-close]")) closeModal(); });
     w.querySelectorAll(".tma__tab").forEach(function (t) { t.addEventListener("click", function () { showTab(t.getAttribute("data-tab")); }); });
-    document.getElementById("tmaLogin").addEventListener("submit", onLogin);
-    document.getElementById("tmaSignup").addEventListener("submit", onSignup);
+    document.getElementById("tmaLogin").addEventListener("submit", onLoginStep1);
+    document.getElementById("tmaSignup").addEventListener("submit", onSignupStep1);
+    document.getElementById("tmaOtp").addEventListener("submit", onOtpVerify);
+    document.getElementById("tmaOtpResend").addEventListener("click", onOtpResend);
+    document.getElementById("tmaOtpBack").addEventListener("click", onOtpBack);
     return w;
   }
 
@@ -170,8 +185,10 @@ window.TMAuth = (function () {
 
   function showTab(which) {
     var login = which !== "signup";
-    // leaving the success view -> restore the form view
+    // leaving the success/OTP view -> restore the form view
     document.getElementById("tmaSuccess").hidden = true;
+    clearOtpView();
+    document.getElementById("tmaOtp").hidden = true;
     document.getElementById("tmaTabs").hidden = false;
     document.getElementById("tmaGate").hidden = !afterLogin;
     document.getElementById("tmaLogin").hidden = !login;
@@ -188,6 +205,7 @@ window.TMAuth = (function () {
     document.getElementById("tmaGate").hidden = true;
     document.getElementById("tmaLogin").hidden = true;
     document.getElementById("tmaSignup").hidden = true;
+    document.getElementById("tmaOtp").hidden = true;
 
     document.getElementById("tmaSuccessTitle").textContent = opts.title || "All set!";
     document.getElementById("tmaSuccessMsg").innerHTML = opts.message || "";
@@ -248,81 +266,158 @@ window.TMAuth = (function () {
     document.body.style.overflow = "";
     // reset back to a form view so the next open is clean
     document.getElementById("tmaSuccess").hidden = true;
+    clearOtpView();
+    document.getElementById("tmaOtp").hidden = true;
     document.getElementById("tmaTabs").hidden = false;
   }
 
-  function onLogin(e) {
+  /* ---------- OTP view helpers ---------- */
+  function clearOtpView() {
+    var code = document.getElementById("tmaOtpCode");
+    if (code) code.value = "";
+    var err = document.getElementById("tmaOtpErr"); if (err) err.textContent = "";
+    var ok = document.getElementById("tmaOtpOk"); if (ok) ok.textContent = "";
+    if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
+    var rb = document.getElementById("tmaOtpResend");
+    if (rb) { rb.disabled = false; rb.textContent = "Resend code"; }
+  }
+
+  function showOtp() {
+    if (!modal) return;
+    document.getElementById("tmaTabs").hidden = true;
+    document.getElementById("tmaGate").hidden = true;
+    document.getElementById("tmaLogin").hidden = true;
+    document.getElementById("tmaSignup").hidden = true;
+    document.getElementById("tmaSuccess").hidden = true;
+    clearOtpView();
+    document.getElementById("tmaOtpTarget").textContent = otpEmail;
+    document.getElementById("tmaOtp").hidden = false;
+    var code = document.getElementById("tmaOtpCode");
+    if (code) code.focus();
+  }
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function onLoginStep1(e) {
     e.preventDefault();
     var btn = e.target.querySelector(".tma__btn"), err = document.getElementById("tmaLErr");
-    err.textContent = ""; btn.disabled = true; btn.textContent = "Logging in…";
-    sb.auth.signInWithPassword({
-      email: document.getElementById("tmaLEmail").value.trim(),
-      password: document.getElementById("tmaLPass").value
-    }).then(function (r) {
-      btn.disabled = false; btn.textContent = "Log in";
-      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't log you in. Please check your details and try again."; return; }
-      if (!(r.data && r.data.session)) { err.textContent = "Sorry, we couldn't log you in. Please try again."; return; }
+    err.textContent = "";
+    var email = (document.getElementById("tmaLEmail").value || "").trim();
+    if (!email || !EMAIL_RE.test(email)) { err.textContent = "Please enter a valid email address"; return; }
+    btn.disabled = true; btn.textContent = "Sending code…";
+    sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true } }).then(function (r) {
+      btn.disabled = false; btn.textContent = "Send code";
+      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't send your code. Please try again."; return; }
+      otpEmail = email; otpMode = "login"; otpProfile = null;
+      showOtp();
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = "Send code";
+      err.textContent = "Sorry, we couldn't send your code. Please try again.";
+    });
+  }
+
+  function onSignupStep1(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector(".tma__btn"), err = document.getElementById("tmaSErr"), ok = document.getElementById("tmaSOk");
+    err.textContent = ""; if (ok) ok.textContent = "";
+    var g = function (id) { return (document.getElementById(id).value || "").trim(); };
+    var name = g("tmaSName"), email = g("tmaSEmail"), phone = g("tmaSPhone"), pin = g("tmaSPin");
+    if (name.length < 2) { err.textContent = "Please enter your full name"; return; }
+    if (!email || !EMAIL_RE.test(email)) { err.textContent = "Please enter a valid email address"; return; }
+    if (!/^[6-9]\d{9}$/.test(phone)) { err.textContent = "Enter a valid 10-digit mobile number"; return; }
+    if (!/^\d{6}$/.test(pin)) { err.textContent = "Enter a valid 6-digit pincode"; return; }
+    var profileData = {
+      full_name: name, phone: phone, address: g("tmaSAddr"),
+      city: g("tmaSCity"), state: g("tmaSState"), pincode: pin
+    };
+    btn.disabled = true; btn.textContent = "Sending code…";
+    sb.auth.signInWithOtp({ email: email, options: { shouldCreateUser: true, data: profileData } }).then(function (r) {
+      btn.disabled = false; btn.textContent = "Send code";
+      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't send your code. Please try again."; return; }
+      otpEmail = email; otpMode = "signup"; otpProfile = profileData;
+      showOtp();
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = "Send code";
+      err.textContent = "Sorry, we couldn't send your code. Please try again.";
+    });
+  }
+
+  function onOtpVerify(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector(".tma__btn"), err = document.getElementById("tmaOtpErr");
+    err.textContent = "";
+    var code = (document.getElementById("tmaOtpCode").value || "").trim();
+    if (!/^\d{6}$/.test(code)) { err.textContent = "Enter the 6-digit code"; return; }
+    btn.disabled = true; btn.textContent = "Verifying…";
+    sb.auth.verifyOtp({ email: otpEmail, token: code, type: "email" }).then(function (r) {
+      if (r.error || !(r.data && r.data.session)) {
+        btn.disabled = false; btn.textContent = "Verify & continue";
+        err.textContent = "That code is incorrect or has expired. Please request a new one.";
+        return;
+      }
+      btn.disabled = false; btn.textContent = "Verify & continue";
       user = r.data.session.user;
-      var gated = !!afterLogin;
       refreshProfile().then(function () {
         updateHeader();
         var fn = firstName();
+        var gated = !!afterLogin;
         showSuccess({
-          title: "Welcome back!",
-          message: "You're logged in" + (fn ? ", " + esc(fn) : "") + ".",
+          title: otpMode === "signup" ? "Account created!" : "Welcome back!",
+          message: (otpMode === "signup"
+            ? "Welcome" + (fn ? ", " + esc(fn) : "") + "! Your account is ready — track all your orders right here."
+            : "You're logged in" + (fn ? ", " + esc(fn) : "") + "."),
           gate: gated,
           actions: gated ? [] : defaultSuccessActions()
         });
         proceedAfterAuth();
       });
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = "Verify & continue";
+      err.textContent = "That code is incorrect or has expired. Please request a new one.";
     });
   }
 
-  function onSignup(e) {
-    e.preventDefault();
-    var btn = e.target.querySelector(".tma__btn"), err = document.getElementById("tmaSErr"), ok = document.getElementById("tmaSOk");
-    err.textContent = ""; ok.textContent = "";
-    var g = function (id) { return (document.getElementById(id).value || "").trim(); };
-    var phone = g("tmaSPhone"), pin = g("tmaSPin"), pass = document.getElementById("tmaSPass").value;
-    if (!/^[6-9]\d{9}$/.test(phone)) { err.textContent = "Enter a valid 10-digit mobile number"; return; }
-    if (!/^\d{6}$/.test(pin)) { err.textContent = "Enter a valid 6-digit pincode"; return; }
-    if (pass.length < 6) { err.textContent = "Password must be at least 6 characters"; return; }
-    btn.disabled = true; btn.textContent = "Creating your account…";
-    var email = g("tmaSEmail"), nameGiven = g("tmaSName");
-    sb.auth.signUp({
-      email: email, password: pass,
-      options: { data: {
-        full_name: nameGiven, phone: phone, address: g("tmaSAddr"),
-        city: g("tmaSCity"), state: g("tmaSState"), pincode: pin
-      } }
-    }).then(function (r) {
-      btn.disabled = false; btn.textContent = "Create account";
-      if (r.error) { err.textContent = r.error.message || "Sorry, we couldn't create your account. Please try again."; return; }
-      var first = (nameGiven ? nameGiven.trim().split(" ")[0] : "");
-      if (r.data && r.data.session) {
-        // Email auto-confirm is ON: the customer is logged in right away.
-        user = r.data.session.user;
-        var gated = !!afterLogin;
-        refreshProfile().then(function () {
-          updateHeader();
-          showSuccess({
-            title: "Account created!",
-            message: "Welcome" + (first ? ", " + esc(first) : "") + "! Your account is ready — you can track all your orders right here.",
-            gate: gated,
-            actions: gated ? [] : defaultSuccessActions()
-          });
-          proceedAfterAuth();
-        });
-      } else {
-        // Email confirmation is ON: no session yet.
-        showSuccess({
-          title: "Almost there!",
-          message: "We've sent a confirmation link to <strong>" + esc(email) + "</strong>. Please click it to verify your email, then log in.",
-          gate: false,
-          actions: [{ label: "Go to log in", primary: true, onClick: function () { showTab("login"); } }]
-        });
+  function onOtpResend() {
+    var rb = document.getElementById("tmaOtpResend"), ok = document.getElementById("tmaOtpOk"), err = document.getElementById("tmaOtpErr");
+    if (!rb || rb.disabled) return;               // guard against spam
+    if (err) err.textContent = ""; if (ok) ok.textContent = "";
+    rb.disabled = true;
+    var opts = { shouldCreateUser: true };
+    if (otpMode === "signup" && otpProfile) opts.data = otpProfile;
+    sb.auth.signInWithOtp({ email: otpEmail, options: opts }).then(function (r) {
+      if (r.error) {
+        if (err) err.textContent = r.error.message || "Sorry, we couldn't resend your code. Please try again.";
+        rb.disabled = false; rb.textContent = "Resend code";
+        return;
       }
+      if (ok) ok.textContent = "New code sent";
+      startResendCountdown(30);
+    }).catch(function () {
+      if (err) err.textContent = "Sorry, we couldn't resend your code. Please try again.";
+      rb.disabled = false; rb.textContent = "Resend code";
     });
+  }
+
+  function startResendCountdown(secs) {
+    var rb = document.getElementById("tmaOtpResend");
+    if (!rb) return;
+    if (resendTimer) { clearInterval(resendTimer); resendTimer = null; }
+    var left = secs;
+    rb.disabled = true; rb.textContent = "Resend in " + left + "s";
+    resendTimer = setInterval(function () {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(resendTimer); resendTimer = null;
+        rb.disabled = false; rb.textContent = "Resend code";
+      } else {
+        rb.textContent = "Resend in " + left + "s";
+      }
+    }, 1000);
+  }
+
+  function onOtpBack() {
+    var code = document.getElementById("tmaOtpCode"); if (code) code.value = "";
+    showTab(otpMode);
   }
 
   /* ---------- public helpers ---------- */
