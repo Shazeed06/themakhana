@@ -821,6 +821,10 @@ html,body{max-width:100%;overflow-x:clip}
 .co-field.is-invalid .co-input{border-color:#DB0007;box-shadow:0 0 0 3px rgba(219,0,7,.16)}
 .co-field__err{display:none;font-size:12px;color:#DB0007;margin-top:4px}
 .co-field.is-invalid .co-field__err{display:block}
+.co-loc{display:flex;align-items:center;flex-wrap:wrap;gap:2px 0;margin-top:6px;padding:6px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink-soft);font-family:'Lexend',var(--sans,system-ui),sans-serif;font-size:13px;line-height:1.35}
+.co-loc--ok{border-color:rgba(22,140,74,.35);background:rgba(22,140,74,.08);color:#127a41}
+.co-loc--err{border-color:rgba(219,0,7,.35);background:rgba(219,0,7,.07);color:#DB0007}
+.co-loc__edit{border:none;background:none;color:#DB0007;font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:underline;padding:0;margin-left:8px}
 .co-pay{display:flex;align-items:center;gap:11px;padding:13px 14px;border:1.5px solid var(--primary);border-radius:12px;background:var(--surface-2);cursor:pointer}
 .co-pay input{accent-color:var(--primary-deep);width:18px;height:18px;flex:0 0 auto}
 .co-pay span{display:flex;flex-direction:column;line-height:1.3}
@@ -867,6 +871,10 @@ html,body{max-width:100%;overflow-x:clip}
   .checkout__body{grid-template-columns:1fr}
   .checkout__summary{border-left:0;border-top:1px solid var(--line)}
   .co-coupon__btn{padding:11px 16px}
+  .co-input{padding:14px 14px;font-size:16px}
+  .co-pay{padding:15px 14px}
+  .co-loc{padding:8px 12px}
+  .co-loc__edit{padding:4px 0;font-size:13px}
 }
 @media (max-width:400px){.co-row{grid-template-columns:1fr}}
 

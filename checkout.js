@@ -33,6 +33,18 @@
       '</div>';
   }
 
+  // Per the email CONTRACT rule: only render the email input when there is NO
+  // logged-in email. If TMAuth is enabled and the user has an email, we use it
+  // silently in gatherData and never show a field.
+  function loggedInEmail() {
+    if (window.TMAuth && window.TMAuth.enabled && window.TMAuth.user) {
+      var u = window.TMAuth.user();
+      if (u && u.email) return u.email;
+    }
+    return "";
+  }
+  function showEmailField() { return !loggedInEmail(); }
+
   function build() {
     var wrap = document.createElement("div");
     wrap.className = "checkout";
@@ -49,16 +61,20 @@
               field("coName", "Full name", "text", "name") +
               '<div class="co-row">' +
                 field("coPhone", "Phone number", "tel", "tel", 'inputmode="numeric" maxlength="10"') +
-                field("coEmail", "Email (optional)", "email", "email") +
+                (showEmailField() ? field("coEmail", "Email (optional)", "email", "email") : "") +
               '</div>' +
             '</fieldset>' +
             '<fieldset class="co-group"><legend>Delivery address</legend>' +
               field("coAddr", "House no, street, area", "text", "street-address") +
-              '<div class="co-row">' +
+              field("coPin", "Pincode", "text", "postal-code", 'inputmode="numeric" maxlength="6"') +
+              // Location confirmation line (filled from the pincode). City/State inputs
+              // stay in the DOM (hidden by default) so gatherData + validation work; the
+              // "Change" button reveals them for manual editing.
+              '<p class="co-loc" id="coLoc" hidden></p>' +
+              '<div class="co-row co-manual" id="coManual" hidden>' +
                 field("coCity", "City", "text", "address-level2") +
                 field("coState", "State", "text", "address-level1") +
               '</div>' +
-              field("coPin", "Pincode", "text", "postal-code", 'inputmode="numeric" maxlength="6"') +
             '</fieldset>' +
             '<fieldset class="co-group"><legend>Payment</legend>' +
               '<label class="co-pay"><input type="radio" name="pay" value="online" checked />' +
@@ -92,6 +108,9 @@
     wrap.addEventListener("click", function (e) { if (e.target.closest("[data-co-close]")) close(); });
     document.getElementById("coForm").addEventListener("submit", onSubmit);
     document.getElementById("coApply").addEventListener("click", applyCoupon);
+    // pincode → city/state auto-fill (debounced on input, immediate on blur)
+    var pinEl = document.getElementById("coPin");
+    if (pinEl) { pinEl.addEventListener("input", onPinInput); pinEl.addEventListener("blur", onPinBlur); }
     // live-clear error styling as the user types
     wrap.addEventListener("input", function (e) {
       var f = e.target.closest(".co-field");
@@ -231,15 +250,111 @@
     if (box && msg) { box.textContent = msg; box.hidden = false; }
   }
 
+  /* ---------- pincode → city/state auto-fill ---------- */
+  var pinTimer = null, pinReqSeq = 0;
+
+  // Reveal the editable City/State inputs (used when a pin can't be resolved or
+  // the user taps "Change"). Keeps them in the DOM either way for validation.
+  function revealManual() {
+    var m = document.getElementById("coManual");
+    if (m) m.hidden = false;
+  }
+
+  // Render the compact .co-loc line. kind: "" (neutral/loading), "ok", "err".
+  function setLoc(html, kind, withEdit) {
+    var loc = document.getElementById("coLoc");
+    if (!loc) return;
+    loc.classList.remove("co-loc--ok", "co-loc--err");
+    if (!html) { loc.innerHTML = ""; loc.hidden = true; return; }
+    if (kind === "ok") loc.classList.add("co-loc--ok");
+    else if (kind === "err") loc.classList.add("co-loc--err");
+    loc.innerHTML = html +
+      (withEdit ? ' <button type="button" class="co-loc__edit" id="coLocEdit">Change</button>' : "");
+    loc.hidden = false;
+    var edit = document.getElementById("coLocEdit");
+    if (edit) edit.addEventListener("click", revealManual);
+  }
+
+  function setCityState(city, state) {
+    var c = document.getElementById("coCity"), s = document.getElementById("coState");
+    if (c) { c.value = city || ""; c.closest(".co-field").classList.remove("is-invalid"); }
+    if (s) { s.value = state || ""; s.closest(".co-field").classList.remove("is-invalid"); }
+  }
+
+  // Show the location line from whatever city/state we already hold (used on
+  // prefill and after a successful lookup).
+  function showLocFromValues() {
+    var c = document.getElementById("coCity"), s = document.getElementById("coState");
+    var city = c ? (c.value || "").trim() : "", state = s ? (s.value || "").trim() : "";
+    if (city || state) {
+      setLoc("📍 " + esc([city, state].filter(Boolean).join(", ")), "ok", true);
+    }
+  }
+
+  function lookupPin(pin) {
+    var seq = ++pinReqSeq; // guard against out-of-order/stale responses
+    setLoc("Finding your area…", "", false);
+    fetch("/api/pincode?pin=" + encodeURIComponent(pin))
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (j) {
+        if (seq !== pinReqSeq || !modal) return; // a newer request superseded this one
+        if (j && j.ok && (j.city || j.state)) {
+          setCityState(j.city, j.state);
+          setErr("coPin", "");
+          setLoc("📍 " + esc([j.city, j.state].filter(Boolean).join(", ")), "ok", true);
+        } else {
+          // Unknown pin → let the customer type city/state themselves.
+          setLoc("Couldn't find that PIN — you can enter city &amp; state manually", "err", false);
+          revealManual();
+        }
+      })
+      .catch(function () {
+        if (seq !== pinReqSeq || !modal) return;
+        // Never block on the API — fall back to manual entry.
+        setLoc("Couldn't find that PIN — you can enter city &amp; state manually", "err", false);
+        revealManual();
+      });
+  }
+
+  // Fired on input (debounced) and on blur of the pincode field.
+  function onPinInput() {
+    var el = document.getElementById("coPin");
+    if (!el) return;
+    var pin = (el.value || "").replace(/\D/g, "");
+    if (pin.length !== 6) { if (pinTimer) clearTimeout(pinTimer); return; }
+    if (pinTimer) clearTimeout(pinTimer);
+    pinTimer = setTimeout(function () { lookupPin(pin); }, 250);
+  }
+  function onPinBlur() {
+    var el = document.getElementById("coPin");
+    if (!el) return;
+    var pin = (el.value || "").replace(/\D/g, "");
+    if (pin.length === 6) { if (pinTimer) clearTimeout(pinTimer); lookupPin(pin); }
+  }
+
   function gatherData() {
     var g = function (id) { return (document.getElementById(id).value || "").trim(); };
     var items = (opts.items || []).map(function (l) {
       var p = opts.getProduct(l.id);
       return p ? { name: p.name.split(" (")[0], qty: l.qty, price: p.price } : null;
     }).filter(Boolean);
+    // Email: use the visible field if present, else the logged-in email silently.
+    var emailEl = document.getElementById("coEmail");
+    var email = emailEl ? (emailEl.value || "").trim() : loggedInEmail();
+    var name = g("coName"), phone = g("coPhone");
+    var city = g("coCity"), state = g("coState"), pincode = g("coPin"), addr = g("coAddr");
+    // Best-effort: persist this address so the next order is 1-tap. Guarded, never throws.
+    if (window.TMAuth && window.TMAuth.enabled && window.TMAuth.user && window.TMAuth.user() && window.TMAuth.saveProfile) {
+      try {
+        window.TMAuth.saveProfile({
+          full_name: name, phone: phone, address: addr,
+          city: city, state: state, pincode: pincode, email: email
+        });
+      } catch (e) { /* never block checkout on a profile save */ }
+    }
     return {
-      name: g("coName"), phone: g("coPhone"), email: g("coEmail"),
-      address: g("coAddr") + ", " + g("coCity") + ", " + g("coState") + " - " + g("coPin"),
+      name: name, phone: phone, email: email,
+      address: addr + ", " + city + ", " + state + " - " + pincode,
       items: items
     };
   }
@@ -262,10 +377,18 @@
       setErr(c[0], ok ? "" : c[2]);
       if (!ok && !firstBad) firstBad = el;
     });
+    // City/State come from the pincode auto-fill (or manual entry). If either is
+    // empty, reveal the manual inputs so the customer can fix it.
+    if (!document.getElementById("coCity").value.trim() || !document.getElementById("coState").value.trim()) {
+      revealManual();
+    }
+    // Email is only validated when the field is actually shown (no logged-in email).
     var em = document.getElementById("coEmail");
-    if (em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
-      setErr("coEmail", "Enter a valid email"); if (!firstBad) firstBad = em;
-    } else { setErr("coEmail", ""); }
+    if (em) {
+      if (em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
+        setErr("coEmail", "Enter a valid email"); if (!firstBad) firstBad = em;
+      } else { setErr("coEmail", ""); }
+    }
 
     if (firstBad) { firstBad.focus(); return; }
 
@@ -408,10 +531,19 @@
 
   function prefillFromProfile() {
     if (!window.TMAuth || !window.TMAuth.enabled) return;
-    var p = window.TMAuth.profile(), u = window.TMAuth.user();
+    var p = window.TMAuth.profile ? window.TMAuth.profile() : null;
+    var u = window.TMAuth.user ? window.TMAuth.user() : null;
     function set(id, v) { var el = document.getElementById(id); if (el && !el.value && v) el.value = v; }
-    if (p) { set("coName", p.full_name); set("coPhone", p.phone); set("coAddr", p.address); set("coCity", p.city); set("coState", p.state); set("coPin", p.pincode); set("coEmail", p.email); }
+    if (p) {
+      set("coName", p.full_name); set("coPhone", p.phone); set("coAddr", p.address);
+      set("coCity", p.city); set("coState", p.state); set("coPin", p.pincode);
+      set("coEmail", p.email); // no-op when the email field isn't rendered
+    }
     if (u && u.email) set("coEmail", u.email);
+    // If we have a pincode + a resolved city/state, show the confirmation line so a
+    // fully-prefilled returning customer sees everything ready and can just Pay.
+    var pinEl = document.getElementById("coPin");
+    if (pinEl && /^\d{6}$/.test((pinEl.value || "").trim())) showLocFromValues();
   }
 
   // NOTE: orders are persisted SERVER-SIDE only (api/verify-payment via the service
@@ -442,13 +574,24 @@
     var dLine0 = document.getElementById("coDiscountLine");
     if (dLine0) dLine0.hidden = true;
     Array.prototype.forEach.call(modal.querySelectorAll(".co-field.is-invalid"), function (f) { f.classList.remove("is-invalid"); });
+    // clean location slate; manual city/state stay hidden until needed
+    setLoc("", null);
+    var manual0 = document.getElementById("coManual");
+    if (manual0) manual0.hidden = true;
     prefillFromProfile();
     renderSummary();
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKey);
-    var first = document.getElementById("coName");
+    // autofocus the first EMPTY visible field (so a fully-prefilled returning
+    // customer lands on the Pay button, not an already-filled input)
+    var order = ["coName", "coPhone", "coEmail", "coAddr", "coPin"];
+    var first = null;
+    for (var i = 0; i < order.length; i++) {
+      var el = document.getElementById(order[i]); // null when not rendered (e.g. email hidden)
+      if (el && !(el.value || "").trim()) { first = el; break; }
+    }
     if (first) setTimeout(function () { first.focus(); }, 80);
   }
 
