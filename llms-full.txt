@@ -1,0 +1,203 @@
+# The Makhana
+
+> The Makhana is a premium Indian D2C snack brand selling roasted and raw makhana (foxnuts / phool makhana / lotus seeds). The brand is based in Delhi and sources its makhana from Bihar. Every batch is roasted in cold-pressed / olive oil and is never deep-fried.
+
+This file contains the full useful content of https://www.themakhana.in for AI ingestion. It complements /llms.txt.
+
+## Brand at a glance
+
+- Product range: 6 roasted flavours, 1 raw pack and a variety combo (3 packs, Rs.649). Prices from Rs.169 per pack.
+- Made without: palm oil, maida (refined flour), MSG, deep-frying or artificial colours. Roasted in cold-pressed oil, never fried.
+- Nutrition: high in plant protein (~9.7g per 100g raw, ~11.8g per 100g roasted), naturally gluten-free, non-GMO, low in fat, 100% vegetarian.
+- Sourcing: foxnuts handpicked from the lotus ponds of Madhubani, Bihar (India's main makhana-growing region); roasted and packed in Delhi.
+- FSSAI Licence No. 23326005001818. Shelf life 9 months from manufacture. Store in a cool, dry place; reseal after opening.
+- Shipping: pan-India, free on orders over Rs.599, flat Rs.49 below that. Payment: secure online only via Razorpay (UPI, cards, netbanking, wallets) — no Cash on Delivery. Coupon MAKHANA10 = 10% off.
+
+## Products
+
+### Peri Peri Punch — https://www.themakhana.in/products/peri
+- Price: Rs.199 (MRP Rs.249) · Weight: 80g · Taste: Spicy & tangy · Bestseller · Roasted
+- Fiery, zingy and impossible to put down. From the lotus ponds of Madhubani to your snack bowl, Peri Peri Punch starts with premium, hand-picked foxnuts that are slow-roasted in cold-pressed oil — never deep-fried. They are then dusted in a bold peri peri blend of smoky red chilli, garlic and a squeeze of tang. The result is a guilt-free crunch with a kick that keeps you reaching back into the pack.
+- Ingredients: Roasted makhana (foxnuts), peri peri seasoning (red chilli, garlic, tomato powder, salt, spices), cold-pressed sunflower oil.
+- Allergens: May contain traces of nuts. Made in a facility that also handles milk.
+
+### Chatpata Pudina — https://www.themakhana.in/products/pudina
+- Price: Rs.199 (MRP Rs.249) · Weight: 80g · Taste: Tangy & minty · Roasted
+- Cool mint chaat, bottled as a crunch. Chatpata Pudina takes big, white foxnuts from Bihar and roasts them low-and-slow for an airy crunch. A street-style toss of dried mint, amchur and chaat masala gives every piece that tangy pudina zing you can't stop snacking on — wholesome and addictive at once.
+- Ingredients: Roasted makhana (foxnuts), mint & chaat seasoning (dried mint, amchur, black salt, cumin, spices), cold-pressed sunflower oil.
+- Allergens: May contain traces of nuts.
+
+### Cream & Onion — https://www.themakhana.in/products/cream
+- Price: Rs.199 (MRP Rs.249) · Weight: 80g · Taste: Creamy & savoury · Roasted
+- Creamy, savoury, dangerously moreish. Cream & Onion is the crowd-pleaser of the range — light foxnuts roasted to a perfect crunch, dusted in a creamy onion-and-herb seasoning. It's the comforting, savoury snack that disappears fastest at every gathering.
+- Ingredients: Roasted makhana (foxnuts), cream & onion seasoning (onion powder, milk solids, herbs, salt, spices), cold-pressed sunflower oil.
+- Allergens: Contains milk. May contain traces of nuts.
+
+### Salt & Pepper — https://www.themakhana.in/products/salt
+- Price: Rs.179 (MRP Rs.229) · Weight: 80g · Taste: Salty & peppery · Roasted
+- The classic. Perfectly seasoned crunch. Some things never go out of style — Salt & Pepper keeps it simple with premium roasted foxnuts. A balance of sea salt and freshly cracked black pepper lets the natural, nutty taste of the makhana shine through: a timeless, all-occasion snack.
+- Ingredients: Roasted makhana (foxnuts), sea salt, cracked black pepper, cold-pressed sunflower oil.
+- Allergens: May contain traces of nuts.
+
+### Himalayan Pink Salt — https://www.themakhana.in/products/pink
+- Price: Rs.179 (MRP Rs.229) · Weight: 80g · Taste: Lightly salted · Roasted
+- Clean and light, with Himalayan pink salt. For the purists: this makhana is roasted, never fried, and seasoned with just a whisper of mineral-rich pink salt. Clean, light and barely-there salty — the kind of snack you feel genuinely good about, any time of day.
+- Ingredients: Roasted makhana (foxnuts), Himalayan pink salt, cold-pressed sunflower oil.
+- Allergens: May contain traces of nuts.
+
+### Classic Lightly Salted — https://www.themakhana.in/products/classic
+- Price: Rs.169 (MRP Rs.219) · Weight: 80g · Taste: Mild & natural · Roasted
+- Just makhana, just right. Classic Lightly Salted is makhana in its most honest form — premium foxnuts, slow-roasted to a satisfying crunch. A gentle pinch of salt is all it needs. Perfect for kids, elders and anyone who loves a clean, subtle, everyday snack.
+- Ingredients: Roasted makhana (foxnuts), a pinch of salt, cold-pressed sunflower oil.
+- Allergens: May contain traces of nuts.
+
+### Raw Phool Makhana — https://www.themakhana.in/products/raw
+- Price: Rs.249 (MRP Rs.299) · Weight: 100g · Taste: Plain (raw) · Raw
+- Premium handpicked foxnuts — big, white pops. Raw Phool Makhana is the hero ingredient itself: large, hand-graded foxnuts sourced directly from farmer families in Madhubani, Bihar. Roast them at home in a little ghee or olive oil, add them to kheer and curries, or pop them into a trail mix. Single ingredient, endless possibilities.
+- Ingredients: 100% raw makhana (phool makhana). Nothing else.
+- Allergens: May contain traces of nuts.
+
+### Variety Combo (3 packs) — https://www.themakhana.in/products/combo
+- Price: Rs.649 (MRP Rs.799) · Weight: 240g (3 x 80g) · Taste: 3 flavours · Combo / gifting
+- Raw, Peri Peri & Pudina in one gift-ready combo. Can't decide? The Variety Combo brings together three favourites — Raw Phool Makhana, fiery Peri Peri and Chatpata Pudina — in one gift-ready pack (80g each, 240g total). Roasted in cold-pressed oil and sealed fresh from Madhubani, it's the perfect way to discover your flavour, or to gift wholesome snacking to someone you love.
+- Ingredients: 3 packs (80g each): Raw Phool Makhana, Peri Peri and Chatpata Pudina roasted makhana. See each flavour for seasoning details.
+- Allergens: May contain traces of milk & nuts (packed in a facility that handles these).
+
+## Nutrition (per 100g)
+
+### Roasted flavours (per 100g)
+
+| Nutrient | Value |
+|---|---|
+| Energy | 385 kcal |
+| Protein | 11.8 g |
+| Carbohydrate | 70.2 g |
+| of which sugars | 1.2 g |
+| Total Fat | 6.4 g |
+| Dietary Fibre | 8.9 g |
+| Sodium | 320 mg |
+| Calcium | 58 mg |
+
+### Raw Phool Makhana (per 100g)
+
+| Nutrient | Value |
+|---|---|
+| Energy | 347 kcal |
+| Protein | 9.7 g |
+| Carbohydrate | 76.9 g |
+| of which sugars | 0.1 g |
+| Total Fat | 0.1 g |
+| Dietary Fibre | 7.6 g |
+| Sodium | 12 mg |
+| Calcium | 60 mg |
+
+A typical handful (25-30g serving) is well under 100 calories.
+
+## FAQs
+
+Q: Is makhana actually healthy?
+A: Yes. Makhana (foxnuts / phool makhana) is naturally low in fat, plant-based, gluten-free and a good source of protein and minerals. Ours is roasted in cold-pressed oil rather than deep-fried, and made with no palm oil, no maida and no MSG — so it stays a genuinely clean, light snack. It is a food, not a medicine, so we do not make disease-cure claims.
+
+Q: Is your makhana roasted or fried?
+A: Roasted, never fried. Every batch is slow-roasted in cold-pressed oil to get the crunch without the grease of deep-frying. That is the whole point of the brand.
+
+Q: Where is your makhana sourced from?
+A: Our foxnuts are handpicked from the lotus ponds of Madhubani in Bihar — the traditional home of phool makhana — and then roasted and packed in Delhi under our FSSAI licence.
+
+Q: Is The Makhana FSSAI certified?
+A: Yes. We operate under FSSAI Licence No. 23326005001818. You will find the same licence number printed on our packaging and in our site footer.
+
+Q: Is your makhana vegetarian and gluten-free?
+A: Yes. Our makhana is 100% vegetarian and naturally gluten-free. We do not use palm oil, maida or MSG in any flavour.
+
+Q: How should I store makhana to keep it crunchy?
+A: Keep the pack in a cool, dry place away from direct sunlight, and once opened, seal it tightly or transfer to an airtight container. Because there are no artificial preservatives, always reseal after each use to keep it fresh and crunchy.
+
+Q: What is the shelf life of your makhana?
+A: Each pack carries a clear best-before date on the label. For the best taste and crunch, we recommend finishing an opened pack within a few weeks and storing it airtight in the meantime.
+
+Q: What flavours and pack sizes do you offer?
+A: We offer roasted flavoured makhana such as Peri Peri Punch, plain Raw Phool Makhana for home cooking, and a Variety Combo so you can try more than one. You can see the current line-up and pack sizes on our Shop page (https://www.themakhana.in/shop).
+
+Q: Do you add preservatives or artificial colours?
+A: No. We keep the label clean — no palm oil, no maida, no MSG and no artificial colours. Just handpicked foxnuts, cold-pressed oil and honest spices.
+
+Q: How do I use a coupon code?
+A: Enter your code (e.g. MAKHANA10 for 10% off) in the Coupon field at checkout and tap Apply — the discount updates your total instantly.
+
+Q: What payment methods do you accept?
+A: We accept secure online payments through Razorpay — UPI, credit and debit cards, netbanking and popular wallets. All payments are processed online; we do not offer Cash on Delivery.
+
+Q: Do you offer Cash on Delivery (COD)?
+A: No, we do not offer Cash on Delivery. Orders are placed with prepaid online payment via Razorpay, which keeps checkout fast and secure.
+
+Q: How much does shipping cost and where do you deliver?
+A: We ship across India. Shipping is free on orders over Rs.599; below that a flat Rs.49 shipping fee applies. Your total shipping is always shown at checkout before you pay.
+
+Q: Can I return my order?
+A: Because makhana is a food product, we accept returns only on unopened, sealed packs within 7 days of delivery. Opened packs cannot be returned for food-safety reasons.
+
+Q: What if my order arrives damaged?
+A: If a pack arrives damaged or you receive the wrong item, please contact us within 48 hours of delivery with your order number and a photo. We will arrange a replacement or refund once we have verified it.
+
+Q: How long do refunds take?
+A: Once your return or damage claim is approved, refunds are processed to your original payment method and typically reflect within 5-7 business days, depending on your bank or payment provider.
+
+## Policies summary
+
+### Shipping (https://www.themakhana.in/shipping)
+- Pan-India delivery from Delhi to all serviceable PIN codes; India only (no international shipping).
+- Free shipping on orders over Rs.599; flat Rs.49 shipping below that.
+- Processing: orders dispatched within 1-2 business days (Mon-Sat, excluding public holidays).
+- Delivery: typically 3-7 business days after dispatch (metros ~3-5 days, remote/non-metro ~5-7 days).
+- Tracking link and courier details are emailed on dispatch.
+
+### Payment
+- Secure online payment only via Razorpay: UPI, credit/debit cards, netbanking and wallets.
+- No Cash on Delivery (COD).
+- Coupon MAKHANA10 gives 10% off at checkout.
+
+### Returns & refunds (https://www.themakhana.in/returns)
+- 7-day return window on unopened packs with the original seal intact (food-safety rules; opened packs cannot be returned).
+- Damaged, wrong or spoiled items: report within 48 hours of delivery with unboxing photos of the product, packaging and batch/expiry label; replacement or refund after verification.
+- Refunds go to the original payment method, typically within 5-7 business days of approval.
+- To raise a request, email themakhana.official@gmail.com with your order number.
+
+### Other
+- Terms of Service: https://www.themakhana.in/terms
+- Privacy Policy: https://www.themakhana.in/privacy
+
+## Blog guides
+
+- What is Makhana? The Complete Guide to Foxnuts (Phool Makhana) — https://www.themakhana.in/blog-what-is-makhana
+- Makhana Benefits: 10 Science-Backed Reasons to Eat Foxnuts — https://www.themakhana.in/blog-makhana-benefits
+- Makhana Nutrition: Calories, Protein & Full Nutritional Value — https://www.themakhana.in/blog-makhana-nutrition
+- Is Makhana Good for Weight Loss? What the Science Says — https://www.themakhana.in/blog-makhana-weight-loss
+- Makhana for Diabetes: Is Foxnut Safe for Blood Sugar? — https://www.themakhana.in/blog-makhana-diabetes
+- Makhana During Pregnancy: Benefits, Safety & Servings — https://www.themakhana.in/blog-makhana-pregnancy
+- How to Roast Makhana at Home: 5 Crispy Flavours — https://www.themakhana.in/blog-how-to-roast-makhana
+- 10 Easy Makhana Recipes: From Roasted Snacks to Kheer — https://www.themakhana.in/blog-makhana-recipes
+- Makhana vs Popcorn vs Almonds: Which Healthy Snack Wins? — https://www.themakhana.in/blog-makhana-vs-popcorn
+- Makhana for Kids: A Healthy Snack Swap Parents Love — https://www.themakhana.in/blog-makhana-for-kids
+- Makhana Side Effects: Who Should Avoid Foxnuts? — https://www.themakhana.in/blog-makhana-side-effects
+- How Many Makhana Per Day? Daily Limit & Best Time — https://www.themakhana.in/blog-makhana-per-day
+- Makhana for Fasting & Vrat: Navratri to Ekadashi — https://www.themakhana.in/blog-makhana-fasting
+- Makhana vs Almonds: Which Is the Healthier Snack? — https://www.themakhana.in/blog-makhana-vs-almonds
+- Makhana for Skin & Hair: Beauty Benefits & Tips — https://www.themakhana.in/blog-makhana-skin-hair
+- Makhana Kheer Recipe: Creamy Foxnut Kheer Step by Step — https://www.themakhana.in/blog-makhana-kheer-recipe
+- Best Time to Eat Makhana: Morning, Evening or Before a Workout? — https://www.themakhana.in/blog-best-time-to-eat-makhana
+
+Blog index: https://www.themakhana.in/blog
+
+## Contact & business facts
+
+- Brand: The Makhana (The Makhana Foods, India) — premium roasted & raw makhana, D2C.
+- Website: https://www.themakhana.in
+- Email: themakhana.official@gmail.com
+- Phone: +91 82871 24651 / +91 98100 05956
+- Instagram: @themakhanaofficial (https://www.instagram.com/themakhanaofficial/)
+- FSSAI Licence No.: 23326005001818
+- Based in: Delhi, India (roasting & packing). Makhana sourced from Madhubani, Bihar.
+- Diet: 100% vegetarian, naturally gluten-free, non-GMO.
+- Support response time: usually within 1-2 business days.
+- Key pages: Home https://www.themakhana.in/ · Shop https://www.themakhana.in/shop · Our Story https://www.themakhana.in/about · Contact https://www.themakhana.in/contact · FAQ https://www.themakhana.in/faq

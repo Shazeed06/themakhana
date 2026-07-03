@@ -210,7 +210,7 @@
     '<div class="assure-mini">' +
       '<div>' + ICON.truck + 'Free shipping over ₹599</div>' +
       '<div>' + ICON.return + '7-day easy returns</div>' +
-      '<div>' + ICON.bag + 'Cash on delivery</div>' +
+      '<div>' + ICON.bag + 'Online payment (no COD)</div>' +
       '<div>' + ICON.lock + 'Secure checkout</div>' +
     '</div>';
 
