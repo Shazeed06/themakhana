@@ -3,6 +3,7 @@
    never touches the leads table. Legal/consent: the forms carry a notice and
    the privacy policy discloses this capture. Env: SUPABASE_SERVICE_ROLE_KEY,
    SUPABASE_URL (optional). */
+var sheet = require("../lib/sheet");
 var SB_URL = (process.env.SUPABASE_URL || "https://uwgbhizqyonmxkoncczd.supabase.co").trim().replace(/\/$/, "");
 
 function clean(v, max) {
@@ -53,6 +54,8 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify(row)
     });
+    // mirror into the owner's Google Sheet — best-effort, must not block the response
+    try { await sheet.pushToSheet("lead", row); } catch (e) {}
     res.status(200).json({ ok: r.ok });
   } catch (e) {
     // never surface internals; a failed lead capture must not error the page
