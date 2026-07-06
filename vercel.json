@@ -69,6 +69,10 @@
     {
       "source": "/blog-best-time-to-eat-makhana",
       "destination": "/blog/blog-best-time-to-eat-makhana"
+    },
+    {
+      "source": "/blog-healthy-monsoon-snacks",
+      "destination": "/blog/blog-healthy-monsoon-snacks"
     }
   ],
   "redirects": [
@@ -155,6 +159,11 @@
     {
       "source": "/blog/blog-best-time-to-eat-makhana",
       "destination": "/blog-best-time-to-eat-makhana",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-healthy-monsoon-snacks",
+      "destination": "/blog-healthy-monsoon-snacks",
       "permanent": true
     }
   ]
