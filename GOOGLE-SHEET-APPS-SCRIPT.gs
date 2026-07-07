@@ -6,7 +6,17 @@
  * request here each time; this script writes/updates a row in the sheet.
  *
  * It is bound to ONE spreadsheet (the one you opened Extensions > Apps
- * Script from). It creates two tabs: "Orders" and "Leads".
+ * Script from). It creates three tabs: "Orders", "Payments" and "Leads".
+ *
+ * >>> THE "Payments" TAB IS A FRAUD-AUDIT / VERIFICATION VIEW.
+ *   Every payment that reaches this sheet is ALREADY a genuinely verified,
+ *   captured Razorpay payment: the website only records an order server-side
+ *   AFTER the Razorpay HMAC signature check + webhook "captured" re-confirm.
+ *   So the Payments tab is NOT the thing that blocks fakes — the server does.
+ *   It is simply an easy cross-check log: each row is one server-verified
+ *   captured payment. Click its "Open in Razorpay" link to independently
+ *   confirm the payment in the Razorpay dashboard, then tick the "Checked"
+ *   box once you've eyeballed it. Nothing here can be faked from outside.
  *
  * >>> HOW TO USE (non-technical, full steps are in GOOGLE-SHEET-SETUP.md):
  *   1) Paste this whole file into the Apps Script editor.
@@ -32,13 +42,18 @@ var SHEET_SECRET = "PASTE_YOUR_SECRET_HERE"; // <-- change me, must match Vercel
 /* Tab names and their column headers. These must match the website's
  * field mapping exactly — do not rename columns unless you also update
  * the mapping in appendOrder() / upsertLead() below. */
-var ORDERS_TAB = "Orders";
-var LEADS_TAB  = "Leads";
+var ORDERS_TAB   = "Orders";
+var PAYMENTS_TAB = "Payments";
+var LEADS_TAB    = "Leads";
 
 var ORDERS_HEADERS = [
   "Timestamp", "Order No", "Payment ID", "Status", "Name", "Phone",
   "Email", "Address", "Items", "Subtotal (Rs)", "Shipping (Rs)",
   "Total (Rs)", "Payment Method"
+];
+var PAYMENTS_HEADERS = [
+  "Timestamp", "Order No", "Payment ID", "Amount (Rs)", "Method",
+  "Status", "Verified", "Razorpay Link", "Checked"
 ];
 var LEADS_HEADERS = [
   "Timestamp", "Lead Key", "Status", "Name", "Phone", "Email",
@@ -64,19 +79,31 @@ function setup() {
     sheets[0].setName(ORDERS_TAB);
   }
 
-  var orders = getOrCreateSheet_(ss, ORDERS_TAB);
-  var leads  = getOrCreateSheet_(ss, LEADS_TAB);
+  var orders   = getOrCreateSheet_(ss, ORDERS_TAB);
+  var payments = getOrCreateSheet_(ss, PAYMENTS_TAB);
+  var leads    = getOrCreateSheet_(ss, LEADS_TAB);
 
-  // Write headers + style them. Orders header = cream; Leads header = light grey.
-  writeHeader_(orders, ORDERS_HEADERS, "#FFF8E7");
-  writeHeader_(leads,  LEADS_HEADERS,  "#F1F3F4");
+  // Keep tab order tidy: Orders, Payments, Leads (best-effort — never fatal).
+  try {
+    payments.activate(); ss.moveActiveSheet(2); // 2nd position, after Orders
+    leads.activate();    ss.moveActiveSheet(3); // 3rd position, after Payments
+  } catch (e) { /* ordering is cosmetic — ignore if it fails */ }
+
+  // Write headers + style them. Orders = cream; Payments = light red; Leads = grey.
+  writeHeader_(orders,   ORDERS_HEADERS,   "#FFF8E7");
+  writeHeader_(payments, PAYMENTS_HEADERS, "#FDECEA");
+  writeHeader_(leads,    LEADS_HEADERS,    "#F1F3F4");
 
   // Sensible column widths (pixels) so the sheet is readable out of the box.
-  setColumnWidths_(orders, [130, 100, 150, 70, 140, 120, 200, 260, 260, 100, 100, 100, 120]);
-  setColumnWidths_(leads,  [130, 160, 90, 140, 120, 200, 110, 220]);
+  setColumnWidths_(orders,   [130, 100, 150, 70, 140, 120, 200, 260, 260, 100, 100, 100, 120]);
+  setColumnWidths_(payments, [130, 100, 200, 100, 90, 80, 190, 170, 80]);
+  setColumnWidths_(leads,    [130, 160, 90, 140, 120, 200, 110, 220]);
 
-  ss.toast("Setup complete — 'Orders' and 'Leads' tabs are ready.", "The Makhana", 5);
-  Logger.log("Setup complete: 'Orders' and 'Leads' tabs created/verified.");
+  // Add tickable checkboxes to the Payments "Checked" column (col 9 = I), rows 2..1000.
+  applyCheckedCheckbox_(payments);
+
+  ss.toast("Setup complete — 'Orders', 'Payments' and 'Leads' tabs are ready.", "The Makhana", 5);
+  Logger.log("Setup complete: 'Orders', 'Payments' and 'Leads' tabs created/verified.");
 }
 
 /* Get a tab by name, creating it if it doesn't exist. */
@@ -103,6 +130,15 @@ function setColumnWidths_(sheet, widths) {
   }
 }
 
+/* Put tickable checkboxes in the Payments "Checked" column (col 9 = "I"),
+ * rows 2..1000, so the owner can mark a payment as cross-checked. Best-effort. */
+function applyCheckedCheckbox_(sheet) {
+  try {
+    var rule = SpreadsheetApp.newDataValidation().requireCheckbox().build();
+    sheet.getRange("I2:I1000").setDataValidation(rule);
+  } catch (e) { /* validation is a nicety — never let it block setup */ }
+}
+
 /* =====================================================================
  * 3) doPost(e)  —  the endpoint your website calls
  * ---------------------------------------------------------------------
@@ -123,6 +159,7 @@ function doPost(e) {
 
     if (body.type === "order") {
       appendOrder(body);
+      appendPayment(body); // also log to the Payments fraud-audit tab
       return jsonOut_({ ok: true, type: "order" });
     }
     if (body.type === "lead") {
@@ -197,6 +234,78 @@ function appendOrder(data) {
   ];
 
   sheet.appendRow(row);
+}
+
+/* =====================================================================
+ * 5b) appendPayment(data)  —  log one row to the "Payments" audit tab
+ * ---------------------------------------------------------------------
+ * FRAUD-AUDIT VIEW. Each row here is one payment that the server ALREADY
+ * verified (Razorpay signature + captured webhook) before recording — so
+ * this is a cross-check log, not the prevention layer. Idempotent on
+ * Payment ID (no duplicate rows). Wrapped so it can never throw and take
+ * the order write / website response down with it.
+ * ===================================================================== */
+function appendPayment(data) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(PAYMENTS_TAB);
+
+    // Create the tab on the fly (with header + checkboxes) if it's missing.
+    if (!sheet) {
+      sheet = ss.insertSheet(PAYMENTS_TAB);
+      writeHeader_(sheet, PAYMENTS_HEADERS, "#FDECEA");
+      setColumnWidths_(sheet, [130, 100, 200, 100, 90, 80, 190, 170, 80]);
+      applyCheckedCheckbox_(sheet);
+    }
+    if (sheet.getLastRow() === 0) {
+      writeHeader_(sheet, PAYMENTS_HEADERS, "#FDECEA");
+      applyCheckedCheckbox_(sheet);
+    }
+
+    var paymentId = data.payment_id || "";
+
+    // --- Idempotency: scan the "Payment ID" column (column C = index 3). ---
+    var lastRow = sheet.getLastRow();
+    if (paymentId && lastRow > 1) {
+      var ids = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
+      for (var i = 0; i < ids.length; i++) {
+        if (String(ids[i][0]) === String(paymentId)) {
+          return; // already logged — do nothing
+        }
+      }
+    }
+
+    var timestamp = Utilities.formatDate(new Date(), TIMEZONE, TS_FORMAT);
+
+    // Column order MUST match PAYMENTS_HEADERS.
+    var row = [
+      timestamp,                       // Timestamp
+      data.order_no || "-",            // Order No
+      paymentId || "-",                // Payment ID
+      Number(data.total) || 0,         // Amount (Rs)
+      data.payment_method || "online", // Method
+      data.status || "paid",           // Status
+      "Signature-verified (server)",   // Verified
+      "",                              // Razorpay Link (set via formula below)
+      false                            // Checked (owner ticks after cross-check)
+    ];
+
+    sheet.appendRow(row);
+
+    // Turn the Razorpay Link cell (column 8 = H) of the new row into a
+    // clickable hyperlink straight to this exact payment in the dashboard.
+    var newRow = sheet.getLastRow();
+    if (paymentId) {
+      sheet.getRange(newRow, 8).setFormula(
+        '=HYPERLINK("https://dashboard.razorpay.com/app/payments/' + paymentId + '","Open in Razorpay")'
+      );
+    } else {
+      sheet.getRange(newRow, 8).setValue("-");
+    }
+  } catch (err) {
+    // Never let the audit log break the order write or the website reply.
+    Logger.log("appendPayment failed (non-fatal): " + (err && err.message || err));
+  }
 }
 
 /* Build the readable multiline Items string.

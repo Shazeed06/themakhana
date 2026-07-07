@@ -4,11 +4,21 @@ This connects your website to your Google Sheet so that **every order and every 
 also appears as a row in the sheet** — a plain, human-readable copy you can open any
 time. You do this once. No coding needed; just follow the steps in order.
 
-It will create two tabs in your sheet:
+It will create **three tabs** in your sheet:
 
 - **Orders** — columns: Timestamp · Order No · Payment ID · Status · Name · Phone ·
   Email · Address · Items · Subtotal (Rs) · Shipping (Rs) · Total (Rs) · Payment Method
+- **Payments** — a fraud-verification / audit view: Timestamp · Order No · Payment ID ·
+  Amount (Rs) · Method · Status · Verified · Razorpay Link · Checked
 - **Leads** — columns: Timestamp · Lead Key · Status · Name · Phone · Email · Source · Page
+
+**About the Payments tab.** Your website already blocks fake payments *before* anything
+reaches this sheet: an order is only recorded server-side after Razorpay verifies the
+payment's HMAC signature and the "captured" webhook re-confirms it. So every row in the
+Payments tab is a genuinely verified, captured payment — the tab is a convenient
+cross-check log, not the thing that stops fraud. To independently confirm any payment,
+click its **"Open in Razorpay"** link (it opens that exact payment in your Razorpay
+dashboard), then tick the **Checked** box once you've eyeballed it.
 
 ---
 
@@ -54,7 +64,14 @@ It will create two tabs in your sheet:
      own* script. Click **Advanced**, then **“Go to (project name) (unsafe)”**, then
      **Allow**.
 4. When it finishes you'll see a small **“Setup complete”** toast in the sheet, and the
-   **Orders** and **Leads** tabs will now exist with styled headers.
+   **Orders**, **Payments** and **Leads** tabs will now exist with styled headers.
+
+> **Already set this up before?** If you're *updating* an existing script to add the new
+> **Payments** tab, you must **re-run `setup()`** (it creates the Payments tab — it won't
+> touch your existing Orders/Leads rows). Then, if you deploy with a **versioned** Web-App
+> deployment, push the new code to the live `/exec` URL: **Deploy → Manage deployments →**
+> (edit, the pencil) **→ Version: New version → Deploy**. The URL stays the same; it just
+> starts running the updated code.
 
 ## 5. Deploy it as a Web App
 
@@ -91,8 +108,12 @@ It will create two tabs in your sheet:
 
 ### Notes
 
-- **Safe to re-run `setup()`** later — it won't erase existing rows.
+- **Safe to re-run `setup()`** later — it won't erase existing rows. (Re-running it is
+  also how you add the new **Payments** tab to a sheet you set up earlier.)
 - Orders are **de-duplicated by Payment ID**: the same order will never appear twice.
+- The **Payments** tab is likewise **de-duplicated by Payment ID**, and each row is an
+  already-server-verified captured payment. Use the **Razorpay Link** to cross-check it,
+  then tick **Checked**. It's an audit view — the server, not this sheet, blocks fakes.
 - Leads are **keyed by Lead Key**: as a visitor fills in more details, their existing
   row is updated in place rather than duplicated.
 - If the sheet ever fails, your **orders, emails and leads keep working normally** — the
