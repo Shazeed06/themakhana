@@ -73,6 +73,10 @@
     {
       "source": "/blog-healthy-monsoon-snacks",
       "destination": "/blog/blog-healthy-monsoon-snacks"
+    },
+    {
+      "source": "/blog-makhana-protein",
+      "destination": "/blog/blog-makhana-protein"
     }
   ],
   "redirects": [
@@ -164,6 +168,11 @@
     {
       "source": "/blog/blog-healthy-monsoon-snacks",
       "destination": "/blog-healthy-monsoon-snacks",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-protein",
+      "destination": "/blog-makhana-protein",
       "permanent": true
     }
   ]
