@@ -77,6 +77,10 @@
     {
       "source": "/blog-makhana-protein",
       "destination": "/blog/blog-makhana-protein"
+    },
+    {
+      "source": "/blog-makhana-rakhi-gift",
+      "destination": "/blog/blog-makhana-rakhi-gift"
     }
   ],
   "redirects": [
@@ -173,6 +177,11 @@
     {
       "source": "/blog/blog-makhana-protein",
       "destination": "/blog-makhana-protein",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog-makhana-rakhi-gift",
+      "destination": "/blog-makhana-rakhi-gift",
       "permanent": true
     }
   ]
